@@ -128,32 +128,14 @@ export function TopHeader({
         </div>
       </div>
 
-      {/* Right: User, Notifications, Window Status */}
-      <div className="flex items-center justify-end gap-3 w-[280px]" data-purpose="profile-and-window-actions">
+      {/* Right: Notifications, Friend Activity */}
+      <div className="flex items-center justify-end gap-2 w-[280px]" data-purpose="profile-and-window-actions">
         <button className="text-spotify-textSubdued hover:text-white p-2 text-sm transition cursor-pointer" title="What's New">
           <i className="fa-regular fa-bell"></i>
         </button>
         <button className="text-spotify-textSubdued hover:text-white p-2 text-sm transition cursor-pointer" title="Friend Activity">
           <i className="fa-solid fa-user-group text-xs"></i>
         </button>
-
-        {/* Profile Avatar with Red Ring matching Stitch */}
-        <div className="relative cursor-pointer group" title="Account (Guest / No Login Required)">
-          <div className="w-8 h-8 rounded-full bg-red-950 p-[2px] flex items-center justify-center border border-red-600/80 overflow-hidden shadow group-hover:scale-105 transition">
-            <img
-              alt="Avatar"
-              className="w-full h-full object-cover rounded-full filter brightness-75 contrast-125"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHcGIXt9tgnr69pqdGfkaALYlK4ONPxluKhyNToQQZd1J8pzVN8kisKxRMYQLNfwYe07xXejp0YW3GJJ8SeRITPLl7qgHKpy7MR4HxOyXXs_0Gro-CREcEM7GnRCs47A_avqiqh77hKsE9P_8kCMMXDKNP4Z1ob9a89lvYtXI5CMf7ymuDkWCL7PLsPufElYZvTPfVa1AmXv5DECw_zcR1jiE5IEZLx-UUWVRK9DDQtgCwWy6yPML69Q"
-            />
-          </div>
-        </div>
-
-        {/* Native Windows Window Buttons */}
-        <div className="flex items-center gap-3.5 ml-2 text-spotify-textSubdued text-xs">
-          <button className="hover:text-white cursor-pointer" title="Minimize"><i className="fa-solid fa-minus"></i></button>
-          <button className="hover:text-white cursor-pointer" title="Maximize"><i className="fa-regular fa-square"></i></button>
-          <button className="hover:text-white cursor-pointer" title="Close"><i className="fa-solid fa-xmark text-sm"></i></button>
-        </div>
       </div>
     </header>
   );

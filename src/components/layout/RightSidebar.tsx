@@ -296,7 +296,12 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
               <img
                 alt={activeArtist.name}
                 className="w-full h-full object-cover filter brightness-75 contrast-125 group-hover:scale-105 transition duration-500"
-                src={activeArtist.imageUrl || currentTrack.artworkUrl || 'https://via.placeholder.com/300'}
+                src={activeArtist.imageUrl || currentTrack.artworkUrl || '/logo.webp'}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/logo.webp';
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-spotify-card via-black/40 to-transparent"></div>
               <div className="absolute top-3 left-3 text-xs font-bold text-white uppercase tracking-wider drop-shadow">

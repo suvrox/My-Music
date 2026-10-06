@@ -149,35 +149,99 @@ export const INITIAL_TRACKS: Track[] = [
 
 export const INITIAL_ARTISTS: Artist[] = [
   {
-    id: 'artist-dr-mob',
-    name: 'DR MØB',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDj7E5tMyhe2b5EaYOK4lJh2KRCtgQ_jKH3_O5K2E3CdMFvOlKbz3xMOrYIdBwP8Ark7XnDpT4o0VK-zWhQcFXXRmVLeGKocdo99aPU7xVvXUUSG3s6QxYWtzq3bRt7CPCzXdEid390YrGTZNkkaibp1RU2nCPyomMma8d-CpftdKjCpsRz3maoRMv0fDiYm1YIiihM3f1hkyi_0oOox5nw5wCGsbu2kcevSgV8d_6rrr1vWuo17-u-rQ',
-    description: 'Multi-genre producer combining dark cyber-bass textures, Phonk grooves, and high-energy electronic soundscapes.',
-    monthlyListeners: '124,592 monthly listeners',
-    verified: true
-  },
-  {
     id: 'artist-arijit-singh',
     name: 'Arijit Singh',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw',
-    description: 'India’s most streamed playback singer and composer, celebrated for romantic and soulful melodies.',
-    monthlyListeners: '38,914,020 monthly listeners',
+    imageUrl: 'https://yt3.ggpht.com/DcEzZrPCQRSSs47rMbdJ3UJkQUCN3X8SKf8aCnvOgd2BmPihAz-0jBGJgEVh9_P8EiSBVNyixDs=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'India’s most celebrated playback superstar with soulful romantic ballads and timeless melodies.',
+    monthlyListeners: '42.5M monthly listeners',
     verified: true
   },
   {
     id: 'artist-karan-aujla',
     name: 'Karan Aujla',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA',
-    description: 'Global Punjabi singer-songwriter redefining modern desi hip hop and dancefloor anthems.',
-    monthlyListeners: '14,820,119 monthly listeners',
+    imageUrl: 'https://yt3.ggpht.com/Da4zbrS4XLxzb3xVNT14aKr22aBg1blJCuCBppbYglO_uDmElYopgoDk7XV6UWNxthI96XOYrw=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Global Punjabi hitmaker redefining modern desi hip hop, bhangra grooves, and viral party anthems.',
+    monthlyListeners: '16.2M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-shreya-ghoshal',
+    name: 'Shreya Ghoshal',
+    imageUrl: 'https://yt3.ggpht.com/PgINZNe0qVxgMSXKG5vF82bNN4WCC12zgWsz9I7OLs4CLF9Cn0Vxq7Xc1ToupnzXrCv0nKfe3VM=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'National Award-winning Indian playback icon revered for exceptional vocal range and classical depth.',
+    monthlyListeners: '31.8M monthly listeners',
     verified: true
   },
   {
     id: 'artist-anirudh',
     name: 'Anirudh Ravichander',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzoXdIy5kfJYX_DilbwKkzBdT5QMCYwB3-RBVcNsTFcB7t9mpgW0iXB9sqq-EvBpNy4ZRqqf0rTcd39GIsLdYZOmVLOgAmVCyhL67c_8Z-Sys1iqHypd4BVH_UJxidnDfLuOgi18aSZvTwcdA4s99deQda3QjY3nRDGXF2c9bIxRAiadSdQZUh5PV-Dg7WS_SxYTNKx75eUYUxNmFecFf2AYjd_RB7Dwbo4-Q_Rv04XjHp60mNzzlH0A',
-    description: 'Renowned Indian film composer known for high-octane background scores and viral chartbusters.',
-    monthlyListeners: '22,431,900 monthly listeners',
+    imageUrl: 'https://yt3.ggpht.com/frx38y_CK6hAUwms55XGdBJbsb1866IM6x6P0Fio7v0FPQFtOhgEdok02Ng-SySN7UJJg4UE5g=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Renowned rockstar music director behind chartbusting Pan-Indian anthems and electrifying background scores.',
+    monthlyListeners: '24.1M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-diljit-dosanjh',
+    name: 'Diljit Dosanjh',
+    imageUrl: 'https://yt3.ggpht.com/7EYXXMXY594V8y4sZT2aawmdKgDAGTu5jNm9C-HpR3jY9cZJ0NMxS__nZKBdWZ1PUpJPjc2BAA=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Global Punjabi superstar bringing electrifying concerts and Punjabi culture to international stadiums.',
+    monthlyListeners: '20.4M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-taylor-swift',
+    name: 'Taylor Swift',
+    imageUrl: 'https://yt3.ggpht.com/5cW4-NDteLLBaWpsjSirr7EmaOKtFGyX8PG2-6Xx7RELneLZe50Y5Bv9oEothnH9BOqxUpClfA=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: '14-time Grammy-winning global powerhouse and prolific songwriter breaking streaming and stadium records worldwide.',
+    monthlyListeners: '104.2M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-the-weeknd',
+    name: 'The Weeknd',
+    imageUrl: 'https://yt3.ggpht.com/WHvw1ak1FcJaHeEiTmG2iN0dqEjjPxAtT_tA8ruJ3MlNr9I-RHsAur1iAenYeQN_d6LNPH2Z8Ic=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Diamond-certified pop & R&B visionary behind cinematic 80s synthwave hits and record-shattering singles.',
+    monthlyListeners: '112.0M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-ar-rahman',
+    name: 'A.R. Rahman',
+    imageUrl: 'https://yt3.ggpht.com/G2CwNAHy4CCMphIOmQhBTNyCUu3AcMjAc2QLg09h3ejq15FyIto6VyC-PPtudekC7kET3uxO=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Double Oscar and double Grammy-winning legend whose innovative compositions revolutionized modern film music.',
+    monthlyListeners: '27.3M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-billie-eilish',
+    name: 'Billie Eilish',
+    imageUrl: 'https://yt3.ggpht.com/dirvtoDAmx-u0UR76-pxfhYL6Wxj2vfL2geUcxDwk62tTWWhGG6QDGc63RG3NdOz38-yBwRHDQ=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Multi-Grammy and Oscar-winning alt-pop trailblazer known for whisper vocals and genre-defining production.',
+    monthlyListeners: '98.0M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-bruno-mars',
+    name: 'Bruno Mars',
+    imageUrl: 'https://yt3.ggpht.com/dxwzp4IYsNJKDcwNYgF0UGdw9vCWSMqkHaLtC08VVKg8eybNs69pbdTaGdoaKQYHVQjFyeybzA=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Multi-Grammy-winning showman effortlessly uniting funk, soul, pop, and timeless romance.',
+    monthlyListeners: '120.5M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-ed-sheeran',
+    name: 'Ed Sheeran',
+    imageUrl: 'https://yt3.ggpht.com/pZQ5JMD4EOI8TcNYAPTzMexe_fC0CKnb_hYlV4rPfIzmDidF239fH1XKmzkeT30XSg7fxNwc_w=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Multi-platinum British singer-songwriter known for intimate acoustic melodies and universally resonant anthems.',
+    monthlyListeners: '85.4M monthly listeners',
+    verified: true
+  },
+  {
+    id: 'artist-sidhu-moose-wala',
+    name: 'Sidhu Moose Wala',
+    imageUrl: 'https://yt3.ggpht.com/ytc/AIdro_kiQJ0Hhp0O-tdaY1dy81-gSNujjccUlWstnpFr686ZlMk=s400-c-k-c0x00ffffff-no-rj-mo',
+    description: 'Legendary Punjabi pioneer whose fierce storytelling, swagger, and revolutionary style became an eternal legacy.',
+    monthlyListeners: '18.9M monthly listeners',
     verified: true
   }
 ];

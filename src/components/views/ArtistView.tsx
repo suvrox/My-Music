@@ -59,9 +59,14 @@ export function ArtistView({ artistId, onBack }: ArtistViewProps) {
       {/* Banner */}
       <div className="relative h-48 sm:h-64 w-full bg-zinc-900 overflow-hidden flex items-end p-4 sm:p-6">
         <img
-          src={artist.imageUrl || 'https://via.placeholder.com/800'}
+          src={artist.imageUrl || '/logo.webp'}
           alt={artist.name}
           className="absolute inset-0 w-full h-full object-cover filter brightness-50"
+          referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/logo.webp';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-spotify-surface via-black/40 to-transparent"></div>
         <div className="relative z-10 space-y-1">

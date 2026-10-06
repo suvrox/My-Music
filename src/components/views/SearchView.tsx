@@ -409,7 +409,12 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               <img
                                 alt={artist.name}
                                 className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                                src={artist.imageUrl || 'https://via.placeholder.com/100'}
+                                src={artist.imageUrl || '/logo.webp'}
+                                referrerPolicy="no-referrer"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = '/logo.webp';
+                                }}
                               />
                             </div>
                             <span className="font-bold text-sm text-white truncate w-full mb-0.5">

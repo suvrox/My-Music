@@ -1,5 +1,6 @@
 import { Track, Artist, Album, Playlist } from '@/types/music';
 import { MusicProvider } from '../types';
+import { INITIAL_ARTISTS } from './catalog';
 
 function parseDuration(isoDuration?: string): number {
   if (!isoDuration) return 180;
@@ -1148,14 +1149,22 @@ export class YouTubeMusicProvider implements MusicProvider {
   }
 
   async getArtist(id: string): Promise<Artist | null> {
+    const found = INITIAL_ARTISTS.find(a => a.id === id || a.name.toLowerCase() === id.toLowerCase() || a.id.toLowerCase().includes(id.toLowerCase()));
+    if (found) return found;
+
+    const cleanedName = id.replace(/^artist-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     return {
       id,
-      name: 'YouTube Music Artist',
-      imageUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
-      description: 'Stream top tracks verified via YouTube Music API.',
-      monthlyListeners: '2,500,000 monthly listeners',
+      name: cleanedName,
+      imageUrl: 'https://yt3.ggpht.com/DcEzZrPCQRSSs47rMbdJ3UJkQUCN3X8SKf8aCnvOgd2BmPihAz-0jBGJgEVh9_P8EiSBVNyixDs=s400-c-k-c0x00ffffff-no-rj-mo',
+      description: `Official artist catalog streaming verified tracks on YouTube Music.`,
+      monthlyListeners: '15,000,000 monthly listeners',
       verified: true
     };
+  }
+
+  async getPopularArtists(): Promise<Artist[]> {
+    return INITIAL_ARTISTS;
   }
 
   async getAlbum(id: string): Promise<Album | null> {

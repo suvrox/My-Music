@@ -810,31 +810,46 @@ export function HomeView({ setActiveView }: HomeViewProps) {
             <section data-purpose="popular-artists-row" className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
-                    Popular Artists
-                  </h2>
+                  <div className="flex items-center gap-2">
+                    <i className="fa-solid fa-certificate text-spotify-green text-sm"></i>
+                    <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
+                      Popular Artists
+                    </h2>
+                    <span className="text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-zinc-800 text-spotify-green">
+                      Verified
+                    </span>
+                  </div>
                   <p className="text-xs text-spotify-textSubdued mt-0.5">
-                    Explore top verified artists streaming on the platform
+                    Explore top verified artists streaming on YouTube Music
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
                 {INITIAL_ARTISTS.map((artist) => (
                   <div
                     key={artist.id}
                     onClick={() => setActiveView({ type: 'artist', id: artist.id })}
                     className="bg-spotify-card hover:bg-spotify-cardHover p-3 sm:p-4 rounded-lg transition duration-200 cursor-pointer group flex flex-col items-center text-center relative border border-transparent hover:border-zinc-800"
                   >
-                    <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg ring-2 ring-transparent group-hover:ring-spotify-green/50 transition">
                       <img
                         alt={artist.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        src={artist.imageUrl || 'https://via.placeholder.com/150'}
+                        src={artist.imageUrl || '/logo.webp'}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = '/logo.webp';
+                        }}
                       />
                     </div>
-                    <h3 className="font-bold text-sm text-white truncate mb-0.5 w-full">
-                      {artist.name}
-                    </h3>
+                    <div className="flex items-center gap-1 max-w-full justify-center">
+                      <h3 className="font-bold text-sm text-white truncate mb-0.5" title={artist.name}>
+                        {artist.name}
+                      </h3>
+                      <i className="fa-solid fa-circle-check text-spotify-green text-[11px] flex-shrink-0" title="Verified Artist"></i>
+                    </div>
                     <p className="text-xs text-spotify-textSubdued truncate w-full">
                       Artist • {artist.monthlyListeners}
                     </p>

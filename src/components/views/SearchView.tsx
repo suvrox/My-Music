@@ -132,20 +132,20 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
   const topSongs = results.slice(0, 4);
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6" data-purpose="search-view-container">
+    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 space-y-6" data-purpose="search-view-container">
       {/* 1. If no query, show Browse Genres */}
       {!searchQuery.trim() && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-white tracking-tight">Browse All Genres</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Browse All Genres</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
             {GENRE_CARDS.map((genre) => (
               <div
                 key={genre.name}
                 onClick={() => setSearchQuery(genre.name)}
-                className={`h-36 rounded-lg p-4 bg-gradient-to-br ${genre.color} relative overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition shadow-lg flex flex-col justify-between group`}
+                className={`h-28 sm:h-36 rounded-lg p-3 sm:p-4 bg-gradient-to-br ${genre.color} relative overflow-hidden cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition shadow-lg flex flex-col justify-between group`}
               >
-                <h3 className="text-xl font-bold text-white drop-shadow">{genre.name}</h3>
-                <div className="self-end text-white/30 text-5xl group-hover:scale-110 transition duration-300">
+                <h3 className="text-base sm:text-xl font-bold text-white drop-shadow">{genre.name}</h3>
+                <div className="self-end text-white/30 text-3xl sm:text-5xl group-hover:scale-110 transition duration-300">
                   <i className={`fa-solid ${genre.icon}`}></i>
                 </div>
               </div>
@@ -171,7 +171,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSearchTab('all')}
-                  className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+                  className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${
                     searchTab === 'all'
                       ? 'bg-white text-black'
                       : 'bg-white/10 hover:bg-white/20 text-white'
@@ -181,7 +181,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                 </button>
                 <button
                   onClick={() => setSearchTab('songs')}
-                  className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+                  className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${
                     searchTab === 'songs'
                       ? 'bg-white text-black'
                       : 'bg-white/10 hover:bg-white/20 text-white'
@@ -192,7 +192,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                 {matchingArtists.length > 0 && (
                   <button
                     onClick={() => setSearchTab('artists')}
-                    className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+                    className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${
                       searchTab === 'artists'
                         ? 'bg-white text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
@@ -214,10 +214,10 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                         <h3 className="text-xl font-bold text-white tracking-tight">Top Result</h3>
                         <div
                           onClick={() => handlePlay(topResult)}
-                          className="bg-spotify-card hover:bg-spotify-cardHover p-5 rounded-lg transition duration-200 group cursor-pointer relative flex flex-col justify-between h-[230px]"
+                          className="bg-spotify-card hover:bg-spotify-cardHover p-4 sm:p-5 rounded-lg transition duration-200 group cursor-pointer relative flex flex-col justify-between min-h-[190px] sm:h-[230px]"
                         >
                           <div className="flex items-start gap-4">
-                            <div className="w-24 h-24 rounded-md overflow-hidden shadow-xl bg-zinc-800 flex-shrink-0">
+                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-md overflow-hidden shadow-xl bg-zinc-800 flex-shrink-0">
                               <img
                                 src={topResult.artworkUrl || 'https://via.placeholder.com/100'}
                                 alt={topResult.title}
@@ -225,15 +225,15 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               />
                             </div>
                             <div className="min-w-0 flex-1">
-                              <h4 className="text-2xl font-bold text-white group-hover:underline line-clamp-2 leading-tight">
+                              <h4 className="text-lg sm:text-2xl font-bold text-white group-hover:underline line-clamp-2 leading-tight">
                                 {topResult.title}
                               </h4>
-                              <p className="text-sm text-spotify-textSubdued mt-1.5 truncate">
+                              <p className="text-xs sm:text-sm text-spotify-textSubdued mt-1.5 truncate">
                                 <span className="text-white font-medium hover:underline">
                                   {topResult.artistName}
                                 </span>
                               </p>
-                              <span className="inline-block mt-3 px-3 py-1 rounded-full bg-black/60 text-xs font-bold text-white uppercase tracking-wider">
+                              <span className="inline-block mt-2 sm:mt-3 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-black/60 text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
                                 Song
                               </span>
                             </div>
@@ -243,8 +243,8 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                             <span className="text-xs text-spotify-textSubdued font-mono">
                               {formatTime(topResult.duration || 180)}
                             </span>
-                            <div className="w-12 h-12 rounded-full bg-spotify-green text-black flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
-                              <i className={`fa-solid ${currentTrack?.id === topResult.id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-lg`}></i>
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-spotify-green text-black flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 shadow-xl transition-all duration-300 hover:scale-105 active:scale-95">
+                              <i className={`fa-solid ${currentTrack?.id === topResult.id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm sm:text-lg`}></i>
                             </div>
                           </div>
                         </div>
@@ -285,7 +285,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                                 </div>
                               </div>
 
-                              <div className="flex items-center gap-4 text-spotify-textSubdued text-xs flex-shrink-0">
+                              <div className="flex items-center gap-3 sm:gap-4 text-spotify-textSubdued text-xs flex-shrink-0">
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
@@ -294,7 +294,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                                   className="hover:text-white cursor-pointer p-1"
                                   title={isFav ? 'Remove favorite' : 'Save to Your Library'}
                                 >
-                                  <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-0 group-hover:opacity-100'}`}></i>
+                                  <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-70 sm:opacity-0 sm:group-hover:opacity-100'}`}></i>
                                 </button>
                                 <span className="font-mono">{formatTime(track.duration || 180)}</span>
                               </div>
@@ -308,10 +308,10 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                   {/* Complete List of All Matching Songs */}
                   <div className="space-y-4 pt-4 border-t border-zinc-800/80">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-white tracking-tight">
+                      <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                         All Results from YouTube ({results.length} songs)
                       </h3>
-                      <span className="text-xs text-spotify-textSubdued">
+                      <span className="text-xs text-spotify-textSubdued hidden sm:inline">
                         Click any song to play and queue all tracks
                       </span>
                     </div>
@@ -319,11 +319,11 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                     {/* Full Interactive Table */}
                     <div className="w-full" data-purpose="all-results-table">
                       {/* Table Header */}
-                      <div className="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
+                      <div className="grid grid-cols-12 px-2 sm:px-4 py-2.5 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
                         <div className="col-span-1 text-center">#</div>
-                        <div className="col-span-6 md:col-span-6">Title</div>
+                        <div className="col-span-8 md:col-span-6">Title</div>
                         <div className="col-span-3 hidden md:block truncate">Album</div>
-                        <div className="col-span-5 md:col-span-2 text-right pr-2">Duration</div>
+                        <div className="col-span-3 md:col-span-2 text-right pr-2">Duration</div>
                       </div>
 
                       {/* Song Rows */}
@@ -336,7 +336,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                             <div
                               key={`all-row-${track.id}-${idx}`}
                               onClick={() => handlePlay(track)}
-                              className={`grid grid-cols-12 items-center px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
+                              className={`grid grid-cols-12 items-center px-2 sm:px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                                 isCurrent ? 'bg-spotify-elevated/70' : ''
                               }`}
                             >
@@ -355,17 +355,17 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               </div>
 
                               {/* Title & Artist */}
-                              <div className="col-span-6 md:col-span-6 flex items-center gap-3 min-w-0 pr-3">
+                              <div className="col-span-8 md:col-span-6 flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
                                 <img
                                   src={track.artworkUrl || 'https://via.placeholder.com/40'}
                                   alt={track.title}
-                                  className="w-10 h-10 rounded object-cover flex-shrink-0 bg-zinc-800 shadow-sm"
+                                  className="w-9 h-9 sm:w-10 sm:h-10 rounded object-cover flex-shrink-0 bg-zinc-800 shadow-sm"
                                 />
                                 <div className="min-w-0">
-                                  <p className={`font-semibold text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
+                                  <p className={`font-semibold text-xs sm:text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
                                     {track.title}
                                   </p>
-                                  <p className="text-xs text-spotify-textSubdued truncate">
+                                  <p className="text-[11px] sm:text-xs text-spotify-textSubdued truncate">
                                     {track.artistName}
                                   </p>
                                 </div>
@@ -377,13 +377,13 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               </div>
 
                               {/* Duration & Actions */}
-                              <div className="col-span-5 md:col-span-2 flex items-center justify-end gap-3 text-spotify-textSubdued">
+                              <div className="col-span-3 md:col-span-2 flex items-center justify-end gap-2 sm:gap-3 text-spotify-textSubdued">
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     addToQueue(track);
                                   }}
-                                  className="hover:text-white transition cursor-pointer opacity-0 group-hover:opacity-100 p-1"
+                                  className="hover:text-white transition cursor-pointer opacity-0 group-hover:opacity-100 p-1 hidden sm:inline-block"
                                   title="Add to queue"
                                 >
                                   <i className="fa-solid fa-list-ul text-xs"></i>
@@ -396,9 +396,9 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                                   className="hover:text-white transition cursor-pointer p-1"
                                   title={isFav ? 'Remove favorite' : 'Save to Your Library'}
                                 >
-                                  <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-0 group-hover:opacity-100'}`}></i>
+                                  <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-70 sm:opacity-0 sm:group-hover:opacity-100'}`}></i>
                                 </button>
-                                <span className="font-mono pr-2">{formatTime(track.duration || 180)}</span>
+                                <span className="font-mono pr-1 sm:pr-2">{formatTime(track.duration || 180)}</span>
                               </div>
                             </div>
                           );
@@ -450,11 +450,11 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                     All Matching Songs ({results.length})
                   </h3>
                   <div className="w-full">
-                    <div className="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
+                    <div className="grid grid-cols-12 px-2 sm:px-4 py-2.5 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
                       <div className="col-span-1 text-center">#</div>
-                      <div className="col-span-6 md:col-span-6">Title</div>
+                      <div className="col-span-8 md:col-span-6">Title</div>
                       <div className="col-span-3 hidden md:block truncate">Album</div>
-                      <div className="col-span-5 md:col-span-2 text-right pr-2">Duration</div>
+                      <div className="col-span-3 md:col-span-2 text-right pr-2">Duration</div>
                     </div>
 
                     <div className="divide-y divide-zinc-900/50 mt-1">
@@ -466,7 +466,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                           <div
                             key={`songs-tab-${track.id}-${idx}`}
                             onClick={() => handlePlay(track)}
-                            className={`grid grid-cols-12 items-center px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
+                            className={`grid grid-cols-12 items-center px-2 sm:px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                               isCurrent ? 'bg-spotify-elevated/70' : ''
                             }`}
                           >
@@ -483,17 +483,17 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               </span>
                             </div>
 
-                            <div className="col-span-6 md:col-span-6 flex items-center gap-3 min-w-0 pr-3">
+                            <div className="col-span-8 md:col-span-6 flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
                               <img
                                 src={track.artworkUrl || 'https://via.placeholder.com/40'}
                                 alt={track.title}
-                                className="w-10 h-10 rounded object-cover flex-shrink-0 bg-zinc-800 shadow-sm"
+                                className="w-9 h-9 sm:w-10 sm:h-10 rounded object-cover flex-shrink-0 bg-zinc-800 shadow-sm"
                               />
                               <div className="min-w-0">
-                                <p className={`font-semibold text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
+                                <p className={`font-semibold text-xs sm:text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
                                   {track.title}
                                 </p>
-                                <p className="text-xs text-spotify-textSubdued truncate">
+                                <p className="text-[11px] sm:text-xs text-spotify-textSubdued truncate">
                                   {track.artistName}
                                 </p>
                               </div>
@@ -503,13 +503,13 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                               {track.albumName || 'Single'}
                             </div>
 
-                            <div className="col-span-5 md:col-span-2 flex items-center justify-end gap-3 text-spotify-textSubdued">
+                            <div className="col-span-3 md:col-span-2 flex items-center justify-end gap-2 sm:gap-3 text-spotify-textSubdued">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   addToQueue(track);
                                 }}
-                                className="hover:text-white transition cursor-pointer opacity-0 group-hover:opacity-100 p-1"
+                                className="hover:text-white transition cursor-pointer opacity-0 group-hover:opacity-100 p-1 hidden sm:inline-block"
                                 title="Add to queue"
                               >
                                 <i className="fa-solid fa-list-ul text-xs"></i>
@@ -522,9 +522,9 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                                 className="hover:text-white transition cursor-pointer p-1"
                                 title={isFav ? 'Remove favorite' : 'Save to Your Library'}
                               >
-                                <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-0 group-hover:opacity-100'}`}></i>
+                                <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-70 sm:opacity-0 sm:group-hover:opacity-100'}`}></i>
                               </button>
-                              <span className="font-mono pr-2">{formatTime(track.duration || 180)}</span>
+                              <span className="font-mono pr-1 sm:pr-2">{formatTime(track.duration || 180)}</span>
                             </div>
                           </div>
                         );

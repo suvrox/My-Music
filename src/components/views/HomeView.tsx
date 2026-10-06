@@ -629,16 +629,16 @@ export function HomeView({ setActiveView }: HomeViewProps) {
         </div>
 
         {isExpanded ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
             {tracks.map((track) => renderTrackCard(track, tracks))}
           </div>
         ) : (
           <div
             id={`scroll-row-${sectionId}`}
-            className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 pt-1 -mx-1 px-1"
+            className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 pt-1 -mx-1 px-1"
           >
             {tracks.map((track) => (
-              <div key={track.id} className="min-w-[170px] w-[170px] sm:min-w-[190px] sm:w-[190px] flex-shrink-0">
+              <div key={track.id} className="min-w-[140px] w-[140px] sm:min-w-[180px] sm:w-[180px] flex-shrink-0">
                 {renderTrackCard(track, tracks)}
               </div>
             ))}
@@ -651,12 +651,12 @@ export function HomeView({ setActiveView }: HomeViewProps) {
   return (
     <div className="flex-1 overflow-y-auto relative flex flex-col" data-purpose="center-main-feed">
       {/* Top Violet Ambient Glow Background Banner */}
-      <div className="custom-gradient-header pt-4 px-6 pb-6 sticky top-0 z-20">
+      <div className="custom-gradient-header pt-3 px-3 sm:px-6 pb-4 sm:pb-6 sticky top-0 z-20">
         {/* Filter Tabs: All, Music, Podcasts */}
         <div className="flex items-center gap-2">
           <button
             onClick={() => setFilterTab('all')}
-            className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition cursor-pointer ${
+            className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${
               filterTab === 'all'
                 ? 'bg-white text-black'
                 : 'bg-white/10 hover:bg-white/20 text-white font-medium'
@@ -666,7 +666,7 @@ export function HomeView({ setActiveView }: HomeViewProps) {
           </button>
           <button
             onClick={() => setFilterTab('music')}
-            className={`px-3.5 py-1.5 rounded-full text-sm transition cursor-pointer ${
+            className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm transition cursor-pointer ${
               filterTab === 'music'
                 ? 'bg-white text-black font-semibold'
                 : 'bg-white/10 hover:bg-white/20 text-white font-medium'
@@ -676,7 +676,7 @@ export function HomeView({ setActiveView }: HomeViewProps) {
           </button>
           <button
             onClick={() => setFilterTab('podcasts')}
-            className={`px-3.5 py-1.5 rounded-full text-sm transition cursor-pointer ${
+            className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm transition cursor-pointer ${
               filterTab === 'podcasts'
                 ? 'bg-white text-black font-semibold'
                 : 'bg-white/10 hover:bg-white/20 text-white font-medium'
@@ -688,14 +688,14 @@ export function HomeView({ setActiveView }: HomeViewProps) {
           {isLoadingFeed && (
             <div className="ml-auto flex items-center gap-2 text-xs text-spotify-textSubdued">
               <i className="fa-solid fa-circle-notch fa-spin text-spotify-green"></i>
-              <span>Loading YouTube tracks...</span>
+              <span className="hidden sm:inline">Loading YouTube tracks...</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Feed Content Sections */}
-      <div className="px-6 space-y-9 pb-16 -mt-2">
+      <div className="px-3 sm:px-6 space-y-7 sm:space-y-9 pb-20 sm:pb-16 -mt-2">
         {/* SECTION: Recently Played (from local listening history) */}
         {recentHistory.length > 0 && filterTab !== 'podcasts' && (
           <section data-purpose="recently-played-row" className="space-y-3">
@@ -713,7 +713,7 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                 Show all
               </button>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
               {recentHistory.slice(0, 5).map((track) => {
                 const isTrackActive =
                   currentTrack?.id === track.id ||
@@ -722,7 +722,7 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                   <div
                     key={`hist-${track.id}`}
                     onClick={() => handlePlayOrPauseTrack(track, recentHistory)}
-                    className="bg-spotify-card hover:bg-spotify-cardHover p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border border-transparent hover:border-zinc-800"
+                    className="bg-spotify-card hover:bg-spotify-cardHover p-2.5 sm:p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border border-transparent hover:border-zinc-800"
                   >
                     <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
                       <img
@@ -844,14 +844,14 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                 {INITIAL_ARTISTS.map((artist) => (
                   <div
                     key={artist.id}
                     onClick={() => setActiveView({ type: 'artist', id: artist.id })}
-                    className="bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg transition duration-200 cursor-pointer group flex flex-col items-center text-center relative border border-transparent hover:border-zinc-800"
+                    className="bg-spotify-card hover:bg-spotify-cardHover p-3 sm:p-4 rounded-lg transition duration-200 cursor-pointer group flex flex-col items-center text-center relative border border-transparent hover:border-zinc-800"
                   >
-                    <div className="relative w-32 h-32 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+                    <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg">
                       <img
                         alt={artist.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-300"

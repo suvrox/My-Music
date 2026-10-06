@@ -57,7 +57,7 @@ export function ArtistView({ artistId, onBack }: ArtistViewProps) {
   return (
     <div className="flex-1 overflow-y-auto flex flex-col">
       {/* Banner */}
-      <div className="relative h-64 w-full bg-zinc-900 overflow-hidden flex items-end p-6">
+      <div className="relative h-48 sm:h-64 w-full bg-zinc-900 overflow-hidden flex items-end p-4 sm:p-6">
         <img
           src={artist.imageUrl || 'https://via.placeholder.com/800'}
           alt={artist.name}
@@ -69,28 +69,28 @@ export function ArtistView({ artistId, onBack }: ArtistViewProps) {
             <i className="fa-solid fa-certificate text-blue-400"></i>
             <span>Verified Artist</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight">{artist.name}</h1>
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-black text-white tracking-tight">{artist.name}</h1>
           <p className="text-xs text-white/80">{artist.monthlyListeners || '124,592 monthly listeners'}</p>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="px-6 py-4 flex items-center gap-4 bg-spotify-surface">
+      <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-4 bg-spotify-surface">
         <button
           onClick={handlePlayAll}
-          className="w-14 h-14 rounded-full bg-spotify-green text-black flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg cursor-pointer"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-spotify-green text-black flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg cursor-pointer"
           title="Play"
         >
-          <i className={`fa-solid ${isPlaying && artistTracks.some(t => t.id === currentTrack?.id) ? 'fa-pause' : 'fa-play ml-1'} text-xl`}></i>
+          <i className={`fa-solid ${isPlaying && artistTracks.some(t => t.id === currentTrack?.id) ? 'fa-pause' : 'fa-play ml-0.5 sm:ml-1'} text-lg sm:text-xl`}></i>
         </button>
-        <button className="px-4 py-1.5 rounded-full border border-zinc-600 text-xs font-semibold text-white hover:border-white transition cursor-pointer">
+        <button className="px-3.5 sm:px-4 py-1.5 rounded-full border border-zinc-600 text-xs font-semibold text-white hover:border-white transition cursor-pointer">
           Follow
         </button>
       </div>
 
       {/* Popular Tracks */}
-      <div className="px-6 pb-12 space-y-6">
-        <h2 className="text-xl font-bold text-white">Popular</h2>
+      <div className="px-3 sm:px-6 pb-12 space-y-4 sm:space-y-6">
+        <h2 className="text-lg sm:text-xl font-bold text-white">Popular</h2>
         <div className="space-y-1">
           {artistTracks.map((track, idx) => {
             const isCurrent = currentTrack?.id === track.id;
@@ -99,12 +99,12 @@ export function ArtistView({ artistId, onBack }: ArtistViewProps) {
               <div
                 key={track.id}
                 onClick={() => handleTrackClick(track)}
-                className={`flex items-center justify-between p-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
+                className={`flex items-center justify-between p-2 sm:p-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                   isCurrent ? 'bg-spotify-elevated' : ''
                 }`}
               >
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <span className="w-5 text-center text-spotify-textSubdued group-hover:hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1 pr-2">
+                  <span className="w-5 text-center text-spotify-textSubdued group-hover:hidden font-mono">
                     {idx + 1}
                   </span>
                   <span className="w-5 text-center text-white hidden group-hover:inline-block">
@@ -113,29 +113,29 @@ export function ArtistView({ artistId, onBack }: ArtistViewProps) {
                   <img
                     src={track.artworkUrl || 'https://via.placeholder.com/40'}
                     alt={track.title}
-                    className="w-10 h-10 rounded object-cover flex-shrink-0"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded object-cover flex-shrink-0"
                   />
                   <div className="min-w-0">
-                    <p className={`font-semibold truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
+                    <p className={`font-semibold text-xs sm:text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
                       {track.title}
                     </p>
-                    <p className="text-spotify-textSubdued truncate">
+                    <p className="text-[11px] sm:text-xs text-spotify-textSubdued truncate">
                       {track.albumName || 'Single'}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 text-spotify-textSubdued">
+                <div className="flex items-center gap-2.5 sm:gap-4 text-spotify-textSubdued flex-shrink-0">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFavorite(track);
                     }}
-                    className="hover:text-white cursor-pointer"
+                    className="hover:text-white cursor-pointer p-1"
                   >
-                    <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-0 group-hover:opacity-100'}`}></i>
+                    <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-70 sm:opacity-0 sm:group-hover:opacity-100'}`}></i>
                   </button>
-                  <span className="font-mono">{formatTime(track.duration || 180)}</span>
+                  <span className="font-mono pr-1">{formatTime(track.duration || 180)}</span>
                 </div>
               </div>
             );

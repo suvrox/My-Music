@@ -6,6 +6,7 @@ import { TopHeader } from './TopHeader';
 import { LeftSidebar } from './LeftSidebar';
 import { RightSidebar } from './RightSidebar';
 import { BottomPlayerBar } from '../player/BottomPlayerBar';
+import { MobileNavBar } from './MobileNavBar';
 import { HomeView } from '../views/HomeView';
 import { SearchView } from '../views/SearchView';
 import { PlaylistView } from '../views/PlaylistView';
@@ -59,8 +60,8 @@ export function MainLayout() {
         onGoForward={handleGoForward}
       />
 
-      {/* Main Content Area matching Stitch */}
-      <div className="flex-1 flex overflow-hidden px-2 pb-2 gap-2">
+      {/* Main Content Area */}
+      <div className="flex-1 flex overflow-hidden px-1 sm:px-2 pb-28 md:pb-2 gap-2">
         {/* Left Sidebar Library */}
         <div className="hidden md:flex flex-shrink-0">
           <LeftSidebar activeView={activeView} setActiveView={setActiveView} />
@@ -94,8 +95,11 @@ export function MainLayout() {
         )}
       </div>
 
-      {/* Bottom Audio Player Bar matching Stitch */}
+      {/* Bottom Audio Player Bar */}
       <BottomPlayerBar />
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileNavBar activeView={activeView} setActiveView={setActiveView} />
 
       {/* Create Playlist Modal */}
       <CreatePlaylistModal />

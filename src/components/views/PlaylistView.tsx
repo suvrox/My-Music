@@ -51,25 +51,25 @@ export function PlaylistView({ playlistId, onBack }: PlaylistViewProps) {
   return (
     <div className="flex-1 overflow-y-auto flex flex-col">
       {/* Header Banner */}
-      <div className="p-6 bg-gradient-to-b from-indigo-900/60 to-spotify-surface flex items-end gap-6 pt-12 pb-6">
-        <div className="w-48 h-48 rounded-lg overflow-hidden shadow-2xl bg-zinc-800 flex-shrink-0">
+      <div className="p-4 sm:p-6 bg-gradient-to-b from-indigo-900/60 to-spotify-surface flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6 pt-6 sm:pt-12 pb-4 sm:pb-6 text-center sm:text-left">
+        <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-lg overflow-hidden shadow-2xl bg-zinc-800 flex-shrink-0">
           {playlist.coverUrl ? (
             <img src={playlist.coverUrl} alt={playlist.name} className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-zinc-800 text-zinc-500">
-              <i className="fa-solid fa-music text-5xl"></i>
+              <i className="fa-solid fa-music text-3xl sm:text-5xl"></i>
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2 min-w-0">
-          <span className="text-xs font-bold uppercase tracking-wider text-white/80">Public Playlist</span>
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight truncate">
+        <div className="flex flex-col gap-1.5 sm:gap-2 min-w-0 w-full sm:w-auto">
+          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white/80">Public Playlist</span>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight truncate">
             {playlist.name}
           </h1>
           <p className="text-xs text-spotify-textSubdued line-clamp-2">
             {playlist.description || 'Curated playlist on Web Player'}
           </p>
-          <div className="flex items-center gap-2 text-xs text-white/90 font-medium mt-1">
+          <div className="flex items-center justify-center sm:justify-start gap-2 text-xs text-white/90 font-medium mt-1">
             <span className="font-bold">{playlist.author || 'Suvradip Maity'}</span>
             <span>•</span>
             <span>{playlist.tracks.length} songs</span>
@@ -78,16 +78,16 @@ export function PlaylistView({ playlistId, onBack }: PlaylistViewProps) {
       </div>
 
       {/* Action Bar */}
-      <div className="px-6 py-4 flex items-center gap-6 bg-spotify-surface">
+      <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-6 bg-spotify-surface">
         <button
           onClick={handlePlayAll}
           disabled={playlist.tracks.length === 0}
-          className={`w-14 h-14 rounded-full bg-spotify-green text-black flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg cursor-pointer ${
+          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-spotify-green text-black flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-lg cursor-pointer ${
             playlist.tracks.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           title="Play"
         >
-          <i className={`fa-solid ${isPlaying && playlist.tracks.some(t => t.id === currentTrack?.id) ? 'fa-pause' : 'fa-play ml-1'} text-xl`}></i>
+          <i className={`fa-solid ${isPlaying && playlist.tracks.some(t => t.id === currentTrack?.id) ? 'fa-pause' : 'fa-play ml-0.5 sm:ml-1'} text-lg sm:text-xl`}></i>
         </button>
 
         {playlist.id.startsWith('playlist-') && !playlist.author?.includes('Suvradip') && (
@@ -107,15 +107,15 @@ export function PlaylistView({ playlistId, onBack }: PlaylistViewProps) {
       </div>
 
       {/* Track List Table */}
-      <div className="px-6 pb-12 flex-1">
+      <div className="px-3 sm:px-6 pb-12 flex-1">
         {playlist.tracks.length > 0 ? (
           <div className="space-y-1">
             {/* Table Header */}
-            <div className="grid grid-cols-12 px-3 py-2 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
-              <span className="col-span-1">#</span>
-              <span className="col-span-6">Title</span>
-              <span className="col-span-3">Album</span>
-              <span className="col-span-2 text-right">
+            <div className="grid grid-cols-12 px-2 sm:px-3 py-2 text-xs font-semibold text-spotify-textSubdued border-b border-zinc-800 uppercase tracking-wider">
+              <span className="col-span-1 text-center">#</span>
+              <span className="col-span-8 md:col-span-6">Title</span>
+              <span className="col-span-3 hidden md:block truncate">Album</span>
+              <span className="col-span-3 md:col-span-2 text-right pr-2">
                 <i className="fa-regular fa-clock"></i>
               </span>
             </div>
@@ -128,58 +128,58 @@ export function PlaylistView({ playlistId, onBack }: PlaylistViewProps) {
                 <div
                   key={`${track.id}-${idx}`}
                   onClick={() => handleTrackClick(track)}
-                  className={`grid grid-cols-12 items-center px-3 py-2 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
+                  className={`grid grid-cols-12 items-center px-2 sm:px-3 py-2 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                     isCurrent ? 'bg-spotify-elevated' : ''
                   }`}
                 >
                   {/* Index / Play Icon */}
-                  <div className="col-span-1 text-spotify-textSubdued">
-                    <span className="group-hover:hidden">{idx + 1}</span>
+                  <div className="col-span-1 text-spotify-textSubdued text-center">
+                    <span className="group-hover:hidden font-mono">{idx + 1}</span>
                     <span className="hidden group-hover:inline-block text-white">
                       <i className={`fa-solid ${isCurrent && isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
                     </span>
                   </div>
 
                   {/* Title & Artist */}
-                  <div className="col-span-6 flex items-center gap-3 min-w-0 pr-2">
+                  <div className="col-span-8 md:col-span-6 flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
                     <img
                       src={track.artworkUrl || 'https://via.placeholder.com/40'}
                       alt={track.title}
-                      className="w-10 h-10 rounded object-cover flex-shrink-0"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded object-cover flex-shrink-0"
                     />
                     <div className="min-w-0">
-                      <p className={`font-semibold truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
+                      <p className={`font-semibold text-xs sm:text-sm truncate ${isCurrent ? 'text-spotify-green' : 'text-white'}`}>
                         {track.title}
                       </p>
-                      <p className="text-spotify-textSubdued truncate">
+                      <p className="text-[11px] sm:text-xs text-spotify-textSubdued truncate">
                         {track.artistName}
                       </p>
                     </div>
                   </div>
 
                   {/* Album */}
-                  <div className="col-span-3 text-spotify-textSubdued truncate pr-2">
+                  <div className="col-span-3 hidden md:block text-spotify-textSubdued truncate pr-2">
                     {track.albumName || 'Single'}
                   </div>
 
                   {/* Duration & Favorite */}
-                  <div className="col-span-2 flex items-center justify-end gap-3 text-spotify-textSubdued">
+                  <div className="col-span-3 md:col-span-2 flex items-center justify-end gap-2 sm:gap-3 text-spotify-textSubdued">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleFavorite(track);
                       }}
-                      className="hover:text-white cursor-pointer"
+                      className="hover:text-white cursor-pointer p-1"
                     >
-                      <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-0 group-hover:opacity-100'}`}></i>
+                      <i className={`text-sm ${isFav ? 'fa-solid fa-heart text-spotify-green' : 'fa-regular fa-heart opacity-70 sm:opacity-0 sm:group-hover:opacity-100'}`}></i>
                     </button>
-                    <span className="font-mono">{formatTime(track.duration || 180)}</span>
+                    <span className="font-mono pr-1">{formatTime(track.duration || 180)}</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         removeTrackFromPlaylist(playlist.id, track.id);
                       }}
-                      className="hover:text-red-400 opacity-0 group-hover:opacity-100 p-1 cursor-pointer"
+                      className="hover:text-red-400 opacity-70 sm:opacity-0 sm:group-hover:opacity-100 p-1 cursor-pointer"
                       title="Remove from playlist"
                     >
                       <i className="fa-solid fa-xmark"></i>

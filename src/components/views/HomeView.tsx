@@ -14,7 +14,11 @@ export function HomeView({ setActiveView }: HomeViewProps) {
   const { playTrack, currentTrack, isPlaying, togglePlay } = useAudioPlayer();
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [youtubeTrending, setYoutubeTrending] = useState<Track[]>([]);
-  const recentHistory = getStoredHistory();
+  const [recentHistory, setRecentHistory] = useState<Track[]>([]);
+
+  useEffect(() => {
+    setRecentHistory(getStoredHistory());
+  }, [currentTrack]);
 
   useEffect(() => {
     fetch('/api/music/trending')

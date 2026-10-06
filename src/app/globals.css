@@ -65,3 +65,20 @@ body {
 .pulse-glow {
   animation: pulseGlow 2s infinite ease-in-out;
 }
+
+/* Dedicated track card carousel sizing for reliable responsive presentation */
+.track-card-carousel-item {
+  width: 165px;
+  min-width: 165px;
+  max-width: 165px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .track-card-carousel-item {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    flex-shrink: 0;
+  }
+}

@@ -495,12 +495,12 @@ export function HomeView({ setActiveView }: HomeViewProps) {
       <div
         key={track.id}
         onClick={() => handlePlayOrPauseTrack(track, contextTracks)}
-        className={`bg-spotify-card hover:bg-spotify-cardHover p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border ${
+        className={`bg-spotify-card hover:bg-spotify-cardHover p-2.5 sm:p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border ${
           isTrackActive ? 'border-spotify-green/60 shadow-lg shadow-spotify-green/10' : 'border-transparent hover:border-zinc-800/80 shadow-md'
         }`}
       >
         {/* Artwork with YouTube Badge and Play Overlay */}
-        <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+        <div className="relative w-full aspect-square rounded-md overflow-hidden mb-2 bg-zinc-800 shadow-lg">
           <img
             alt={track.title}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
@@ -514,51 +514,51 @@ export function HomeView({ setActiveView }: HomeViewProps) {
             loading="lazy"
           />
           {/* YouTube Tag */}
-          <div className="absolute top-2 left-2 text-red-500 text-xs drop-shadow bg-black/70 px-1.5 py-0.5 rounded flex items-center gap-1 backdrop-blur-sm">
+          <div className="absolute top-1.5 left-1.5 text-red-500 text-xs drop-shadow bg-black/70 px-1.5 py-0.5 rounded flex items-center gap-1 backdrop-blur-sm">
             <i className="fa-brands fa-youtube"></i>
             <span className="text-[10px] text-white font-semibold">YT</span>
           </div>
 
           {/* Equalizer animation when playing */}
           {isTrackActive && isPlaying && (
-            <div className="absolute top-2 right-2 bg-black/80 px-1.5 py-1 rounded backdrop-blur-sm flex items-center gap-0.5">
-              <span className="w-1 h-3 bg-spotify-green animate-pulse rounded-full"></span>
-              <span className="w-1 h-4 bg-spotify-green animate-bounce rounded-full"></span>
+            <div className="absolute top-1.5 right-1.5 bg-black/80 px-1.5 py-1 rounded backdrop-blur-sm flex items-center gap-0.5">
+              <span className="w-1 h-2.5 bg-spotify-green animate-pulse rounded-full"></span>
+              <span className="w-1 h-3.5 bg-spotify-green animate-bounce rounded-full"></span>
               <span className="w-1 h-2 bg-spotify-green animate-pulse rounded-full"></span>
             </div>
           )}
 
           {/* Duration Badge */}
           {Boolean(track.duration && track.duration > 0) && (
-            <div className="absolute bottom-2 left-2 text-[10px] text-white/90 font-medium bg-black/70 px-1.5 py-0.5 rounded backdrop-blur-sm">
+            <div className="absolute bottom-1.5 left-1.5 text-[9px] sm:text-[10px] text-white/90 font-medium bg-black/70 px-1.5 py-0.5 rounded backdrop-blur-sm">
               {formatTime(track.duration || 0)}
             </div>
           )}
 
           {/* Play Button Overlay */}
-          <div className={`absolute right-2 bottom-2 transition-all duration-300 drop-shadow-xl ${
+          <div className={`absolute right-1.5 bottom-1.5 transition-all duration-300 drop-shadow-xl ${
             isTrackActive && isPlaying
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'
           }`}>
-            <div className="w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95 transition">
-              <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95 transition">
+              <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-xs`}></i>
             </div>
           </div>
         </div>
 
         {/* Track Title */}
-        <h3 className={`font-bold text-sm truncate mb-0.5 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`} title={track.title}>
+        <h3 className={`font-semibold text-xs sm:text-sm truncate mb-0.5 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`} title={track.title}>
           {track.title}
         </h3>
 
         {/* Artist Name */}
-        <p className="text-xs text-spotify-textSubdued truncate leading-snug" title={track.artistName}>
+        <p className="text-[11px] sm:text-xs text-spotify-textSubdued truncate leading-snug" title={track.artistName}>
           {track.artistName}
         </p>
 
         {/* Album / Channel source */}
-        <span className="text-[11px] text-zinc-500 truncate mt-1">
+        <span className="text-[10px] sm:text-[11px] text-zinc-500 truncate mt-0.5 block">
           {track.albumName || 'YouTube Music'}
         </span>
       </div>
@@ -638,7 +638,7 @@ export function HomeView({ setActiveView }: HomeViewProps) {
             className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 pt-1 -mx-1 px-1"
           >
             {tracks.map((track) => (
-              <div key={track.id} className="min-w-[140px] w-[140px] sm:min-w-[180px] sm:w-[180px] flex-shrink-0">
+              <div key={track.id} className="track-card-carousel-item">
                 {renderTrackCard(track, tracks)}
               </div>
             ))}
@@ -713,38 +713,12 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                 Show all
               </button>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-              {recentHistory.slice(0, 5).map((track) => {
-                const isTrackActive =
-                  currentTrack?.id === track.id ||
-                  (currentTrack?.youtubeId && currentTrack?.youtubeId === track.youtubeId);
-                return (
-                  <div
-                    key={`hist-${track.id}`}
-                    onClick={() => handlePlayOrPauseTrack(track, recentHistory)}
-                    className="bg-spotify-card hover:bg-spotify-cardHover p-2.5 sm:p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border border-transparent hover:border-zinc-800"
-                  >
-                    <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                      <img
-                        alt={track.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        src={track.artworkUrl || 'https://via.placeholder.com/200'}
-                      />
-                      <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                        <div className="w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                          <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                        </div>
-                      </div>
-                    </div>
-                    <h3 className={`font-bold text-sm truncate mb-0.5 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`}>
-                      {track.title}
-                    </h3>
-                    <p className="text-xs text-spotify-textSubdued truncate leading-snug">
-                      {track.artistName}
-                    </p>
-                  </div>
-                );
-              })}
+            <div className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 pt-1 -mx-1 px-1">
+              {recentHistory.slice(0, 10).map((track) => (
+                <div key={`hist-${track.id}`} className="track-card-carousel-item">
+                  {renderTrackCard(track, recentHistory)}
+                </div>
+              ))}
             </div>
           </section>
         )}

@@ -50,9 +50,15 @@ export function TopHeader({
           title="My Music"
         >
           <img
-            src="/My%20Music%20logo.webp"
+            src="/logo.webp"
             alt="My Music"
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover group-hover:scale-105 transition shadow-sm"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (!target.src.includes('favicon.ico')) {
+                target.src = '/favicon.ico';
+              }
+            }}
           />
           <span className="font-bold text-sm tracking-tight text-white hidden sm:inline">My Music</span>
         </button>

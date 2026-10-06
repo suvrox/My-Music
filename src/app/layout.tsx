@@ -14,18 +14,17 @@ export const metadata: Metadata = {
   description: 'Music for everyone. Discover, stream and organize your favorite songs with no login required.',
   icons: {
     icon: [
-      { url: '/My%20Music%20logo.webp', type: 'image/webp' },
       { url: '/logo.webp', type: 'image/webp' },
       { url: '/favicon.ico' },
     ],
-    shortcut: '/My%20Music%20logo.webp',
-    apple: '/My%20Music%20logo.webp',
+    shortcut: '/logo.webp',
+    apple: '/logo.webp',
   },
   openGraph: {
     title: 'My Music - Web Player',
     description: 'Music for everyone. Free, responsive legal music streaming web app.',
     siteName: 'My Music Web Player',
-    images: [{ url: '/My%20Music%20logo.webp' }],
+    images: [{ url: '/logo.webp' }],
     type: 'website',
   },
 };
@@ -38,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <head>
-        <link rel="icon" type="image/webp" href="/My%20Music%20logo.webp" />
-        <link rel="shortcut icon" href="/My%20Music%20logo.webp" />
-        <link rel="apple-touch-icon" href="/My%20Music%20logo.webp" />
+        <link rel="icon" type="image/webp" href="/logo.webp" />
+        <link rel="shortcut icon" href="/logo.webp" />
+        <link rel="apple-touch-icon" href="/logo.webp" />
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           rel="stylesheet"

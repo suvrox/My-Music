@@ -32,9 +32,15 @@ export function LeftSidebar({ activeView, setActiveView }: LeftSidebarProps) {
           className="flex items-center gap-2.5 hover:text-white transition font-bold text-sm cursor-pointer group"
         >
           <img
-            src="/My%20Music%20logo.webp"
+            src="/logo.webp"
             alt="My Music"
             className="w-5 h-5 rounded-full object-cover group-hover:scale-105 transition"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (!target.src.includes('favicon.ico')) {
+                target.src = '/favicon.ico';
+              }
+            }}
           />
           <span className="text-white text-base">Your Library</span>
         </button>

@@ -10,7 +10,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-ncs-release',
     albumName: 'Fearless Funk (Single)',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5-A5tvDVNA1zUz-P2fNxAW00Db5ym3CfrOJFQk-k2P77vTWqQjvEKAKGvywh3CHuCVi1INiU6cjJSpAx91bBTR7RLLNO6MO9Y5XVDzegiCf3TViS5VLvs5-CQAt1HkSz0btc1w6du8wzdewpqOpnkX8fJxL-ehZh-bIhAt-EVDpBVRKyEt-LFtKPb_W45DfYMBoFgjFDKWIL2DlQ0d8O7mSBiiePUCyRzx6qXsIjVLnk98ger4Rha7A',
-    audioUrl: 'https://actions.google.com/sounds/v1/science_fiction/deep_space_drive.ogg', // reliable royalty-free audio
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     duration: 138, // 2:18 matching Stitch
     genre: 'Electronic / Phonk',
     source: 'NCS Royalty-Free Catalog'
@@ -23,7 +23,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-bad-newz',
     albumName: 'Bad Newz',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA',
-    audioUrl: 'https://actions.google.com/sounds/v1/ambiences/carnival_crowd_and_rides.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     duration: 204,
     genre: 'Punjabi Pop',
     source: 'Trending India'
@@ -36,7 +36,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-devara',
     albumName: 'Devara Part 1',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzoXdIy5kfJYX_DilbwKkzBdT5QMCYwB3-RBVcNsTFcB7t9mpgW0iXB9sqq-EvBpNy4ZRqqf0rTcd39GIsLdYZOmVLOgAmVCyhL67c_8Z-Sys1iqHypd4BVH_UJxidnDfLuOgi18aSZvTwcdA4s99deQda3QjY3nRDGXF2c9bIxRAiadSdQZUh5PV-Dg7WS_SxYTNKx75eUYUxNmFecFf2AYjd_RB7Dwbo4-Q_Rv04XjHp60mNzzlH0A',
-    audioUrl: 'https://actions.google.com/sounds/v1/foley/swoosh_transition_medium.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     duration: 220,
     genre: 'Tamil Hits',
     source: 'Trending Tamil'
@@ -49,7 +49,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-laapataa-ladies',
     albumName: 'Laapataa Ladies',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw',
-    audioUrl: 'https://actions.google.com/sounds/v1/water/gentle_rain_on_pavement.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     duration: 172,
     genre: 'Bollywood & Chill',
     source: 'Bollywood & Chill'
@@ -62,7 +62,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-happy-vibes',
     albumName: 'Happy Vibes Vol. 1',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCm0Wvim7hrP_Ix-Thx7IGW3U-rJxlanKQrxUX6OjQJk0qPzKbCS4DYYEgiG5vVgAbhWL6hw5MC7UnxJnlIvcayJj7Xl9JgsLOYwDrSQwkB5m7J1Hm43pnbNrQPLrmc2xcLDP2bgdV5oQtfKg8n-zyqmPDNNZlutq4auv8Tm3qkuziIgprzK7I9jsi2P-O9LDL1u5uqwc_FLn0ZGMmOxFYBzVjohOFbcYd0Luk6ppN2u_ieXKuLCz8Npw',
-    audioUrl: 'https://actions.google.com/sounds/v1/water/lake_waves_small_dock.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
     duration: 195,
     genre: 'Indie Acoustic',
     source: 'Happy Vibes'
@@ -75,7 +75,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-pov-in-love',
     albumName: "pov: you're in love",
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuArPqqhxGNQuAkPXNQ7Qo1IyjZGCe-6UY5BkAdZB840epb7OZ-A-1-PDInctHf_T7lMfoqdhuRB1oUop-bONhFIca7coVES6ug_4vzCnbBCqyJQIo-Wl29YnFx0jy5hg-JEmsqdKqrzT48krptPwCB-AxuaGnaabPDpKcMKXGdKibuwto-_YW8627ehGWTCEkkKqnrlpkFECUxblfTCJAUaCZKZih8iO4l3BfgsT6CTzIrEmIZEfqaiTg',
-    audioUrl: 'https://actions.google.com/sounds/v1/weather/light_thunder_storm_and_rain.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
     duration: 184,
     genre: 'Dream Pop / Romance',
     source: "pov: you're in love"
@@ -88,7 +88,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-ipop-hits',
     albumName: 'I-Pop Superhits 2026',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAopyW1fXaxyQ6fqqM6Mu--hATPxza6P9F25-XDm248qRcaYaO_Rk5h-jBQuwDdn4Sjvup5V-uxp69JVf4H-r2_0cw4iE1bc5tsvlDBLWrUQLV0CGvREMXRJyMt9MMr-13SEceLMsdvHb-0OkB5qkRyQ_VhbHiA7RxeBjH2TdVEa68FCX6nZX-cXVQVPDx-DIGbb9YzeFQC97W84sZXg80lxhaUyqrDzvO8bdvNV11puqLD-5-y2tCUVg',
-    audioUrl: 'https://actions.google.com/sounds/v1/transportation/subway_interior.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
     duration: 210,
     genre: 'Indian Pop',
     source: 'I-Pop'
@@ -101,7 +101,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-jigra',
     albumName: 'Jigra Soundtracks',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXp2Y5r7pWKez5A7kdM13GjwX74bbXtPJbLKDFI7pLaLo7UNF6F1h0L2LW3FsINJQ66qE1Vf8ahdCGcTN6PZsjNR8XvcHJD96VMe0tbqvL1zlUOF56rit2OiEqd2FBtnbwtCJFJNvIc_6VFlNYZGDxuGoeo5h9PD3uRerWz7H5_5KvPdG3uFjue5Foyoj6m2n8baxuPPz_vx79Eynajy90ECk5SsK0e4rXUlVkk0wnBjWrl0ZQE_j8Lg',
-    audioUrl: 'https://actions.google.com/sounds/v1/ambiences/outdoor_market_mumbai.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     duration: 198,
     genre: 'Hindi Hits',
     source: 'Hot Hits Hindi'
@@ -114,7 +114,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-gta-soundtrack',
     albumName: 'Grand Theft Auto Official Playlist',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCnaAPj5qow9H9cawa408P83Lle6lbSm0Pm0Po1JEaS61p1dLP9WIVDmczbO9ueJffwozyUbsHi6qyHu62GlZgQgZ44FiK9xjTUhrAdUm9YEP3Sr0Z71lyIfx_8HeVXGFrODbdNgHhh4PytdqiASU3e0WG2-SRO1FmOWA6vXv1jl4SE-BES1tyzEnujvCV84vNF3tHpzZvBRgRHXzuO6WPlV4Tvut01hSA_qn7-5f9YKBVPD_q5gjZNlg',
-    audioUrl: 'https://actions.google.com/sounds/v1/science_fiction/force_field_hum.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     duration: 245,
     genre: 'Synthwave / Retro',
     source: 'Rockstar Games'
@@ -127,7 +127,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-phonk-drift',
     albumName: 'the beat of your drift (PHONK)',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0q7PqQYMt1bwVjLAxGuytTU42EM3iczCuwNsjzeTuVl84Nib7YyGP3ZTuT4FgNXyNS6bdk3_9AWtGkHrbPiGpQQZ2NjhNtHM34tZymmXUa13ZFENmmejd-VCLIF6tkRGWY57D97Un5pdLb1_-aVWaA4NKXUCarsnJczIoDZf3Uax8YUBhMiNa1TMErMUX8zbfu2ms0aeFJkFdaxiDhVnVt_wxKoTnqLCtnECB5Xc_LbWvaJrMQKHpEQ',
-    audioUrl: 'https://actions.google.com/sounds/v1/science_fiction/teleport_device_loop.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     duration: 152,
     genre: 'Drift Phonk',
     source: 'PHONK Records'
@@ -140,7 +140,7 @@ export const INITIAL_TRACKS: Track[] = [
     albumId: 'album-dreamy-chill',
     albumName: 'Dreamy Chill Lounge',
     artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAhutN_e5d-q8qaz5HJax0urT6lq-Soxx1coRaITVv7_o0uyDlDSCW2cfSMIdVgGNp20tR2igJEoY22Ue6v4WKmRVvPQ5jiythYoy7v6TuqGPNLJjXjB6YatWQNHbsQNQMGPkuiBvutks7p1JMpGjNNdQMB_z9Z5BkMJuAhKq8YeAayWKSVQk6PPbOJMOYS-KZObQJ9-lZO-BJzQBmqFnUKFpUJem5upVdN5f3gSo6LHqy_2Cp3M6UU4g',
-    audioUrl: 'https://actions.google.com/sounds/v1/water/creek_water_trickle.ogg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     duration: 178,
     genre: 'Ambient Chill',
     source: 'Dreamy Chill'

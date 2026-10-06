@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAudioPlayer } from '@/context/AudioPlayerContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { formatTime } from '@/lib/utils';
@@ -31,24 +31,73 @@ export function BottomPlayerBar() {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const volumeBarRef = useRef<HTMLDivElement>(null);
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  // Dragging states for smooth slider interaction
+  const [isDraggingSeek, setIsDraggingSeek] = useState(false);
+  const [dragSeekTime, setDragSeekTime] = useState(0);
+
+  const activeCurrentTime = isDraggingSeek ? dragSeekTime : currentTime;
+  const progressPercent = duration > 0 ? (activeCurrentTime / duration) * 100 : 0;
   const volumePercent = isMuted ? 0 : volume * 100;
   const isCurrentFav = currentTrack ? isFavorite(currentTrack.id) : false;
 
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Pointer drag handler for Progress Scrubber
+  const handleSeekPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!progressBarRef.current || duration <= 0) return;
-    const rect = progressBarRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-    seek(ratio * duration);
+    setIsDraggingSeek(true);
+
+    const calcTime = (clientX: number) => {
+      if (!progressBarRef.current) return 0;
+      const rect = progressBarRef.current.getBoundingClientRect();
+      const clickX = clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      const targetTime = ratio * duration;
+      setDragSeekTime(targetTime);
+      return targetTime;
+    };
+
+    calcTime(e.clientX);
+
+    const onPointerMove = (ev: PointerEvent) => {
+      calcTime(ev.clientX);
+    };
+
+    const onPointerUp = (ev: PointerEvent) => {
+      const finalTime = calcTime(ev.clientX);
+      seek(finalTime);
+      setIsDraggingSeek(false);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
   };
 
-  const handleVolumeClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Pointer drag handler for Volume Bar
+  const handleVolumePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!volumeBarRef.current) return;
-    const rect = volumeBarRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-    setVolume(ratio);
+
+    const calcVolume = (clientX: number) => {
+      if (!volumeBarRef.current) return;
+      const rect = volumeBarRef.current.getBoundingClientRect();
+      const clickX = clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      setVolume(ratio);
+    };
+
+    calcVolume(e.clientX);
+
+    const onPointerMove = (ev: PointerEvent) => {
+      calcVolume(ev.clientX);
+    };
+
+    const onPointerUp = () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    };
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
   };
 
   const handleFullScreen = () => {
@@ -72,7 +121,7 @@ export function BottomPlayerBar() {
             className="w-full h-full object-cover filter contrast-125 brightness-75"
             src={
               currentTrack?.artworkUrl ||
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuAzWdoH6WxNHi1JSIbUqB4F-my1SN3_Fzv9LeJRNPwLDcazlunj7VV7g1Bfo38Q89V1wEKvR4ZJQROfNnQn5sMHvkGvcy3MgcpDO4kHyIhXeHRBY7-i6pjU_K7Q5r9NCzwDTB3U0VH17D6j0ZY2cUvy9QxYZX_rMjKzG817To6Nicf2bPEbY4hyokAZlE2_JH9Q9HOnCenWIA7M3nPdT2ppc2RBXirnVqjJyYdag3mdRteK8wf1YK6PpA'
+              'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg'
             }
           />
         </div>
@@ -100,22 +149,22 @@ export function BottomPlayerBar() {
           {/* Shuffle Button */}
           <button
             onClick={toggleShuffle}
-            className={`transition text-xs cursor-pointer relative ${
-              shuffle ? 'text-spotify-green' : 'hover:text-white'
+            className={`transition text-xs cursor-pointer relative p-1.5 ${
+              shuffle ? 'text-spotify-green hover:scale-105' : 'text-spotify-textSubdued hover:text-white'
             }`}
             title={shuffle ? 'Disable shuffle' : 'Enable shuffle'}
           >
             <i className="fa-solid fa-shuffle"></i>
             {shuffle && (
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-spotify-green rounded-full"></span>
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-spotify-green rounded-full"></span>
             )}
           </button>
 
           {/* Previous Button */}
           <button
             onClick={playPrev}
-            className="hover:text-white transition text-sm cursor-pointer"
-            title="Previous"
+            className="hover:text-white transition text-sm cursor-pointer p-1"
+            title="Previous (or restart song)"
           >
             <i className="fa-solid fa-backward-step"></i>
           </button>
@@ -123,7 +172,7 @@ export function BottomPlayerBar() {
           {/* Circular Play / Pause */}
           <button
             onClick={togglePlay}
-            className="w-8 h-8 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition cursor-pointer shadow"
+            className="w-8 h-8 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition cursor-pointer shadow hover:bg-zinc-200"
             title={isPlaying ? 'Pause' : 'Play'}
           >
             <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-xs`}></i>
@@ -132,8 +181,8 @@ export function BottomPlayerBar() {
           {/* Next Button */}
           <button
             onClick={playNext}
-            className="hover:text-white transition text-sm cursor-pointer"
-            title="Next"
+            className="hover:text-white transition text-sm cursor-pointer p-1"
+            title="Next song"
           >
             <i className="fa-solid fa-forward-step"></i>
           </button>
@@ -141,50 +190,52 @@ export function BottomPlayerBar() {
           {/* Repeat Button */}
           <button
             onClick={cycleRepeat}
-            className={`transition text-xs cursor-pointer relative ${
-              repeat !== 'off' ? 'text-spotify-green' : 'hover:text-white'
+            className={`transition text-xs cursor-pointer relative p-1.5 ${
+              repeat !== 'off' ? 'text-spotify-green hover:scale-105' : 'text-spotify-textSubdued hover:text-white'
             }`}
-            title={`Repeat mode: ${repeat.toUpperCase()}`}
+            title={`Repeat mode: ${repeat === 'off' ? 'Off' : repeat === 'all' ? 'Repeat all' : 'Repeat one'}`}
           >
             <i className="fa-solid fa-repeat"></i>
             {repeat === 'one' && (
-              <span className="absolute -top-1 -right-1 text-[9px] font-bold">1</span>
+              <span className="absolute top-0 right-0 text-[8px] font-extrabold leading-none bg-spotify-green text-black rounded-full px-0.5">
+                1
+              </span>
             )}
             {repeat !== 'off' && (
-              <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-spotify-green rounded-full"></span>
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-spotify-green rounded-full"></span>
             )}
           </button>
         </div>
 
-        {/* Scrubber Seek Bar */}
+        {/* Scrubber Seek Bar with Drag Support */}
         <div className="w-full flex items-center gap-2 text-[11px] text-spotify-textSubdued font-mono">
-          <span>{formatTime(currentTime)}</span>
+          <span className="w-10 text-right">{formatTime(activeCurrentTime)}</span>
           {/* Progress track container */}
           <div
             ref={progressBarRef}
-            onClick={handleProgressClick}
-            className="flex-1 h-1 bg-zinc-800 rounded-full relative group cursor-pointer py-1 -my-1"
+            onPointerDown={handleSeekPointerDown}
+            className="flex-1 h-3 flex items-center relative group cursor-pointer touch-none"
           >
-            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden relative">
               <div
                 className="h-full bg-white group-hover:bg-spotify-green rounded-full relative transition-all duration-75"
                 style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
               ></div>
             </div>
-            {/* Hover thumb */}
+            {/* Thumb */}
             <div
               className="hidden group-hover:block absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow pointer-events-none"
               style={{ left: `calc(${Math.min(100, Math.max(0, progressPercent))}% - 6px)` }}
             ></div>
           </div>
-          <span>{formatTime(duration)}</span>
+          <span className="w-10 text-left">{formatTime(duration)}</span>
         </div>
       </div>
 
       {/* Right Section: Volume and Device Controls */}
       <div className="flex items-center justify-end gap-3 text-spotify-textSubdued w-[30%] min-w-[200px]">
         <button
-          className="hover:text-white transition text-xs cursor-pointer"
+          className="hover:text-white transition text-xs cursor-pointer p-1"
           title="Lyrics"
         >
           <i className="fa-solid fa-microphone"></i>
@@ -192,7 +243,7 @@ export function BottomPlayerBar() {
 
         <button
           onClick={toggleQueue}
-          className={`transition text-xs cursor-pointer ${
+          className={`transition text-xs cursor-pointer p-1 ${
             isQueueOpen ? 'text-spotify-green' : 'hover:text-white'
           }`}
           title="Queue"
@@ -201,17 +252,17 @@ export function BottomPlayerBar() {
         </button>
 
         <button
-          className="hover:text-white transition text-xs cursor-pointer"
+          className="hover:text-white transition text-xs cursor-pointer p-1"
           title="Connect to a device"
         >
           <i className="fa-solid fa-computer"></i>
         </button>
 
-        {/* Volume Slider */}
+        {/* Volume Slider with Drag Support */}
         <div className="flex items-center gap-1.5 group">
           <button
             onClick={toggleMute}
-            className="hover:text-white transition text-xs cursor-pointer"
+            className="hover:text-white transition text-xs cursor-pointer p-1"
             title={isMuted ? 'Unmute' : 'Mute'}
           >
             <i
@@ -219,17 +270,17 @@ export function BottomPlayerBar() {
                 isMuted || volume === 0
                   ? 'fa-volume-xmark text-red-400'
                   : volume < 0.5
-                  ? 'fa-volume-low'
-                  : 'fa-volume-high'
+                  ? 'fa-volume-low text-white'
+                  : 'fa-volume-high text-white'
               }`}
             ></i>
           </button>
           <div
             ref={volumeBarRef}
-            onClick={handleVolumeClick}
-            className="w-20 h-1 bg-zinc-800 rounded-full relative cursor-pointer py-1 -my-1"
+            onPointerDown={handleVolumePointerDown}
+            className="w-20 h-3 flex items-center relative cursor-pointer group touch-none"
           >
-            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
+            <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden relative">
               <div
                 className="h-full bg-white group-hover:bg-spotify-green rounded-full relative transition-all duration-75"
                 style={{ width: `${Math.min(100, Math.max(0, volumePercent))}%` }}
@@ -243,7 +294,7 @@ export function BottomPlayerBar() {
         </div>
 
         <button
-          className="hover:text-white transition text-xs cursor-pointer"
+          className="hover:text-white transition text-xs cursor-pointer p-1"
           title="Miniplayer"
         >
           <i className="fa-solid fa-film"></i>
@@ -251,7 +302,7 @@ export function BottomPlayerBar() {
 
         <button
           onClick={handleFullScreen}
-          className="hover:text-white transition text-xs cursor-pointer"
+          className="hover:text-white transition text-xs cursor-pointer p-1"
           title="Full screen"
         >
           <i className="fa-solid fa-expand"></i>

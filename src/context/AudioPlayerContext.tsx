@@ -312,6 +312,21 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     audio.addEventListener('loadedmetadata', handleAudioLoadedMetadata);
     audio.addEventListener('ended', handleAudioEnded);
 
+    // Suppress cross-origin frame access SecurityErrors caused by YouTube iframe postMessage inspections
+    const handleSecurityError = (event: ErrorEvent) => {
+      if (
+        event.message &&
+        (event.message.includes('SecurityError') ||
+          event.message.includes('cross-origin') ||
+          event.message.includes('document'))
+      ) {
+        event.preventDefault();
+      }
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('error', handleSecurityError);
+    }
+
     // Mount YouTube player host element strictly on document.body outside of React's Virtual DOM
     let host = document.getElementById('yt-player-host');
     if (!host && typeof document !== 'undefined') {
@@ -440,6 +455,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       audio.removeEventListener('timeupdate', handleAudioTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleAudioLoadedMetadata);
       audio.removeEventListener('ended', handleAudioEnded);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('error', handleSecurityError);
+      }
       audio.pause();
       if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
     };

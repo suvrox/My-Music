@@ -1,4 +1,4 @@
-import { Track, Artist, Album, Playlist } from '@/types/music';
+  import { Track, Artist, Album, Playlist } from '@/types/music';
 import { MusicProvider } from '../types';
 
 function parseDuration(isoDuration?: string): number {
@@ -11,32 +11,110 @@ function parseDuration(isoDuration?: string): number {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
-function cleanTitle(title: string): { songTitle: string; artist: string } {
-  // Decode HTML entities
-  const decoded = title
+function decodeHtmlEntities(str: string): string {
+  if (!str) return '';
+  return str
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#x27;/g, "'")
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>');
+    .replace(/&gt;/g, '>')
+    .replace(/&#039;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+}
 
-  // Clean common video tag additions
-  const cleaned = decoded
-    .replace(/\s*[\(\[]\s*(official\s*(music\s*)?video|audio|lyric(s)?|visualizer|4k|hd|remix)\s*[\)\]]/gi, '')
+function parseMusicTrackDetails(rawTitle: string, rawChannel: string): { songTitle: string; artist: string; album: string } {
+  let title = decodeHtmlEntities(rawTitle);
+  const channel = decodeHtmlEntities(rawChannel || '')
+    .replace(/\s*-\s*Topic$/i, '')
+    .replace(/VEVO$/i, '')
     .trim();
 
-  // If title has "Artist - Song" format
-  if (cleaned.includes(' - ')) {
-    const parts = cleaned.split(' - ');
-    return {
-      artist: parts[0].trim(),
-      songTitle: parts.slice(1).join(' - ').trim()
-    };
+  // 1. Remove bracketed noise: (Official Video), [Audio], (Lyrics), (Visualizer), etc.
+  title = title
+    .replace(/[\(\[]\s*(official\s*(music\s*)?video|official\s*audio|original\s*(soundtrack|video)|lyric(al)?(\s*video)?|audio(\s*song)?|visualizer|4k|8k|hd|full\s*song|full\s*video|vertical\s*video|video\s*song|performance\s*video|dance\s*video|teaser|trailer|prod\.\s*by[^\)\]]*)\s*[\)\]]/gi, ' ')
+    .trim();
+
+  // 2. Remove promo hashtags & emoji noise
+  title = title.replace(/#[a-zA-Z0-9_]+/g, '').trim();
+  title = title.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+
+  let songTitle = title;
+  let artist = channel;
+  let album = '';
+
+  // Case A: Title in quotes at start: "Tum Hi Ho" Aashiqui 2 Full Song | Aditya Roy Kapur...
+  const quoteMatch = title.match(/^["']([^"']+)["']\s*(.*)$/);
+  if (quoteMatch) {
+    songTitle = quoteMatch[1].trim();
+    const rem = quoteMatch[2].trim();
+    if (rem.includes('|')) {
+      const parts = rem.split('|').map(s => s.trim()).filter(Boolean);
+      album = parts[0]?.replace(/\b(full\s*song|song|video|movie|soundtrack|with lyrics)\b/gi, '').trim() || songTitle;
+      artist = parts[parts.length - 1] || channel;
+    } else if (rem.includes('-')) {
+      const parts = rem.split('-').map(s => s.trim()).filter(Boolean);
+      album = parts[0] || songTitle;
+      artist = parts[parts.length - 1] || channel;
+    } else {
+      album = rem.replace(/\b(full\s*song|song|video|movie|with lyrics)\b/gi, '').trim() || songTitle;
+    }
+  }
+  // Case B: "Artist - Song Title" or "Song Title - Artist"
+  else if (title.includes(' - ')) {
+    const parts = title.split(' - ').map(s => s.trim()).filter(Boolean);
+    if (parts.length >= 2) {
+      artist = parts[0];
+      const right = parts.slice(1).join(' - ');
+      if (right.includes('|')) {
+        const sub = right.split('|').map(s => s.trim()).filter(Boolean);
+        songTitle = sub[0];
+        album = sub[1] || songTitle;
+      } else {
+        songTitle = right;
+        album = `${songTitle} (Single)`;
+      }
+    }
+  }
+  // Case C: Pipe delimited: "Song Title | Movie | Artist"
+  else if (title.includes('|')) {
+    const parts = title.split('|').map(s => s.trim()).filter(Boolean);
+    songTitle = parts[0];
+    if (parts.length >= 3) {
+      album = parts[1];
+      artist = parts[parts.length - 1];
+    } else if (parts.length === 2) {
+      artist = parts[1];
+      album = `${songTitle} (Single)`;
+    }
   }
 
+  // 3. Final cleanups of song title
+  songTitle = songTitle.replace(/\s*\|\s*.*$/, '').trim();
+  songTitle = songTitle.replace(/\b(Full Video|Official Video|Lyrics|Lyrical|Song)\b/gi, '').trim();
+  if (!songTitle) songTitle = title;
+
+  // 4. Clean known record labels if used as artist
+  const isLabel = /^(t-series|zee music|sony music|yrf|tips official|saregama|speed records|eros|geet mp3|white hill|vevo)/i.test(artist);
+  if (isLabel) {
+    const singerMatch = title.match(/\b(?:singer|by|feat\.?|ft\.?)\s*[:\-]?\s*([^|()\-]+)/i);
+    if (singerMatch) {
+      artist = singerMatch[1].trim();
+    } else if (channel && !/^(t-series|zee music|sony music|yrf|tips|saregama)/i.test(channel)) {
+      artist = channel;
+    }
+  }
+
+  artist = artist.replace(/^(t-series|zee music company|sony music india|saregama music|yrf)\s*/i, '').trim();
+  if (!artist) artist = channel || 'YouTube Artist';
+
   return {
-    songTitle: cleaned,
-    artist: ''
+    songTitle,
+    artist,
+    album: album || `${songTitle} (Single)`
   };
 }
 
@@ -57,8 +135,8 @@ export class YouTubeMusicProvider implements MusicProvider {
     }
 
     try {
-      // 1. Search for video IDs in Music category (10)
-      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&maxResults=15&q=${encodeURIComponent(q)}&key=${this.apiKey}`;
+      // 1. Search for video IDs with up to 25 results
+      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&q=${encodeURIComponent(q)}&key=${this.apiKey}`;
       const searchRes = await fetch(searchUrl);
       if (!searchRes.ok) {
         console.error('YouTube API search error:', searchRes.status, await searchRes.text());
@@ -81,27 +159,36 @@ export class YouTubeMusicProvider implements MusicProvider {
       }
 
       const detailsData = await detailsRes.json();
-      return (detailsData.items || []).map((item: any) => {
+      const tracks: Track[] = (detailsData.items || []).map((item: any) => {
         const rawTitle = item.snippet?.title || '';
-        const { songTitle, artist } = cleanTitle(rawTitle);
         const channelTitle = item.snippet?.channelTitle || 'YouTube Artist';
+        const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
         const duration = parseDuration(item.contentDetails?.duration);
         const thumbnails = item.snippet?.thumbnails;
-        const artworkUrl = thumbnails?.maxres?.url || thumbnails?.high?.url || thumbnails?.medium?.url;
+        const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
 
         return {
           id: `yt-${item.id}`,
           youtubeId: item.id,
-          title: songTitle || rawTitle,
+          title: songTitle,
           artistId: `artist-${item.snippet?.channelId}`,
-          artistName: artist || channelTitle,
+          artistName: artist,
           albumId: `album-${item.id}`,
-          albumName: `${songTitle || rawTitle} (Single)`,
+          albumName: album,
           artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
           duration,
           genre: 'YouTube Music',
           source: 'YouTube API'
         };
+      });
+
+      // Prioritize playable songs (1 to 10 minutes) before multi-hour mix compilations
+      return tracks.sort((a, b) => {
+        const aIsSong = (a.duration || 0) >= 60 && (a.duration || 0) <= 600;
+        const bIsSong = (b.duration || 0) >= 60 && (b.duration || 0) <= 600;
+        if (aIsSong && !bIsSong) return -1;
+        if (!aIsSong && bIsSong) return 1;
+        return 0;
       });
     } catch (err) {
       console.error('Error fetching from YouTube API:', err);
@@ -115,7 +202,7 @@ export class YouTubeMusicProvider implements MusicProvider {
     }
 
     try {
-      const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&videoCategoryId=10&maxResults=15&key=${this.apiKey}`;
+      const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&videoCategoryId=10&maxResults=25&key=${this.apiKey}`;
       const res = await fetch(url);
       if (!res.ok) {
         console.error('YouTube API trending error:', res.status, await res.text());
@@ -125,20 +212,20 @@ export class YouTubeMusicProvider implements MusicProvider {
       const data = await res.json();
       return (data.items || []).map((item: any) => {
         const rawTitle = item.snippet?.title || '';
-        const { songTitle, artist } = cleanTitle(rawTitle);
         const channelTitle = item.snippet?.channelTitle || 'YouTube Music';
+        const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
         const duration = parseDuration(item.contentDetails?.duration);
         const thumbnails = item.snippet?.thumbnails;
-        const artworkUrl = thumbnails?.maxres?.url || thumbnails?.high?.url || thumbnails?.medium?.url;
+        const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
 
         return {
           id: `yt-${item.id}`,
           youtubeId: item.id,
-          title: songTitle || rawTitle,
+          title: songTitle,
           artistId: `artist-${item.snippet?.channelId}`,
-          artistName: artist || channelTitle,
+          artistName: artist,
           albumId: `album-${item.id}`,
-          albumName: `${songTitle || rawTitle} (Single)`,
+          albumName: album,
           artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
           duration,
           genre: 'YouTube Trending',
@@ -167,26 +254,27 @@ export class YouTubeMusicProvider implements MusicProvider {
       if (!item) return null;
 
       const rawTitle = item.snippet?.title || '';
-      const { songTitle, artist } = cleanTitle(rawTitle);
       const channelTitle = item.snippet?.channelTitle || 'YouTube Artist';
+      const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
       const duration = parseDuration(item.contentDetails?.duration);
       const thumbnails = item.snippet?.thumbnails;
-      const artworkUrl = thumbnails?.maxres?.url || thumbnails?.high?.url || thumbnails?.medium?.url;
+      const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
 
       return {
         id: `yt-${item.id}`,
         youtubeId: item.id,
-        title: songTitle || rawTitle,
+        title: songTitle,
         artistId: `artist-${item.snippet?.channelId}`,
-        artistName: artist || channelTitle,
+        artistName: artist,
         albumId: `album-${item.id}`,
-        albumName: `${songTitle || rawTitle} (Single)`,
+        albumName: album,
         artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
         duration,
         genre: 'YouTube Music',
         source: 'YouTube API'
       };
-    } catch {
+    } catch (err) {
+      console.error('Error fetching track from YouTube API:', err);
       return null;
     }
   }

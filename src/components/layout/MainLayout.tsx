@@ -70,7 +70,11 @@ export function MainLayout() {
         <main className="flex-1 bg-spotify-surface rounded-lg overflow-hidden relative flex flex-col">
           {activeView.type === 'home' && <HomeView setActiveView={setActiveView} />}
           {activeView.type === 'search' && (
-            <SearchView searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            <SearchView
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setActiveView={setActiveView}
+            />
           )}
           {activeView.type === 'favorites' && <FavoritesView />}
           {activeView.type === 'history' && <HistoryView />}

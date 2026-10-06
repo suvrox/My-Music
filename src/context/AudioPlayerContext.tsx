@@ -151,6 +151,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const pendingTrackRef = useRef<Track | null>(null);
   const pendingPlayRef = useRef<boolean>(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const consecutiveErrorsRef = useRef<number>(0);
+  const errorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Direct playback execution
   const playTrackDirect = useCallback((track: Track) => {
@@ -361,12 +363,15 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
           height: '200',
           width: '200',
           videoId: currentTrackRef.current?.youtubeId || INITIAL_YOUTUBE_TRACKS[0]?.youtubeId || 'cMg8KaMdDYo',
+          host: 'https://www.youtube-nocookie.com',
           playerVars: {
             autoplay: 0,
             controls: 0,
             disablekb: 1,
             fs: 0,
             playsinline: 1,
+            enablejsapi: 1,
+            widget_referrer: typeof window !== 'undefined' ? window.location.origin : '',
             origin: typeof window !== 'undefined' ? window.location.origin : ''
           },
           events: {
@@ -389,6 +394,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
             },
             onStateChange: (event: any) => {
               if (event.data === 1) { // PLAYING
+                consecutiveErrorsRef.current = 0;
                 setIsPlaying(true);
               } else if (event.data === 2) { // PAUSED
                 setIsPlaying(false);
@@ -397,8 +403,19 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
               }
             },
             onError: (event: any) => {
-              console.warn('YouTube Player error event:', event.data);
-              handleNextTrackAuto();
+              // Error 150 / 101: video embedding disallowed by content owner
+              // Debounce and auto-skip to next verified track
+              console.warn('[YouTube Player] Notice (code ' + event.data + '). Moving to next verified song.');
+              if (consecutiveErrorsRef.current >= 3) {
+                console.warn('[YouTube Player] Multiple consecutive embed restrictions. Pausing autoplay to avoid loop.');
+                setIsPlaying(false);
+                return;
+              }
+              consecutiveErrorsRef.current++;
+              if (errorTimeoutRef.current) clearTimeout(errorTimeoutRef.current);
+              errorTimeoutRef.current = setTimeout(() => {
+                handleNextTrackAuto();
+              }, 500);
             }
           }
         });

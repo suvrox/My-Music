@@ -187,67 +187,67 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
 
   // Trending India & Bollywood Chill
   {
-    id: 'yt-L76eT_L76E',
-    youtubeId: 'L76eT_L76E',
+    id: 'yt-BBrQWOuE_pg',
+    youtubeId: 'BBrQWOuE_pg',
     title: 'Tauba Tauba',
     artistName: 'Karan Aujla',
     albumName: 'Bad Newz',
-    artworkUrl: 'https://i.ytimg.com/vi/L76eT_L76E/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
     duration: 204,
     genre: 'Punjabi Pop',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-b0_i0b5t8jY',
-    youtubeId: 'b0_i0b5t8jY',
+    id: 'yt-9jY8PItvMxo',
+    youtubeId: '9jY8PItvMxo',
     title: 'Chuttamalle',
     artistName: 'Anirudh Ravichander, Shilpa Rao',
     albumName: 'Devara',
-    artworkUrl: 'https://i.ytimg.com/vi/b0_i0b5t8jY/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/9jY8PItvMxo/hqdefault.jpg',
     duration: 220,
     genre: 'Tamil Hits',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-AKHg502z1LM',
-    youtubeId: 'AKHg502z1LM',
+    id: 'yt-k3g_WjLCsXM',
+    youtubeId: 'k3g_WjLCsXM',
     title: 'O Sajni Re',
     artistName: 'Arijit Singh, Ram Sampath',
     albumName: 'Laapataa Ladies',
-    artworkUrl: 'https://i.ytimg.com/vi/AKHg502z1LM/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
     duration: 172,
     genre: 'Bollywood & Chill',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-q6-j9m7S8z0',
-    youtubeId: 'q6-j9m7S8z0',
+    id: 'yt-lXqvdKl3S2k',
+    youtubeId: 'lXqvdKl3S2k',
     title: 'Tum Se',
     artistName: 'Sachin-Jigar, Raghav Chaitanya',
     albumName: 'Teri Baaton Mein Aisa Uljha Jiya',
-    artworkUrl: 'https://i.ytimg.com/vi/q6-j9m7S8z0/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/lXqvdKl3S2k/hqdefault.jpg',
     duration: 263,
     genre: 'Bollywood & Chill',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-g4nzfLwBwtg',
-    youtubeId: 'g4nzfLwBwtg',
+    id: 'yt-Pz_FkqA2x6s',
+    youtubeId: 'Pz_FkqA2x6s',
     title: 'Ve Kamleya',
     artistName: 'Arijit Singh, Shreya Ghoshal',
     albumName: 'Rocky Aur Rani Kii Prem Kahaani',
-    artworkUrl: 'https://i.ytimg.com/vi/g4nzfLwBwtg/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/Pz_FkqA2x6s/hqdefault.jpg',
     duration: 247,
     genre: 'Bollywood & Chill',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-u2NAus-VDe0',
-    youtubeId: 'u2NAus-VDe0',
+    id: 'yt-u2NAuswnTKs',
+    youtubeId: 'u2NAuswnTKs',
     title: 'Apna Bana Le',
     artistName: 'Arijit Singh, Sachin-Jigar',
     albumName: 'Bhediya',
-    artworkUrl: 'https://i.ytimg.com/vi/u2NAus-VDe0/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/u2NAuswnTKs/hqdefault.jpg',
     duration: 261,
     genre: 'Bollywood & Chill',
     source: 'YouTube Music'
@@ -273,17 +273,6 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     albumName: 'Heeriye (Single)',
     artworkUrl: 'https://i.ytimg.com/vi/RLzC55ai0eo/hqdefault.jpg',
     duration: 194,
-    genre: 'Romance',
-    source: 'YouTube Music'
-  },
-  {
-    id: 'yt-fL_WwYjM_aY',
-    youtubeId: 'fL_WwYjM_aY',
-    title: 'Soulmate',
-    artistName: 'Arijit Singh, Badshah',
-    albumName: 'Ek Tha Raja',
-    artworkUrl: 'https://i.ytimg.com/vi/fL_WwYjM_aY/hqdefault.jpg',
-    duration: 213,
     genre: 'Romance',
     source: 'YouTube Music'
   },
@@ -369,12 +358,12 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
 
   // I-Pop Superhits & Indie Pop
   {
-    id: 'yt-VuG7FT9evQI',
-    youtubeId: 'VuG7FT9evQI',
+    id: 'yt-73vZDNKa_Wg',
+    youtubeId: '73vZDNKa_Wg',
     title: 'Maan Meri Jaan',
     artistName: 'King',
     albumName: 'Champagne Talk',
-    artworkUrl: 'https://i.ytimg.com/vi/VuG7FT9evQI/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/73vZDNKa_Wg/hqdefault.jpg',
     duration: 194,
     genre: 'Indian Pop',
     source: 'YouTube Music'
@@ -391,34 +380,34 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     source: 'YouTube Music'
   },
   {
-    id: 'yt-gLH9314p5W4',
-    youtubeId: 'gLH9314p5W4',
+    id: 'yt-0IIJxkDtkHY',
+    youtubeId: '0IIJxkDtkHY',
     title: 'Husn',
     artistName: 'Anuv Jain',
     albumName: 'Husn (Single)',
-    artworkUrl: 'https://i.ytimg.com/vi/gLH9314p5W4/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/0IIJxkDtkHY/hqdefault.jpg',
     duration: 219,
     genre: 'Indian Pop',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-e3U3W7QZ77U',
-    youtubeId: 'e3U3W7QZ77U',
+    id: 'yt-EiiOYwqk3A0',
+    youtubeId: 'EiiOYwqk3A0',
     title: 'Faasle',
     artistName: 'Aditya Rikhari',
     albumName: 'Faasle (Single)',
-    artworkUrl: 'https://i.ytimg.com/vi/e3U3W7QZ77U/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/EiiOYwqk3A0/hqdefault.jpg',
     duration: 196,
     genre: 'Indian Pop',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-AWZmsR54q-s',
-    youtubeId: 'AWZmsR54q-s',
+    id: 'yt-8GkPMG8IwBQ',
+    youtubeId: '8GkPMG8IwBQ',
     title: 'Tu Hai Kahan',
     artistName: 'AUR',
     albumName: 'Tu Hai Kahan',
-    artworkUrl: 'https://i.ytimg.com/vi/AWZmsR54q-s/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/8GkPMG8IwBQ/hqdefault.jpg',
     duration: 263,
     genre: 'Indian Pop',
     source: 'YouTube Music'
@@ -426,23 +415,23 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
 
   // Hot Hits Hindi & Punjabi
   {
-    id: 'yt-G4s-43g_6bQ',
-    youtubeId: 'G4s-43g_6bQ',
+    id: 'yt-fnyd1hGyJIY',
+    youtubeId: 'fnyd1hGyJIY',
     title: 'Chal Kudiye',
     artistName: 'Diljit Dosanjh, Alia Bhatt',
     albumName: 'Jigra Soundtracks',
-    artworkUrl: 'https://i.ytimg.com/vi/G4s-43g_6bQ/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/fnyd1hGyJIY/hqdefault.jpg',
     duration: 198,
     genre: 'Hot Hits Hindi',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-cWMxKA7PBec',
-    youtubeId: 'cWMxKA7PBec',
+    id: 'yt--Chif1XK2e8',
+    youtubeId: '-Chif1XK2e8',
     title: 'Softly',
     artistName: 'Karan Aujla, Ikky',
     albumName: 'Making Memories',
-    artworkUrl: 'https://i.ytimg.com/vi/cWMxKA7PBec/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/-Chif1XK2e8/hqdefault.jpg',
     duration: 156,
     genre: 'Punjabi Hits',
     source: 'YouTube Music'
@@ -461,23 +450,23 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
 
   // Drift Phonk & Workout
   {
-    id: 'yt-1laX4XUfgkM',
-    youtubeId: '1laX4XUfgkM',
+    id: 'yt--w54aVt1JsY',
+    youtubeId: '-w54aVt1JsY',
     title: 'Tokyo Midnight Drift (PHONK)',
     artistName: 'Kordhell & DVRST Echoes',
     albumName: 'the beat of your drift',
-    artworkUrl: 'https://i.ytimg.com/vi/1laX4XUfgkM/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
     duration: 152,
     genre: 'Drift Phonk',
     source: 'YouTube Music'
   },
   {
-    id: 'yt-w-sQRS-Um98',
-    youtubeId: 'w-sQRS-Um98',
+    id: 'yt-w-sQRS-Lc9k',
+    youtubeId: 'w-sQRS-Lc9k',
     title: 'Murder In My Mind',
     artistName: 'KORDHELL',
     albumName: 'Murder In My Mind',
-    artworkUrl: 'https://i.ytimg.com/vi/w-sQRS-Um98/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/w-sQRS-Lc9k/hqdefault.jpg',
     duration: 145,
     genre: 'Drift Phonk',
     source: 'YouTube Music'
@@ -494,12 +483,12 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     source: 'YouTube Music'
   },
   {
-    id: 'yt-z-e9z_R3x8E',
-    youtubeId: 'z-e9z_R3x8E',
+    id: 'yt--dhx7Hnu-wo',
+    youtubeId: '-dhx7Hnu-wo',
     title: 'Metamorphosis',
     artistName: 'INTERWORLD',
     albumName: 'Metamorphosis',
-    artworkUrl: 'https://i.ytimg.com/vi/z-e9z_R3x8E/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/-dhx7Hnu-wo/hqdefault.jpg',
     duration: 142,
     genre: 'Drift Phonk',
     source: 'YouTube Music'
@@ -507,46 +496,35 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
 
   // Podcasts & Storytelling Episodes
   {
-    id: 'yt-rB3oWjK2z38',
-    youtubeId: 'rB3oWjK2z38',
+    id: 'yt-_L2cqQayZSo',
+    youtubeId: '_L2cqQayZSo',
     title: 'The Ranveer Show (TRS) Podcast',
     artistName: 'BeerBiceps',
     albumName: 'The Ranveer Show',
-    artworkUrl: 'https://i.ytimg.com/vi/rB3oWjK2z38/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/_L2cqQayZSo/hqdefault.jpg',
     duration: 3600,
     genre: 'Podcast',
     source: 'YouTube Podcasts'
   },
   {
-    id: 'yt-Lw_Y_U489wE',
-    youtubeId: 'Lw_Y_U489wE',
+    id: 'yt-psb7bt1IfnA',
+    youtubeId: 'psb7bt1IfnA',
     title: 'WTF is AI & Future Tech',
     artistName: 'Nikhil Kamath Podcast',
     albumName: 'WTF Podcast',
-    artworkUrl: 'https://i.ytimg.com/vi/Lw_Y_U489wE/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/psb7bt1IfnA/hqdefault.jpg',
     duration: 5400,
     genre: 'Podcast',
     source: 'YouTube Podcasts'
   },
   {
-    id: 'yt-p3bW8x_8h1Y',
-    youtubeId: 'p3bW8x_8h1Y',
+    id: 'yt-SFX8FIHFLE4',
+    youtubeId: 'SFX8FIHFLE4',
     title: 'Huberman Lab - Focus & Brain Science',
     artistName: 'Dr. Andrew Huberman',
     albumName: 'Huberman Lab',
-    artworkUrl: 'https://i.ytimg.com/vi/p3bW8x_8h1Y/hqdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/SFX8FIHFLE4/hqdefault.jpg',
     duration: 4200,
-    genre: 'Podcast',
-    source: 'YouTube Podcasts'
-  },
-  {
-    id: 'yt-m0bV9-x8w7s',
-    youtubeId: 'm0bV9-x8w7s',
-    title: 'Desi Crime Stories & Audio Mystery',
-    artistName: 'Desi Crime Network',
-    albumName: 'True Crime Podcast',
-    artworkUrl: 'https://i.ytimg.com/vi/m0bV9-x8w7s/hqdefault.jpg',
-    duration: 2800,
     genre: 'Podcast',
     source: 'YouTube Podcasts'
   }

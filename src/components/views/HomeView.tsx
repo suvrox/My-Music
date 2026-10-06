@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAudioPlayer } from '@/context/AudioPlayerContext';
 import { INITIAL_TRACKS, INITIAL_ARTISTS } from '@/lib/music/providers/catalog';
 import { Track, FilterTab, ActiveView } from '@/types/music';
@@ -13,7 +13,19 @@ interface HomeViewProps {
 export function HomeView({ setActiveView }: HomeViewProps) {
   const { playTrack, currentTrack, isPlaying, togglePlay } = useAudioPlayer();
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
+  const [youtubeTrending, setYoutubeTrending] = useState<Track[]>([]);
   const recentHistory = getStoredHistory();
+
+  useEffect(() => {
+    fetch('/api/music/trending')
+      .then(res => res.json())
+      .then(data => {
+        if (data.tracks && Array.isArray(data.tracks)) {
+          setYoutubeTrending(data.tracks);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handlePlayOrPauseTrack = (track: Track, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -98,6 +110,57 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                         src={track.artworkUrl || 'https://via.placeholder.com/200'}
                       />
                       {/* Play Button Overlay on Hover */}
+                      <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
+                        <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
+                          <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className={`font-bold text-sm truncate mb-1 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`}>
+                      {track.title}
+                    </h3>
+                    <p className="text-xs text-spotify-textSubdued truncate leading-snug">
+                      {track.artistName}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* Dynamic YouTube Trending Row */}
+        {youtubeTrending.length > 0 && filterTab !== 'podcasts' && (
+          <section data-purpose="youtube-trending-row">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <i className="fa-brands fa-youtube text-red-500 text-xl"></i>
+                <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
+                  Trending on YouTube
+                </h2>
+              </div>
+              <span className="text-xs font-semibold text-spotify-textSubdued">
+                Live from YouTube API
+              </span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {youtubeTrending.slice(0, 5).map((track) => {
+                const isTrackActive = currentTrack?.id === track.id || currentTrack?.youtubeId === track.youtubeId;
+                return (
+                  <div
+                    key={track.id}
+                    onClick={() => handlePlayOrPauseTrack(track)}
+                    className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
+                  >
+                    <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+                      <img
+                        alt={track.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                        src={track.artworkUrl || `https://i.ytimg.com/vi/${track.youtubeId}/hqdefault.jpg`}
+                      />
+                      <div className="absolute top-2 left-2 text-red-500 text-sm drop-shadow bg-black/60 px-1.5 py-0.5 rounded flex items-center gap-1">
+                        <i className="fa-brands fa-youtube"></i>
+                      </div>
                       <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
                         <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
                           <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>

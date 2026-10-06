@@ -1,5 +1,5 @@
 import { MusicProvider } from './types';
-import { defaultMusicProvider } from './providers/catalog';
+import { youtubeMusicProvider } from './providers/youtube';
 
-// Central provider export allowing zero-friction swapping of providers
-export const musicProvider: MusicProvider = defaultMusicProvider;
+// Active provider using YouTube Data API with environment-based API key
+export const musicProvider: MusicProvider = youtubeMusicProvider;

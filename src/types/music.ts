@@ -6,7 +6,8 @@ export interface Track {
   albumId?: string;
   albumName?: string;
   artworkUrl?: string;
-  audioUrl: string;
+  audioUrl?: string;
+  youtubeId?: string;
   duration?: number; // in seconds
   genre?: string;
   source: string;

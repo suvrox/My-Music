@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Spotify - Web Player</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            spotify: {
+              base: '#000000',
+              surface: '#121212',
+              card: '#181818',
+              cardHover: '#282828',
+              elevated: '#242424',
+              highlight: '#2a2a2a',
+              green: '#1ed760',
+              textSubdued: '#a7a7a7',
+              textBase: '#ffffff'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Circular', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Font Awesome Icons for Spotify UI icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style data-purpose="custom-scrollbars">
+    /* Custom thin scrollbar matching Spotify desktop */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  </style>
+<style data-purpose="interactive-enhancements">
+    .truncate-2-lines {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .custom-gradient-header {
+      background: linear-gradient(180deg, #372b6b 0%, #1a1631 35%, #121212 100%);
+    }
+    .liked-songs-gradient {
+      background: linear-gradient(135deg, #450af5, #c4efd9);
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-sans antialiased select-none h-screen flex flex-col overflow-hidden">
+<!-- BEGIN: TopHeader -->
+<header class="h-[52px] bg-black flex items-center justify-between px-3 gap-2 flex-shrink-0 z-50">
+<!-- Left: Window Controls & History Navigation -->
+<div class="flex items-center gap-3 w-[280px]" data-purpose="left-controls">
+<!-- Windows Window Dots / Options -->
+<button class="text-spotify-textSubdued hover:text-white px-1.5 py-1 text-xs">
+<i class="fa-solid fa-ellipsis text-sm"></i>
+</button>
+<!-- Back / Forward Buttons -->
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-full bg-spotify-surface flex items-center justify-center text-spotify-textSubdued hover:text-white hover:bg-spotify-elevated transition">
+<i class="fa-solid fa-chevron-left text-xs"></i>
+</button>
+<button class="w-8 h-8 rounded-full bg-spotify-surface flex items-center justify-center text-spotify-textSubdued hover:text-white hover:bg-spotify-elevated transition">
+<i class="fa-solid fa-chevron-right text-xs"></i>
+</button>
+</div>
+</div>
+<!-- Center: Home Button and Search Input Pill -->
+<div class="flex items-center gap-2 flex-1 max-w-[530px]" data-purpose="global-search-container">
+<!-- Home Icon Button -->
+<button class="w-10 h-10 rounded-full bg-spotify-elevated hover:scale-105 active:scale-95 flex items-center justify-center text-white transition flex-shrink-0">
+<i class="fa-solid fa-house text-base"></i>
+</button>
+<!-- Search Input Bar -->
+<div class="flex-1 relative flex items-center group">
+<div class="absolute left-3 text-spotify-textSubdued group-hover:text-white pointer-events-none transition">
+<i class="fa-solid fa-magnifying-glass text-base"></i>
+</div>
+<input class="w-full h-10 pl-10 pr-10 rounded-full bg-spotify-elevated border-none text-sm text-white placeholder-spotify-textSubdued focus:outline-none focus:ring-2 focus:ring-white hover:bg-spotify-highlight transition font-medium" placeholder="What do you want to play?" type="text">
+<div class="absolute right-3 flex items-center gap-2 text-spotify-textSubdued border-l border-zinc-700 pl-2.5 my-auto">
+<button class="hover:text-white transition" title="Browse">
+<i class="fa-solid fa-layer-group text-sm"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Right: User, Notifications, Window Status -->
+<div class="flex items-center justify-end gap-3 w-[280px]" data-purpose="profile-and-window-actions">
+<button class="text-spotify-textSubdued hover:text-white p-2 text-sm transition" title="What's New">
+<i class="fa-regular fa-bell"></i>
+</button>
+<button class="text-spotify-textSubdued hover:text-white p-2 text-sm transition" title="Friend Activity">
+<i class="fa-solid fa-user-group text-xs"></i>
+</button>
+<!-- Profile Avatar with Red Ring -->
+<div class="relative cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-red-950 p-[2px] flex items-center justify-center border border-red-600/80 overflow-hidden shadow">
+<img alt="Avatar" class="w-full h-full object-cover rounded-full filter brightness-75 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHcGIXt9tgnr69pqdGfkaALYlK4ONPxluKhyNToQQZd1J8pzVN8kisKxRMYQLNfwYe07xXejp0YW3GJJ8SeRITPLl7qgHKpy7MR4HxOyXXs_0Gro-CREcEM7GnRCs47A_avqiqh77hKsE9P_8kCMMXDKNP4Z1ob9a89lvYtXI5CMf7ymuDkWCL7PLsPufElYZvTPfVa1AmXv5DECw_zcR1jiE5IEZLx-UUWVRK9DDQtgCwWy6yPML69Q">
+</div>
+</div>
+<!-- Native Windows Window Buttons -->
+<div class="flex items-center gap-3.5 ml-2 text-spotify-textSubdued text-xs">
+<button class="hover:text-white"><i class="fa-solid fa-minus"></i></button>
+<button class="hover:text-white"><i class="fa-regular fa-square"></i></button>
+<button class="hover:text-white"><i class="fa-solid fa-xmark text-sm"></i></button>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex overflow-hidden px-2 pb-2 gap-2">
+<!-- BEGIN: LeftSidebarLibrary -->
+<aside class="w-[340px] bg-spotify-surface rounded-lg flex flex-col flex-shrink-0 overflow-hidden" data-purpose="your-library-panel">
+<!-- Library Header -->
+<div class="px-4 py-3 flex items-center justify-between text-spotify-textSubdued">
+<button class="flex items-center gap-3 hover:text-white transition font-bold text-sm">
+<i class="fa-solid fa-bookmark text-base"></i>
+<span class="text-white text-base">Your Library</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-full hover:bg-spotify-highlight hover:text-white flex items-center justify-center transition" title="Create playlist or folder">
+<i class="fa-solid fa-plus text-sm"></i>
+</button>
+<button class="w-8 h-8 rounded-full hover:bg-spotify-highlight hover:text-white flex items-center justify-center transition" title="Enlarge your library">
+<i class="fa-solid fa-arrow-right text-xs"></i>
+</button>
+</div>
+</div>
+<!-- Filter Pills -->
+<div class="px-3 pb-2 flex items-center gap-1.5 overflow-x-hidden text-xs font-semibold">
+<button class="px-3 py-1.5 rounded-full bg-spotify-elevated hover:bg-spotify-highlight text-white transition whitespace-nowrap">Playlists</button>
+<button class="px-3 py-1.5 rounded-full bg-spotify-elevated hover:bg-spotify-highlight text-white transition whitespace-nowrap">Podcasts</button>
+<button class="px-3 py-1.5 rounded-full bg-spotify-elevated hover:bg-spotify-highlight text-white transition whitespace-nowrap">Albums</button>
+<button class="w-7 h-7 rounded-full bg-spotify-elevated hover:bg-spotify-highlight text-spotify-textSubdued hover:text-white flex items-center justify-center flex-shrink-0 ml-auto">
+<i class="fa-solid fa-chevron-right text-[10px]"></i>
+</button>
+</div>
+<!-- Search & Sort Row -->
+<div class="px-3 py-1.5 flex items-center justify-between text-spotify-textSubdued text-xs font-medium">
+<button class="w-7 h-7 rounded-full hover:bg-spotify-elevated hover:text-white flex items-center justify-center transition">
+<i class="fa-solid fa-magnifying-glass text-xs"></i>
+</button>
+<button class="flex items-center gap-1.5 hover:text-white transition">
+<span class="">Recents</span>
+<i class="fa-solid fa-bars-staggered text-xs"></i>
+</button>
+</div>
+<!-- Playlist Items Scrollable List -->
+<div class="flex-1 overflow-y-auto px-2 space-y-0.5" data-purpose="playlist-items-list">
+<!-- Liked Songs Entry -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded liked-songs-gradient flex items-center justify-center flex-shrink-0 shadow">
+<i class="fa-solid fa-heart text-white text-base"></i>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">Liked Songs</span>
+<div class="flex items-center gap-1 text-xs text-spotify-textSubdued">
+<i class="fa-solid fa-thumbtack text-spotify-green text-[10px] rotate-45 mr-0.5"></i>
+<span class="truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+</div>
+<!-- Sky is the limit Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="Playlist cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOmQRIS8f3CS7eq3-ImvLihnpYXCuK4XFtSQaKbHJqpVuEXbiLOZKmF6CPSG-zLsfTvR6wib5bOzDbvfFyN2FgQxLEL4xQ3p9JgWh3eYkbLEwYy0lcJmS-OtS_b_bICeOBzAckeSTfIN82slGKPJh0JFltPB0MUs5bV78cerqpuKYyRNyULvyruUfqUzDvvZDUbI3KiIfAYZwd-rXwI9LhANOZei1IrGhoUfDDVIc3Dxhoy3RkJtOAVA">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">Sky is the limit 📈</span>
+<span class="text-xs text-spotify-textSubdued truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+<!-- Diffsong2 Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="Diffsong2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjCrrkIsO7PhuNhCQSglSzTl9Y6b6wyGC7Ru3DbJviiQQyy0fZsAy6_ohyfpXvd9K6NnEvYRvOrg1YGkyVtPwqcZsxNqSPWK0WZuyxg1GE-JcUppejk2hxpZSQG9EhUio0zARB6vVH1AW7PREWersKcNX-oUGQkUpqNk0qkeIntajuO4a7w4vM3psuPumnxQOQilDxyA2a4KA1tSF1YOw60cSlKZu0yO2ET0Rv19R3Q9wWH_ijLrlE0w">
+</div>
+<div class="flex flex-col min-w-0">
+
+<span class="text-xs text-spotify-textSubdued truncate">Playlist •<br></span>
+</div>
+</div>
+<!-- Bengali songs Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="Bengali songs" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0nwddKHCIdgGbgXSUBLSW19mAPIrcuYRnuC-ZSTYso9Lh6a7xe9Glm-PaHVTdSoIBoiVDSjdw0cEnMkFFNmQi9pJ-_t705z9ftMAA1JNHtLyenKove5xPjrmXUr-ek3pO7M1BVjOEAVigoGZ3sLkmVa3nU57nTv3M9hW_7xM8mM9GT2Of7zzFxDjNeiZIpFwJlTQtMYnvkctKQvxfENd_q5DWfXNwY0qtahkccrcSvvL1qYXvfLxoKQ">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">Bengali songs 🎵</span>
+<span class="text-xs text-spotify-textSubdued truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+<!-- Fresh bengali Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="Fresh bengali" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8hXfAzQFPyxyinbqcC8K3pv5SLuK1HNKACKEMZu9AprpYG6-gYIyF0wno1ZewRK0tsW5tyu5Sk44k2BSt2S3RI7LGoXvPVxUWxhQkdInFcXspfU9oAVexI8HdTegXe9kHxL8d9dlaDmt3nGd4I_i3fsXV1hiFq_8DF1mKLHwIhm10y5dDowmO4HTBGHWRGvUEnNAwQRcoZmZrpixRA8zRWRsRJrhNG9TuZQo86mX5UhaDZ-zMHrSsZA">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">Fresh bengali</span>
+<span class="text-xs text-spotify-textSubdued truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+<!-- Peace of mind Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="Peace of mind" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDreGk7wvWOh72L6iEDdeeKBXvjjCSqqCa5v2WHwnT3mFXF98dc1X6U0l_qEeD6USzNrq3OurrnBib5S_p_CRAg0A96R9GDTQdxYgJIrw_P4zt8_Z0GhRt2wSVz00fQQwe5vHjUZrLfhvCygkAsCUD3gtaqygG5KCvrQ9FJUcsIR52inFaHPWBYbMKC9riYc-NT0HgKOQdT0j8RaYv6KLd0vF6Gz4AqqIumlXH2OCyEB85BVxPSBtmTVA">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">Peace of mind</span>
+<span class="text-xs text-spotify-textSubdued truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+<!-- EDM Playlist -->
+<div class="flex items-center gap-3 p-2 rounded-md hover:bg-spotify-elevated cursor-pointer group transition">
+<div class="w-12 h-12 rounded overflow-hidden flex-shrink-0 bg-zinc-800">
+<img alt="EDM" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpywiZIg-rc2TPlZxWCiCydIPpj_66RHQEzSfY0Dz3LQhAPN5dnYvTh-6QDLbgHdIIIXzWp62q5pMGngPN-QsBnJKWFkBYrn9BuMl_gGrHn9EA5o-xtD06JWE-dWeHY8piv6adGk4NSvpwJd4aocWY3EcDYk540Zl4VVO2r0i9aXoYNYae6XUhdqvXdZ-imK4WVyxvYRKQfsmUCcLXGuSMdjmGkSEQJ8yRNltpVi_P2JlRmNX2uMGTDA">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="text-white text-sm font-semibold truncate">EDM</span>
+<span class="text-xs text-spotify-textSubdued truncate">Playlist • Suvradip Maity</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebarLibrary -->
+<!-- BEGIN: CenterMainContent -->
+<main class="flex-1 bg-spotify-surface rounded-lg overflow-y-auto relative flex flex-col" data-purpose="center-main-feed">
+<!-- Top Violet Ambient Glow Background Banner -->
+<div class="custom-gradient-header pt-4 px-6 pb-6 sticky top-0 z-20">
+<!-- Filter Tabs: All, Music, Podcasts -->
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition">All</button>
+<button class="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition">Music</button>
+<button class="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition">Podcasts</button>
+</div>
+</div>
+<!-- Feed Grid Sections Container -->
+<div class="px-6 space-y-8 pb-12 -mt-2">
+<!-- SECTION 1: Featured Rows / Trending -->
+<section data-purpose="trending-row">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">Trending Now</h2>
+<a class="text-xs font-bold text-spotify-textSubdued hover:underline" href="#">Show all</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<!-- Card 1: Trending Now India -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="Trending India" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA">
+<!-- Spotify Badge Overlay -->
+<div class="absolute top-2 left-2 text-[#1ed760] text-sm drop-shadow">
+<i class="fa-brands fa-spotify text-lg"></i>
+</div>
+<!-- Artistic Gradient Text Title inside poster -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+<span class="text-emerald-400 font-extrabold text-base italic leading-tight drop-shadow-md">Trending<br><span class="text-yellow-300">Now India</span></span>
+</div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Trending Now India</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Every track you're listening/should be...</p>
+</div>
+<!-- Card 2: Bollywood & Chill -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="Bollywood &amp; Chill" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute bottom-2 left-2 text-yellow-300 font-bold text-sm drop-shadow">
+                  Bollywood &amp; Chill
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Bollywood &amp; Chill</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Sit back, and chill with Bollywood's...</p>
+</div>
+<!-- Card 3: Happy Vibes -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="Happy Vibes" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm0Wvim7hrP_Ix-Thx7IGW3U-rJxlanKQrxUX6OjQJk0qPzKbCS4DYYEgiG5vVgAbhWL6hw5MC7UnxJnlIvcayJj7Xl9JgsLOYwDrSQwkB5m7J1Hm43pnbNrQPLrmc2xcLDP2bgdV5oQtfKg8n-zyqmPDNNZlutq4auv8Tm3qkuziIgprzK7I9jsi2P-O9LDL1u5uqwc_FLn0ZGMmOxFYBzVjohOFbcYd0Luk6ppN2u_ieXKuLCz8Npw">
+<div class="absolute top-2 left-2 text-white/90">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute bottom-2 left-2 right-2 text-white font-extrabold text-base drop-shadow-md">
+                  Happy Vibes
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Happy Vibes</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Bright, sunny, catchy tunes put a smile on...</p>
+</div>
+<!-- Card 4: pov: you're in love -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="In Love" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArPqqhxGNQuAkPXNQ7Qo1IyjZGCe-6UY5BkAdZB840epb7OZ-A-1-PDInctHf_T7lMfoqdhuRB1oUop-bONhFIca7coVES6ug_4vzCnbBCqyJQIo-Wl29YnFx0jy5hg-JEmsqdKqrzT48krptPwCB-AxuaGnaabPDpKcMKXGdKibuwto-_YW8627ehGWTCEkkKqnrlpkFECUxblfTCJAUaCZKZih8iO4l3BfgsT6CTzIrEmIZEfqaiTg">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute top-2 right-2 text-yellow-300 text-xs font-semibold drop-shadow">
+                  pov: you're in love
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">pov: you're in love</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Uff, you've fallen! 💜</p>
+</div>
+<!-- Card 5: I-Pop -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="I-Pop Superhits" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAopyW1fXaxyQ6fqqM6Mu--hATPxza6P9F25-XDm248qRcaYaO_Rk5h-jBQuwDdn4Sjvup5V-uxp69JVf4H-r2_0cw4iE1bc5tsvlDBLWrUQLV0CGvREMXRJyMt9MMr-13SEceLMsdvHb-0OkB5qkRyQ_VhbHiA7RxeBjH2TdVEa68FCX6nZX-cXVQVPDx-DIGbb9YzeFQC97W84sZXg80lxhaUyqrDzvO8bdvNV11puqLD-5-y2tCUVg">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute bottom-2 left-2 text-cyan-400 font-extrabold text-sm drop-shadow">
+                  I-Pop
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">I-Pop Superhits</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Your ultimate daily pop workout boost...</p>
+</div>
+</div>
+</section>
+<!-- SECTION 2: More of what you like -->
+<section data-purpose="more-of-what-you-like">
+<div class="flex items-end justify-between mb-3">
+<div>
+<p class="text-xs text-spotify-textSubdued font-medium tracking-wide">Hear a little bit of everything you love.</p>
+<h2 class="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">More of what you like</h2>
+</div>
+<a class="text-xs font-bold text-spotify-textSubdued hover:underline" href="#">Show all</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<!-- Card 1: Trending Now Tamil -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="Trending Tamil" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzoXdIy5kfJYX_DilbwKkzBdT5QMCYwB3-RBVcNsTFcB7t9mpgW0iXB9sqq-EvBpNy4ZRqqf0rTcd39GIsLdYZOmVLOgAmVCyhL67c_8Z-Sys1iqHypd4BVH_UJxidnDfLuOgi18aSZvTwcdA4s99deQda3QjY3nRDGXF2c9bIxRAiadSdQZUh5PV-Dg7WS_SxYTNKx75eUYUxNmFecFf2AYjd_RB7Dwbo4-Q_Rv04XjHp60mNzzlH0A">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+<span class="text-emerald-400 font-extrabold text-base italic leading-tight drop-shadow-md">Trending<br><span class="text-pink-500">Now Tamil</span></span>
+</div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Trending Now Tamil</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Top Trending Tamil Songs on Social...</p>
+</div>
+<!-- Card 2: HOT HITS HINDI -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-red-950 shadow-lg">
+<img alt="Hot Hits Hindi" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 filter contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXp2Y5r7pWKez5A7kdM13GjwX74bbXtPJbLKDFI7pLaLo7UNF6F1h0L2LW3FsINJQ66qE1Vf8ahdCGcTN6PZsjNR8XvcHJD96VMe0tbqvL1zlUOF56rit2OiEqd2FBtnbwtCJFJNvIc_6VFlNYZGDxuGoeo5h9PD3uRerWz7H5_5KvPdG3uFjue5Foyoj6m2n8baxuPPz_vx79Eynajy90ECk5SsK0e4rXUlVkk0wnBjWrl0ZQE_j8Lg">
+<div class="absolute top-2 left-2 text-white">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute top-1 right-2 text-red-500 font-black tracking-widest text-xs">
+                  HOT HITS
+                </div>
+<div class="absolute bottom-2 left-2 text-white font-extrabold text-xs tracking-wider bg-black/60 px-1 py-0.5 rounded">
+                  HINDI
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Hot Hits Hindi</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Hottest Hindi music that India is listening...</p>
+</div>
+<!-- Card 3: Grand Theft Auto Official Playlist -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="GTA Playlist" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnaAPj5qow9H9cawa408P83Lle6lbSm0Pm0Po1JEaS61p1dLP9WIVDmczbO9ueJffwozyUbsHi6qyHu62GlZgQgZ44FiK9xjTUhrAdUm9YEP3Sr0Z71lyIfx_8HeVXGFrODbdNgHhh4PytdqiASU3e0WG2-SRO1FmOWA6vXv1jl4SE-BES1tyzEnujvCV84vNF3tHpzZvBRgRHXzuO6WPlV4Tvut01hSA_qn7-5f9YKBVPD_q5gjZNlg">
+<div class="absolute top-2 left-2 text-white">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute bottom-2 left-2 right-2 text-[10px] leading-tight font-bold text-white drop-shadow bg-black/50 p-1 rounded">
+                  Grand Theft Auto Official Playlist
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Grand Theft Auto Official...</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Listen to all the music from Grand Theft Au...</p>
+</div>
+<!-- Card 4: the beat of your drift (PHONK) -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-purple-950 shadow-lg">
+<img alt="PHONK" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 filter hue-rotate-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0q7PqQYMt1bwVjLAxGuytTU42EM3iczCuwNsjzeTuVl84Nib7YyGP3ZTuT4FgNXyNS6bdk3_9AWtGkHrbPiGpQQZ2NjhNtHM34tZymmXUa13ZFENmmejd-VCLIF6tkRGWY57D97Un5pdLb1_-aVWaA4NKXUCarsnJczIoDZf3Uax8YUBhMiNa1TMErMUX8zbfu2ms0aeFJkFdaxiDhVnVt_wxKoTnqLCtnECB5Xc_LbWvaJrMQKHpEQ">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+<div class="absolute right-2 bottom-2 text-white font-black tracking-widest text-lg rotate-90 origin-bottom-right drop-shadow">
+                  PHONK
+                </div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">the beat of your drift</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">the beat of your drift</p>
+</div>
+<!-- Card 5: Dream chill -->
+<div class="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col">
+<div class="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+<img alt="Dream Chill" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhutN_e5d-q8qaz5HJax0urT6lq-Soxx1coRaITVv7_o0uyDlDSCW2cfSMIdVgGNp20tR2igJEoY22Ue6v4WKmRVvPQ5jiythYoy7v6TuqGPNLJjXjB6YatWQNHbsQNQMGPkuiBvutks7p1JMpGjNNdQMB_z9Z5BkMJuAhKq8YeAayWKSVQk6PPbOJMOYS-KZObQJ9-lZO-BJzQBmqFnUKFpUJem5upVdN5f3gSo6LHqy_2Cp3M6UU4g">
+<div class="absolute top-2 left-2 text-[#1ed760]">
+<i class="fa-brands fa-spotify text-lg drop-shadow"></i>
+</div>
+</div>
+<h3 class="font-bold text-sm text-white truncate mb-1">Dreamy Chill</h3>
+<p class="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">Relax with ambient chill beats...</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: CenterMainContent -->
+<!-- BEGIN: RightSidebarNowPlaying -->
+<aside class="w-[320px] bg-spotify-surface rounded-lg flex flex-col flex-shrink-0 overflow-y-auto p-4" data-purpose="now-playing-panel">
+<!-- Right Panel Title -->
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-bold text-white hover:underline cursor-pointer">Sky is the limit 📈</h2>
+<div class="flex items-center gap-3 text-spotify-textSubdued text-sm">
+<button class="hover:text-white"><i class="fa-solid fa-ellipsis"></i></button>
+<button class="hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+</div>
+</div>
+<!-- Main Song Big Album Artwork (Fearless Funk - NCS) -->
+<div class="relative w-full aspect-square rounded-lg overflow-hidden mb-4 shadow-2xl bg-black">
+<img alt="Fearless Funk Artwork" class="w-full h-full object-cover filter contrast-150 brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5-A5tvDVNA1zUz-P2fNxAW00Db5ym3CfrOJFQk-k2P77vTWqQjvEKAKGvywh3CHuCVi1INiU6cjJSpAx91bBTR7RLLNO6MO9Y5XVDzegiCf3TViS5VLvs5-CQAt1HkSz0btc1w6du8wzdewpqOpnkX8fJxL-ehZh-bIhAt-EVDpBVRKyEt-LFtKPb_W45DfYMBoFgjFDKWIL2DlQ0d8O7mSBiiePUCyRzx6qXsIjVLnk98ger4Rha7A">
+<!-- NCS Style demonic silhouette overlay simulation -->
+<div class="absolute inset-0 bg-gradient-to-t from-red-950/90 via-red-900/30 to-black/80 flex flex-col justify-between p-3 pointer-events-none">
+<span class="text-red-500 font-extrabold tracking-widest text-xs">NCS</span>
+<div class="self-center mb-6">
+<i class="fa-solid fa-person-burst text-4xl text-red-500/80"></i>
+</div>
+</div>
+</div>
+<!-- Track Information & Verified Icon -->
+<div class="flex items-center justify-between mb-6">
+<div class="flex flex-col min-w-0 pr-2">
+<h1 class="text-xl font-bold text-white truncate hover:underline cursor-pointer">Fearless Funk</h1>
+<p class="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer font-medium mt-0.5">DR MØB, Chris Linton</p>
+</div>
+<button class="text-spotify-green hover:scale-105 transition flex-shrink-0" title="Saved to your Liked Songs">
+<i class="fa-solid fa-circle-check text-lg"></i>
+</button>
+</div>
+<!-- About The Artist Card -->
+<div class="bg-spotify-card rounded-lg overflow-hidden relative group cursor-pointer shadow-lg mb-4" data-purpose="artist-bio-card">
+<div class="relative h-44 w-full bg-zinc-800 overflow-hidden">
+<img alt="Artist Poster" class="w-full h-full object-cover filter brightness-75 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj7E5tMyhe2b5EaYOK4lJh2KRCtgQ_jKH3_O5K2E3CdMFvOlKbz3xMOrYIdBwP8Ark7XnDpT4o0VK-zWhQcFXXRmVLeGKocdo99aPU7xVvXUUSG3s6QxYWtzq3bRt7CPCzXdEid390YrGTZNkkaibp1RU2nCPyomMma8d-CpftdKjCpsRz3maoRMv0fDiYm1YIiihM3f1hkyi_0oOox5nw5wCGsbu2kcevSgV8d_6rrr1vWuo17-u-rQ">
+<div class="absolute inset-0 bg-gradient-to-t from-spotify-card via-black/40 to-transparent"></div>
+<div class="absolute top-3 left-3 text-xs font-bold text-white uppercase tracking-wider drop-shadow">
+            About the artist
+          </div>
+</div>
+<div class="p-3 -mt-6 relative">
+<div class="flex items-center gap-1.5">
+<span class="text-white font-bold text-base hover:underline">DR MØB</span>
+<i class="fa-solid fa-certificate text-blue-400 text-xs"></i>
+</div>
+<p class="text-xs text-spotify-textSubdued mt-1">124,592 monthly listeners</p>
+<p class="text-xs text-spotify-textSubdued mt-2 line-clamp-3 leading-relaxed">
+            Multi-genre producer combining dark cyber-bass textures, Phonk grooves, and high-energy electronic soundscapes.
+          </p>
+</div>
+</div>
+</aside>
+<!-- END: RightSidebarNowPlaying -->
+</div>
+<!-- END: MainContentArea -->
+<!-- BEGIN: BottomPlayerBar -->
+<footer class="h-[76px] bg-black border-t border-zinc-900 px-4 flex items-center justify-between select-none z-50 flex-shrink-0" data-purpose="persistent-audio-player">
+<!-- Left Section: Track Info Mini Widget -->
+<div class="flex items-center gap-3.5 w-[30%] min-w-[180px]">
+<div class="w-14 h-14 rounded overflow-hidden flex-shrink-0 bg-zinc-900 shadow">
+<img alt="Currently Playing" class="w-full h-full object-cover filter contrast-125 brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzWdoH6WxNHi1JSIbUqB4F-my1SN3_Fzv9LeJRNPwLDcazlunj7VV7g1Bfo38Q89V1wEKvR4ZJQROfNnQn5sMHvkGvcy3MgcpDO4kHyIhXeHRBY7-i6pjU_K7Q5r9NCzwDTB3U0VH17D6j0ZY2cUvy9QxYZX_rMjKzG817To6Nicf2bPEbY4hyokAZlE2_JH9Q9HOnCenWIA7M3nPdT2ppc2RBXirnVqjJyYdag3mdRteK8wf1YK6PpA">
+</div>
+<div class="flex flex-col min-w-0 pr-1">
+<span class="text-sm font-semibold text-white truncate hover:underline cursor-pointer">Fearless Funk</span>
+<span class="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer">DR MØB, Chris Linton</span>
+</div>
+<button class="text-spotify-green hover:scale-105 transition ml-1" title="Saved">
+<i class="fa-solid fa-circle-check text-base"></i>
+</button>
+</div>
+<!-- Center Section: Playback Controls & Progress Bar -->
+<div class="flex flex-col items-center w-[40%] max-w-[650px] gap-1.5">
+<!-- Player Buttons -->
+<div class="flex items-center gap-5 text-spotify-textSubdued">
+<button class="hover:text-white transition text-xs" title="Enable shuffle">
+<i class="fa-solid fa-shuffle"></i>
+</button>
+<button class="hover:text-white transition text-sm" title="Previous">
+<i class="fa-solid fa-backward-step"></i>
+</button>
+<!-- Circular Play / Pause -->
+<button class="w-8 h-8 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition" title="Play">
+<i class="fa-solid fa-play text-xs ml-0.5"></i>
+</button>
+<button class="hover:text-white transition text-sm" title="Next">
+<i class="fa-solid fa-forward-step"></i>
+</button>
+<button class="hover:text-white transition text-xs" title="Enable repeat">
+<i class="fa-solid fa-repeat"></i>
+</button>
+</div>
+<!-- Scrubber Seek Bar -->
+<div class="w-full flex items-center gap-2 text-[11px] text-spotify-textSubdued font-mono">
+<span class="">0:07</span>
+<!-- Progress track container -->
+<div class="flex-1 h-1 bg-zinc-800 rounded-full relative group cursor-pointer">
+<!-- Active Track Progress (0:07 / 2:18 approx 5%) -->
+<div class="h-full bg-white group-hover:bg-spotify-green rounded-full relative" style="width: 5.5%;">
+<div class="hidden group-hover:block absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"></div>
+</div>
+</div>
+<span class="">2:18</span>
+</div>
+</div>
+<!-- Right Section: Volume and Device Controls -->
+<div class="flex items-center justify-end gap-3 text-spotify-textSubdued w-[30%] min-w-[200px]">
+<button class="hover:text-white transition text-xs" title="Lyrics">
+<i class="fa-solid fa-microphone"></i>
+</button>
+<button class="hover:text-white transition text-xs" title="Queue">
+<i class="fa-solid fa-bars"></i>
+</button>
+<button class="hover:text-white transition text-xs" title="Connect to a device">
+<i class="fa-solid fa-computer"></i>
+</button>
+<!-- Volume Slider -->
+<div class="flex items-center gap-1.5 group">
+<button class="hover:text-white transition text-xs" title="Mute">
+<i class="fa-solid fa-volume-high"></i>
+</button>
+<div class="w-20 h-1 bg-zinc-800 rounded-full relative cursor-pointer">
+<div class="h-full bg-white group-hover:bg-spotify-green rounded-full relative" style="width: 75%;">
+<div class="hidden group-hover:block absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full shadow"></div>
+</div>
+</div>
+</div>
+<button class="hover:text-white transition text-xs" title="Miniplayer">
+<i class="fa-solid fa-film"></i>
+</button>
+<button class="hover:text-white transition text-xs" title="Full screen">
+<i class="fa-solid fa-expand"></i>
+</button>
+</div>
+</footer>
+<!-- END: BottomPlayerBar -->
+
+
+</body></html>

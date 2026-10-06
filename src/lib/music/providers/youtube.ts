@@ -11,6 +11,17 @@ function parseDuration(isoDuration?: string): number {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
+function parseTimeString(timeStr?: string): number {
+  if (!timeStr) return 180;
+  const parts = timeStr.trim().split(':').map(Number);
+  if (parts.length === 3) {
+    return (parts[0] || 0) * 3600 + (parts[1] || 0) * 60 + (parts[2] || 0);
+  } else if (parts.length === 2) {
+    return (parts[0] || 0) * 60 + (parts[1] || 0);
+  }
+  return 180;
+}
+
 function decodeHtmlEntities(str: string): string {
   if (!str) return '';
   return str
@@ -771,6 +782,62 @@ export class YouTubeMusicProvider implements MusicProvider {
     console.warn('[YouTube API] Daily quota limit reached. Gracefully serving verified YouTube catalog.');
   }
 
+  private async searchYouTubePublic(query: string): Promise<Track[]> {
+    try {
+      const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&sp=EgIQAQ%253D%253D`;
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+        signal: AbortSignal.timeout(6000)
+      });
+      if (!res.ok) return [];
+
+      const text = await res.text();
+      const match = text.match(/var ytInitialData\s*=\s*({[\s\S]+?});<\/script>/) || text.match(/window\["ytInitialData"\]\s*=\s*({[\s\S]+?});<\/script>/);
+      if (!match) return [];
+
+      const data = JSON.parse(match[1]);
+      const contents = data.contents?.twoColumnSearchResultsRenderer?.primaryContents?.sectionListRenderer?.contents?.[0]?.itemSectionRenderer?.contents || [];
+
+      const tracks: Track[] = [];
+      const seenIds = new Set<string>();
+
+      for (const c of contents) {
+        const vr = c.videoRenderer;
+        if (!vr || !vr.videoId || seenIds.has(vr.videoId)) continue;
+        seenIds.add(vr.videoId);
+
+        const rawTitle = vr.title?.runs?.[0]?.text || '';
+        const channelTitle = vr.ownerText?.runs?.[0]?.text || 'YouTube Music';
+        const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
+        const durationStr = vr.lengthText?.simpleText || '';
+        const duration = parseTimeString(durationStr);
+        const thumb = `https://i.ytimg.com/vi/${vr.videoId}/hqdefault.jpg`;
+        const artistSlug = (artist || channelTitle).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+        tracks.push({
+          id: `yt-${vr.videoId}`,
+          youtubeId: vr.videoId,
+          title: songTitle,
+          artistId: `artist-${artistSlug || 'yt'}`,
+          artistName: artist,
+          albumId: `album-${vr.videoId}`,
+          albumName: album,
+          artworkUrl: thumb,
+          duration,
+          genre: 'YouTube Music',
+          source: 'YouTube Music'
+        });
+      }
+
+      return tracks;
+    } catch {
+      return [];
+    }
+  }
+
   async searchTracks(query: string): Promise<Track[]> {
     const q = query.trim();
     if (!q) return this.getTrendingTracks();
@@ -782,98 +849,91 @@ export class YouTubeMusicProvider implements MusicProvider {
       return cached.data;
     }
 
-    if (!this.apiKey || this.isQuotaBlocked()) {
-      const fallback = this.getFallbackTracks(q);
-      apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
-      return fallback;
-    }
+    let results: Track[] = [];
 
-    try {
-      // 1. Search for video IDs with up to 25 results
-      const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&q=${encodeURIComponent(q)}&key=${this.apiKey}`;
-      const searchRes = await fetch(searchUrl);
+    // Tier 1: If API key present and not blocked, try official YouTube Data API
+    if (this.apiKey && !this.isQuotaBlocked()) {
+      try {
+        const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=25&q=${encodeURIComponent(q)}&key=${this.apiKey}`;
+        const searchRes = await fetch(searchUrl, { signal: AbortSignal.timeout(5000) });
 
-      if (!searchRes.ok) {
-        if (searchRes.status === 429) {
+        if (searchRes.ok) {
+          const searchData = await searchRes.json();
+          const rawVideoIds = (searchData.items || [])
+            .map((item: any) => item.id?.videoId)
+            .filter(Boolean);
+          const videoIds = Array.from(new Set(rawVideoIds)).join(',');
+
+          if (videoIds) {
+            const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoIds}&key=${this.apiKey}`;
+            const detailsRes = await fetch(detailsUrl, { signal: AbortSignal.timeout(5000) });
+
+            if (detailsRes.ok) {
+              const detailsData = await detailsRes.json();
+              const seenTrackIds = new Set<string>();
+
+              for (const item of (detailsData.items || [])) {
+                if (!item?.id || seenTrackIds.has(item.id)) continue;
+                seenTrackIds.add(item.id);
+
+                const rawTitle = item.snippet?.title || '';
+                const channelTitle = item.snippet?.channelTitle || 'YouTube Artist';
+                const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
+                const duration = parseDuration(item.contentDetails?.duration);
+                const thumbnails = item.snippet?.thumbnails;
+                const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.default?.url;
+                const artistSlug = (artist || channelTitle).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+                results.push({
+                  id: `yt-${item.id}`,
+                  youtubeId: item.id,
+                  title: songTitle,
+                  artistId: `artist-${artistSlug || item.snippet?.channelId || 'yt'}`,
+                  artistName: artist,
+                  albumId: `album-${item.id}`,
+                  albumName: album,
+                  artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
+                  duration,
+                  genre: 'YouTube Music',
+                  source: 'YouTube API'
+                });
+              }
+            }
+          }
+        } else if (searchRes.status === 429) {
           this.markQuotaExceeded();
-        } else {
-          console.warn(`[YouTube API] Search status ${searchRes.status}. Using verified catalog.`);
         }
-        const fallback = this.getFallbackTracks(q);
-        apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
-        return fallback;
+      } catch {
+        // Fall through to public search
       }
-
-      const searchData = await searchRes.json();
-      const rawVideoIds = (searchData.items || [])
-        .map((item: any) => item.id?.videoId)
-        .filter(Boolean);
-      const videoIds = Array.from(new Set(rawVideoIds)).join(',');
-
-      if (!videoIds) {
-        const fallback = this.getFallbackTracks(q);
-        apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
-        return fallback;
-      }
-
-      // 2. Fetch video details including durations
-      const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoIds}&key=${this.apiKey}`;
-      const detailsRes = await fetch(detailsUrl);
-      if (!detailsRes.ok) {
-        if (detailsRes.status === 429) this.markQuotaExceeded();
-        const fallback = this.getFallbackTracks(q);
-        apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
-        return fallback;
-      }
-
-      const detailsData = await detailsRes.json();
-      const seenTrackIds = new Set<string>();
-      const tracks: Track[] = [];
-
-      for (const item of (detailsData.items || [])) {
-        if (!item?.id || seenTrackIds.has(item.id)) continue;
-        seenTrackIds.add(item.id);
-
-        const rawTitle = item.snippet?.title || '';
-        const channelTitle = item.snippet?.channelTitle || 'YouTube Artist';
-        const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
-        const duration = parseDuration(item.contentDetails?.duration);
-        const thumbnails = item.snippet?.thumbnails;
-        const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
-        const artistSlug = (artist || channelTitle).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-        tracks.push({
-          id: `yt-${item.id}`,
-          youtubeId: item.id,
-          title: songTitle,
-          artistId: `artist-${artistSlug || item.snippet?.channelId || 'yt'}`,
-          artistName: artist,
-          albumId: `album-${item.id}`,
-          albumName: album,
-          artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
-          duration,
-          genre: 'YouTube Music',
-          source: 'YouTube API'
-        });
-      }
-
-      // Prioritize playable songs
-      const sorted = tracks.sort((a, b) => {
-        const aIsSong = (a.duration || 0) >= 60 && (a.duration || 0) <= 600;
-        const bIsSong = (b.duration || 0) >= 60 && (b.duration || 0) <= 600;
-        if (aIsSong && !bIsSong) return -1;
-        if (!aIsSong && bIsSong) return 1;
-        return 0;
-      });
-
-      apiCache.set(cacheKey, { data: sorted, expires: Date.now() + CACHE_TTL_MS });
-      return sorted;
-    } catch {
-      const fallback = this.getFallbackTracks(q);
-      apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
-      return fallback;
     }
+
+    // Tier 2: If official API did not yield results (quota/error/empty), run live YouTube public search
+    if (results.length === 0) {
+      results = await this.searchYouTubePublic(q);
+    }
+
+    // Tier 3: If still empty, check locally verified catalog
+    if (results.length === 0) {
+      results = this.getFallbackTracks(q);
+    }
+
+    // Sort to prioritize playable track lengths
+    const sorted = results.sort((a, b) => {
+      const aIsSong = (a.duration || 0) >= 60 && (a.duration || 0) <= 600;
+      const bIsSong = (b.duration || 0) >= 60 && (b.duration || 0) <= 600;
+      if (aIsSong && !bIsSong) return -1;
+      if (!aIsSong && bIsSong) return 1;
+      return 0;
+    });
+
+    if (sorted.length > 0) {
+      apiCache.set(cacheKey, { data: sorted, expires: Date.now() + CACHE_TTL_MS });
+    }
+
+    return sorted;
   }
+
 
   async getTrendingTracks(regionCode: string = 'US'): Promise<Track[]> {
     const region = (regionCode || 'US').toUpperCase();
@@ -1140,12 +1200,6 @@ export class YouTubeMusicProvider implements MusicProvider {
     if (!query) return COMPREHENSIVE_YOUTUBE_CATALOG;
     const q = query.toLowerCase();
 
-    // Check category match first
-    const categoryMatches = this.getCatalogByCategory(q);
-    if (categoryMatches.length > 0 && categoryMatches.length !== COMPREHENSIVE_YOUTUBE_CATALOG.length) {
-      return categoryMatches;
-    }
-
     const matched = COMPREHENSIVE_YOUTUBE_CATALOG.filter(t =>
       t.title.toLowerCase().includes(q) ||
       t.artistName.toLowerCase().includes(q) ||
@@ -1153,7 +1207,15 @@ export class YouTubeMusicProvider implements MusicProvider {
       (t.albumName && t.albumName.toLowerCase().includes(q))
     );
 
-    return matched.length > 0 ? matched : COMPREHENSIVE_YOUTUBE_CATALOG;
+    if (matched.length > 0) return matched;
+
+    // Check category match only if the query explicitly matches a category keyword
+    const categoryMatches = this.getCatalogByCategory(q);
+    if (categoryMatches.length > 0 && categoryMatches.length !== COMPREHENSIVE_YOUTUBE_CATALOG.length) {
+      return categoryMatches;
+    }
+
+    return [];
   }
 }
 

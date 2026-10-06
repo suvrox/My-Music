@@ -45,36 +45,17 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
         const res = await fetch(`/api/music/search?q=${encodeURIComponent(q)}`);
         if (res.ok) {
           const data = await res.json();
-          const fetchedTracks: Track[] = data.tracks || [];
-          if (fetchedTracks.length > 0) {
-            setResults(fetchedTracks);
-          } else {
-            // Fallback filter locally
-            const lower = q.toLowerCase();
-            const fallback = INITIAL_TRACKS.filter(t =>
-              t.title.toLowerCase().includes(lower) ||
-              t.artistName.toLowerCase().includes(lower) ||
-              t.albumName?.toLowerCase().includes(lower)
-            );
-            setResults(fallback);
-          }
+          const fetchedTracks: Track[] = Array.isArray(data.tracks) ? data.tracks : [];
+          setResults(fetchedTracks);
         } else {
-          const lower = q.toLowerCase();
-          setResults(INITIAL_TRACKS.filter(t =>
-            t.title.toLowerCase().includes(lower) ||
-            t.artistName.toLowerCase().includes(lower)
-          ));
+          setResults([]);
         }
       } catch {
-        const lower = q.toLowerCase();
-        setResults(INITIAL_TRACKS.filter(t =>
-          t.title.toLowerCase().includes(lower) ||
-          t.artistName.toLowerCase().includes(lower)
-        ));
+        setResults([]);
       } finally {
         setLoading(false);
       }
-    }, 350);
+    }, 300);
 
     return () => clearTimeout(timeout);
   }, [searchQuery]);

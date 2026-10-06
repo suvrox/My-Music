@@ -5,7 +5,7 @@ export interface MusicProvider {
   getTrack(id: string): Promise<Track | null>;
   getArtist(id: string): Promise<Artist | null>;
   getAlbum(id: string): Promise<Album | null>;
-  getTrendingTracks(): Promise<Track[]>;
+  getTrendingTracks(regionCode?: string): Promise<Track[]>;
   getRecommendations(track: Track): Promise<Track[]>;
   getCategoryTracks(category: string): Promise<Track[]>;
   getNewReleases(): Promise<Album[]>;

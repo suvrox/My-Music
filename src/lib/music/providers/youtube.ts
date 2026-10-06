@@ -128,18 +128,7 @@ const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour TTL
 
 // Rich Pre-Mapped YouTube Catalog spanning all categories with verified YouTube Video IDs
 const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
-  // Trending Global & Electronic
-  {
-    id: 'yt-cMg8KaMdDYo',
-    youtubeId: 'cMg8KaMdDYo',
-    title: 'Fearless Funk',
-    artistName: 'DR MØB, Chris Linton',
-    albumName: 'Fearless Funk (Single)',
-    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
-    duration: 138,
-    genre: 'Electronic / Phonk',
-    source: 'YouTube Music'
-  },
+  // Trending Global Hits
   {
     id: 'yt-kPa7bsKwL-c',
     youtubeId: 'kPa7bsKwL-c',
@@ -182,6 +171,83 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/ekr2nIex040/hqdefault.jpg',
     duration: 170,
     genre: 'Pop / K-Pop',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-JGwWNGJdvx8',
+    youtubeId: 'JGwWNGJdvx8',
+    title: 'Shape of You',
+    artistName: 'Ed Sheeran',
+    albumName: '÷ (Divide)',
+    artworkUrl: 'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg',
+    duration: 233,
+    genre: 'Pop / Global',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-7wtfhZwyrcc',
+    youtubeId: '7wtfhZwyrcc',
+    title: 'Believer',
+    artistName: 'Imagine Dragons',
+    albumName: 'Evolve',
+    artworkUrl: 'https://i.ytimg.com/vi/7wtfhZwyrcc/hqdefault.jpg',
+    duration: 204,
+    genre: 'Alternative / Rock',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-4NRXx6U8ABQ',
+    youtubeId: '4NRXx6U8ABQ',
+    title: 'Blinding Lights',
+    artistName: 'The Weeknd',
+    albumName: 'After Hours',
+    artworkUrl: 'https://i.ytimg.com/vi/4NRXx6U8ABQ/hqdefault.jpg',
+    duration: 200,
+    genre: 'Synthpop / Global',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-dMMUH_ZpbB0',
+    youtubeId: 'dMMUH_ZpbB0',
+    title: 'Starboy',
+    artistName: 'The Weeknd, Daft Punk',
+    albumName: 'Starboy',
+    artworkUrl: 'https://i.ytimg.com/vi/dMMUH_ZpbB0/hqdefault.jpg',
+    duration: 230,
+    genre: 'R&B / Pop',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-kTJczUoc26U',
+    youtubeId: 'kTJczUoc26U',
+    title: 'Stay',
+    artistName: 'The Kid LAROI, Justin Bieber',
+    albumName: 'F*CK LOVE 3',
+    artworkUrl: 'https://i.ytimg.com/vi/kTJczUoc26U/hqdefault.jpg',
+    duration: 141,
+    genre: 'Pop / Global',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-H5v3kku4y6Q',
+    youtubeId: 'H5v3kku4y6Q',
+    title: 'As It Was',
+    artistName: 'Harry Styles',
+    albumName: "Harry's House",
+    artworkUrl: 'https://i.ytimg.com/vi/H5v3kku4y6Q/hqdefault.jpg',
+    duration: 167,
+    genre: 'Indie Pop',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-XoiOOiuH8iI',
+    youtubeId: 'XoiOOiuH8iI',
+    title: 'Water',
+    artistName: 'Tyla',
+    albumName: 'TYLA',
+    artworkUrl: 'https://i.ytimg.com/vi/XoiOOiuH8iI/hqdefault.jpg',
+    duration: 200,
+    genre: 'Afrobeats / Pop',
     source: 'YouTube Music'
   },
 
@@ -252,6 +318,50 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     genre: 'Bollywood & Chill',
     source: 'YouTube Music'
   },
+  {
+    id: 'yt-jHNNMj5bNQw',
+    youtubeId: 'jHNNMj5bNQw',
+    title: 'Kabira',
+    artistName: 'Arijit Singh, Harshdeep Kaur',
+    albumName: 'Yeh Jawaani Hai Deewani',
+    artworkUrl: 'https://i.ytimg.com/vi/jHNNMj5bNQw/hqdefault.jpg',
+    duration: 215,
+    genre: 'Bollywood & Chill',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-bzSTpdcs-EI',
+    youtubeId: 'bzSTpdcs-EI',
+    title: 'Channa Mereya',
+    artistName: 'Arijit Singh, Pritam',
+    albumName: 'Ae Dil Hai Mushkil',
+    artworkUrl: 'https://i.ytimg.com/vi/bzSTpdcs-EI/hqdefault.jpg',
+    duration: 289,
+    genre: 'Bollywood & Chill',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-sK7riqg2mr4',
+    youtubeId: 'sK7riqg2mr4',
+    title: 'Agar Tum Saath Ho',
+    artistName: 'Arijit Singh, Alka Yagnik',
+    albumName: 'Tamasha',
+    artworkUrl: 'https://i.ytimg.com/vi/sK7riqg2mr4/hqdefault.jpg',
+    duration: 341,
+    genre: 'Bollywood & Chill',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-T94PHkuydcw',
+    youtubeId: 'T94PHkuydcw',
+    title: 'Kun Faya Kun',
+    artistName: 'A.R. Rahman, Mohit Chauhan, Javed Ali',
+    albumName: 'Rockstar',
+    artworkUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
+    duration: 470,
+    genre: 'Bollywood & Chill',
+    source: 'YouTube Music'
+  },
 
   // Romance & Love (pov: you're in love)
   {
@@ -295,6 +405,39 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     albumName: 'Easy On My Eyes',
     artworkUrl: 'https://i.ytimg.com/vi/GxldQ9eX2wo/hqdefault.jpg',
     duration: 177,
+    genre: 'Romance',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-2Vv-BfVoq4g',
+    youtubeId: '2Vv-BfVoq4g',
+    title: 'Perfect',
+    artistName: 'Ed Sheeran',
+    albumName: '÷ (Divide)',
+    artworkUrl: 'https://i.ytimg.com/vi/2Vv-BfVoq4g/hqdefault.jpg',
+    duration: 263,
+    genre: 'Romance',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-450p7goxZqg',
+    youtubeId: '450p7goxZqg',
+    title: 'All of Me',
+    artistName: 'John Legend',
+    albumName: 'Love in the Future',
+    artworkUrl: 'https://i.ytimg.com/vi/450p7goxZqg/hqdefault.jpg',
+    duration: 269,
+    genre: 'Romance',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-0yW7w8F2TVA',
+    youtubeId: '0yW7w8F2TVA',
+    title: "Say You Won't Let Go",
+    artistName: 'James Arthur',
+    albumName: 'Back from the Edge',
+    artworkUrl: 'https://i.ytimg.com/vi/0yW7w8F2TVA/hqdefault.jpg',
+    duration: 211,
     genre: 'Romance',
     source: 'YouTube Music'
   },
@@ -352,6 +495,61 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     albumName: 'War',
     artworkUrl: 'https://i.ytimg.com/vi/qFkNATtc3mc/hqdefault.jpg',
     duration: 302,
+    genre: 'Happy Vibes',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-ZbZSe6N_BXs',
+    youtubeId: 'ZbZSe6N_BXs',
+    title: 'Happy',
+    artistName: 'Pharrell Williams',
+    albumName: 'G I R L',
+    artworkUrl: 'https://i.ytimg.com/vi/ZbZSe6N_BXs/hqdefault.jpg',
+    duration: 233,
+    genre: 'Happy Vibes',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-hT_nvWreIhg',
+    youtubeId: 'hT_nvWreIhg',
+    title: 'Counting Stars',
+    artistName: 'OneRepublic',
+    albumName: 'Native',
+    artworkUrl: 'https://i.ytimg.com/vi/hT_nvWreIhg/hqdefault.jpg',
+    duration: 257,
+    genre: 'Happy Vibes',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-OPf0YbXqDm0',
+    youtubeId: 'OPf0YbXqDm0',
+    title: 'Uptown Funk',
+    artistName: 'Mark Ronson, Bruno Mars',
+    albumName: 'Uptown Special',
+    artworkUrl: 'https://i.ytimg.com/vi/OPf0YbXqDm0/hqdefault.jpg',
+    duration: 270,
+    genre: 'Happy Vibes',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-qrO4YZeyl0I',
+    youtubeId: 'qrO4YZeyl0I',
+    title: 'Bad Romance',
+    artistName: 'Lady Gaga',
+    albumName: 'The Fame Monster',
+    artworkUrl: 'https://i.ytimg.com/vi/qrO4YZeyl0I/hqdefault.jpg',
+    duration: 308,
+    genre: 'Happy Vibes',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-H7HmzwI67ec',
+    youtubeId: 'H7HmzwI67ec',
+    title: 'Good Time',
+    artistName: 'Owl City, Carly Rae Jepsen',
+    albumName: 'The Midsummer Station',
+    artworkUrl: 'https://i.ytimg.com/vi/H7HmzwI67ec/hqdefault.jpg',
+    duration: 206,
     genre: 'Happy Vibes',
     source: 'YouTube Music'
   },
@@ -490,6 +688,28 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     albumName: 'Metamorphosis',
     artworkUrl: 'https://i.ytimg.com/vi/-dhx7Hnu-wo/hqdefault.jpg',
     duration: 142,
+    genre: 'Drift Phonk',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-F5tSoaJ93ac',
+    youtubeId: 'F5tSoaJ93ac',
+    title: 'Override',
+    artistName: 'KSLV Noh',
+    albumName: 'Override',
+    artworkUrl: 'https://i.ytimg.com/vi/F5tSoaJ93ac/hqdefault.jpg',
+    duration: 114,
+    genre: 'Drift Phonk',
+    source: 'YouTube Music'
+  },
+  {
+    id: 'yt-cMg8KaMdDYo',
+    youtubeId: 'cMg8KaMdDYo',
+    title: 'Fearless Funk',
+    artistName: 'DR MØB, Chris Linton',
+    albumName: 'Fearless Funk (Single)',
+    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
+    duration: 138,
     genre: 'Drift Phonk',
     source: 'YouTube Music'
   },
@@ -655,64 +875,77 @@ export class YouTubeMusicProvider implements MusicProvider {
     }
   }
 
-  async getTrendingTracks(): Promise<Track[]> {
-    const cacheKey = 'trending:global';
+  async getTrendingTracks(regionCode: string = 'US'): Promise<Track[]> {
+    const region = (regionCode || 'US').toUpperCase();
+    const cacheKey = `trending:${region}`;
     const cached = apiCache.get(cacheKey);
     if (cached && cached.expires > Date.now()) {
       return cached.data;
     }
 
+    const fallback = region === 'IN'
+      ? this.getCatalogByCategory('india')
+      : this.getCatalogByCategory('trending');
+
     if (!this.apiKey || this.isQuotaBlocked()) {
-      const fallback = this.getFallbackTracks();
       apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
       return fallback;
     }
 
     try {
-      const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&videoCategoryId=10&maxResults=25&key=${this.apiKey}`;
+      const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,status&chart=mostPopular&videoCategoryId=10&regionCode=${region}&maxResults=25&key=${this.apiKey}`;
       const res = await fetch(url);
       if (!res.ok) {
         if (res.status === 429) this.markQuotaExceeded();
-        const fallback = this.getFallbackTracks();
         apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
         return fallback;
       }
 
       const data = await res.json();
-      const tracks = (data.items || []).map((item: any) => {
-        const rawTitle = item.snippet?.title || '';
-        const channelTitle = item.snippet?.channelTitle || 'YouTube Music';
-        const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
-        const duration = parseDuration(item.contentDetails?.duration);
-        const thumbnails = item.snippet?.thumbnails;
-        const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
+      const tracks: Track[] = (data.items || [])
+        .filter((item: any) => item.status?.embeddable !== false)
+        .map((item: any) => {
+          const rawTitle = item.snippet?.title || '';
+          const channelTitle = item.snippet?.channelTitle || 'YouTube Music';
+          const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
+          const duration = parseDuration(item.contentDetails?.duration);
+          const thumbnails = item.snippet?.thumbnails;
+          const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
 
-        return {
-          id: `yt-${item.id}`,
-          youtubeId: item.id,
-          title: songTitle,
-          artistId: `artist-${item.snippet?.channelId}`,
-          artistName: artist,
-          albumId: `album-${item.id}`,
-          albumName: album,
-          artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
-          duration,
-          genre: 'YouTube Trending',
-          source: 'YouTube API'
-        };
-      });
+          return {
+            id: `yt-${item.id}`,
+            youtubeId: item.id,
+            title: songTitle,
+            artistId: `artist-${item.snippet?.channelId || 'yt'}`,
+            artistName: artist,
+            albumId: `album-${item.id}`,
+            albumName: album,
+            artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
+            duration,
+            genre: region === 'IN' ? 'Trending India' : 'YouTube Trending',
+            source: 'YouTube API'
+          };
+        });
 
-      apiCache.set(cacheKey, { data: tracks, expires: Date.now() + CACHE_TTL_MS });
-      return tracks;
+      if (tracks.length > 0) {
+        // Merge official chart items with rich curated tracks to ensure zero broken cards
+        const merged = Array.from(
+          new Map([...tracks, ...fallback].map(t => [t.youtubeId || t.id, t])).values()
+        );
+        apiCache.set(cacheKey, { data: merged, expires: Date.now() + CACHE_TTL_MS });
+        return merged;
+      }
+
+      apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
+      return fallback;
     } catch {
-      const fallback = this.getFallbackTracks();
       apiCache.set(cacheKey, { data: fallback, expires: Date.now() + CACHE_TTL_MS });
       return fallback;
     }
   }
 
   async getRecommendations(track: Track): Promise<Track[]> {
-    if (!track) return this.getTrendingTracks();
+    if (!track) return this.getTrendingTracks('US');
 
     const cacheKey = `rec:${track.id || track.youtubeId}`;
     const cached = apiCache.get(cacheKey);
@@ -731,72 +964,82 @@ export class YouTubeMusicProvider implements MusicProvider {
         return filtered.slice(0, 15);
       }
 
-      const catalogTracks = this.getFallbackTracks();
+      const catalogTracks = this.getCatalogByCategory(track.genre || 'trending');
       const combined = [...filtered, ...catalogTracks.filter(t => t.id !== track.id && t.youtubeId !== track.youtubeId)];
       const unique = Array.from(new Map(combined.map(t => [t.youtubeId || t.id, t])).values());
       const result = unique.slice(0, 15);
       apiCache.set(cacheKey, { data: result, expires: Date.now() + CACHE_TTL_MS });
       return result;
     } catch {
-      return this.getTrendingTracks();
+      return this.getTrendingTracks('US');
     }
   }
 
   async getCategoryTracks(category: string): Promise<Track[]> {
-    const q = category.trim();
-    if (!q) return this.getTrendingTracks();
+    const q = (category || '').trim().toLowerCase();
+    if (!q || q.includes('trending') || q.includes('global')) return this.getTrendingTracks('US');
+    if (q.includes('india')) return this.getTrendingTracks('IN');
 
-    const cacheKey = `cat:${q.toLowerCase()}`;
+    const cacheKey = `cat:${q}`;
     const cached = apiCache.get(cacheKey);
     if (cached && cached.expires > Date.now()) {
       return cached.data;
     }
 
-    // If quota is blocked, immediately serve matched categorized catalog
+    const baseCatalog = this.getCatalogByCategory(q);
+
+    // If quota is blocked or no key, serve verified category catalog immediately
     if (this.isQuotaBlocked() || !this.apiKey) {
-      const categoryCatalog = this.getCatalogByCategory(q);
-      apiCache.set(cacheKey, { data: categoryCatalog, expires: Date.now() + CACHE_TTL_MS });
-      return categoryCatalog;
+      apiCache.set(cacheKey, { data: baseCatalog, expires: Date.now() + CACHE_TTL_MS });
+      return baseCatalog;
     }
 
     try {
       const searchResults = await this.searchTracks(`${q} songs`);
       if (searchResults && searchResults.length > 0) {
-        apiCache.set(cacheKey, { data: searchResults, expires: Date.now() + CACHE_TTL_MS });
-        return searchResults;
+        const merged = Array.from(
+          new Map([...baseCatalog, ...searchResults].map(t => [t.youtubeId || t.id, t])).values()
+        );
+        apiCache.set(cacheKey, { data: merged, expires: Date.now() + CACHE_TTL_MS });
+        return merged;
       }
-      return this.getCatalogByCategory(q);
+      apiCache.set(cacheKey, { data: baseCatalog, expires: Date.now() + CACHE_TTL_MS });
+      return baseCatalog;
     } catch {
-      return this.getCatalogByCategory(q);
+      apiCache.set(cacheKey, { data: baseCatalog, expires: Date.now() + CACHE_TTL_MS });
+      return baseCatalog;
     }
   }
 
   private getCatalogByCategory(categoryQuery: string): Track[] {
-    const q = categoryQuery.toLowerCase();
+    const q = (categoryQuery || '').toLowerCase();
 
     if (q.includes('podcast')) {
       return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre === 'Podcast');
-    }
-    if (q.includes('bollywood') || q.includes('chill')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Bollywood') || t.genre?.includes('Acoustic') || t.genre?.includes('Tamil'));
-    }
-    if (q.includes('love') || q.includes('romance')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Romance') || t.albumName?.toLowerCase().includes('love'));
-    }
-    if (q.includes('happy') || q.includes('vibes') || q.includes('good')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Happy') || t.genre?.includes('Indie Acoustic'));
-    }
-    if (q.includes('ipop') || q.includes('pop') || q.includes('indie')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Indian Pop') || t.genre?.includes('Pop'));
-    }
-    if (q.includes('hot') || q.includes('punjabi') || q.includes('hits')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Hits') || t.genre?.includes('Punjabi'));
     }
     if (q.includes('phonk') || q.includes('drift')) {
       return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Phonk'));
     }
     if (q.includes('india')) {
-      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Bollywood') || t.genre?.includes('Punjabi') || t.genre?.includes('Tamil') || t.genre?.includes('Indian Pop'));
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Punjabi') || t.genre?.includes('Bollywood') || t.genre?.includes('Tamil') || t.genre?.includes('Indian Pop'));
+    }
+    if (q.includes('bollywood') || q.includes('chill')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Bollywood') || t.genre?.includes('Acoustic') || t.genre?.includes('Tamil'));
+    }
+    if (q.includes('love') || q.includes('romance')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Romance') || t.albumName?.toLowerCase().includes('love') || t.genre?.includes('Pop / Global'));
+    }
+    if (q.includes('happy') || q.includes('vibes') || q.includes('good')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Happy') || t.genre?.includes('Indie Acoustic') || t.genre?.includes('Synthpop'));
+    }
+    if (q.includes('ipop') || q.includes('indie')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Indian Pop'));
+    }
+    if (q.includes('hot') || q.includes('hits')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Hits') || t.genre?.includes('Global') || t.genre?.includes('Pop'));
+    }
+    if (q.includes('trending') || q.includes('global')) {
+      return COMPREHENSIVE_YOUTUBE_CATALOG.filter(t => t.genre?.includes('Global') || t.genre?.includes('Pop') || t.genre?.includes('Alternative'));
     }
 
     return COMPREHENSIVE_YOUTUBE_CATALOG;

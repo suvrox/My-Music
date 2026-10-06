@@ -3,16 +3,16 @@ import { MusicProvider } from '../types';
 
 export const INITIAL_TRACKS: Track[] = [
   {
-    id: 'yt-cMg8KaMdDYo',
-    youtubeId: 'cMg8KaMdDYo',
-    title: 'Fearless Funk',
-    artistId: 'artist-dr-mob',
-    artistName: 'DR MØB, Chris Linton',
-    albumId: 'album-ncs-release',
-    albumName: 'Fearless Funk (Single)',
-    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
-    duration: 138,
-    genre: 'Electronic / Phonk',
+    id: 'yt-kPa7bsKwL-c',
+    youtubeId: 'kPa7bsKwL-c',
+    title: 'Die With A Smile',
+    artistId: 'artist-lady-gaga',
+    artistName: 'Lady Gaga, Bruno Mars',
+    albumId: 'album-die-with-a-smile',
+    albumName: 'Die With A Smile',
+    artworkUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
+    duration: 252,
+    genre: 'Pop / Global',
     source: 'YouTube Music'
   },
   {
@@ -338,7 +338,10 @@ export class CatalogMusicProvider implements MusicProvider {
     return null;
   }
 
-  async getTrendingTracks(): Promise<Track[]> {
+  async getTrendingTracks(regionCode?: string): Promise<Track[]> {
+    if (regionCode?.toUpperCase() === 'IN') {
+      return INITIAL_TRACKS.filter(t => t.genre?.includes('Punjabi') || t.genre?.includes('Bollywood') || t.genre?.includes('Tamil') || t.genre?.includes('Indian Pop'));
+    }
     return INITIAL_TRACKS;
   }
 

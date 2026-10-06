@@ -115,31 +115,51 @@ export function BottomPlayerBar() {
     >
       {/* Left Section: Track Info Mini Widget */}
       <div className="flex items-center gap-3.5 w-[30%] min-w-[180px]">
-        <div className="w-14 h-14 rounded overflow-hidden flex-shrink-0 bg-zinc-900 shadow">
-          <img
-            alt={currentTrack?.title || 'Currently Playing'}
-            className="w-full h-full object-cover filter contrast-125 brightness-75"
-            src={
-              currentTrack?.artworkUrl ||
-              'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg'
-            }
-          />
-        </div>
-        <div className="flex flex-col min-w-0 pr-1">
-          <span className="text-sm font-semibold text-white truncate hover:underline cursor-pointer">
-            {currentTrack?.title || 'Fearless Funk'}
-          </span>
-          <span className="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer">
-            {currentTrack?.artistName || 'DR MØB, Chris Linton'}
-          </span>
-        </div>
-        <button
-          onClick={() => currentTrack && toggleFavorite(currentTrack)}
-          className="text-spotify-green hover:scale-105 transition ml-1 cursor-pointer flex-shrink-0"
-          title={isCurrentFav ? 'Saved' : 'Save track'}
-        >
-          <i className={`text-base ${isCurrentFav ? 'fa-solid fa-circle-check' : 'fa-regular fa-heart text-spotify-textSubdued hover:text-white'}`}></i>
-        </button>
+        {currentTrack ? (
+          <>
+            <div className="w-14 h-14 rounded overflow-hidden flex-shrink-0 bg-zinc-900 shadow">
+              <img
+                alt={currentTrack.title}
+                className="w-full h-full object-cover filter contrast-125 brightness-90"
+                src={
+                  currentTrack.artworkUrl ||
+                  `https://i.ytimg.com/vi/${currentTrack.youtubeId}/hqdefault.jpg`
+                }
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (currentTrack.youtubeId && !target.src.includes(currentTrack.youtubeId)) {
+                    target.src = `https://i.ytimg.com/vi/${currentTrack.youtubeId}/hqdefault.jpg`;
+                  }
+                }}
+              />
+            </div>
+            <div className="flex flex-col min-w-0 pr-1">
+              <span className="text-sm font-semibold text-white truncate hover:underline cursor-pointer" title={currentTrack.title}>
+                {currentTrack.title}
+              </span>
+              <span className="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer" title={currentTrack.artistName}>
+                {currentTrack.artistName}
+              </span>
+            </div>
+            <button
+              onClick={() => toggleFavorite(currentTrack)}
+              className="text-spotify-green hover:scale-105 transition ml-1 cursor-pointer flex-shrink-0"
+              title={isCurrentFav ? 'Saved' : 'Save track'}
+            >
+              <i className={`text-base ${isCurrentFav ? 'fa-solid fa-circle-check' : 'fa-regular fa-heart text-spotify-textSubdued hover:text-white'}`}></i>
+            </button>
+          </>
+        ) : (
+          <div className="flex items-center gap-3 text-spotify-textSubdued">
+            <div className="w-12 h-12 rounded bg-zinc-900/90 flex items-center justify-center text-zinc-600 border border-zinc-800">
+              <i className="fa-solid fa-music text-base"></i>
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-xs font-semibold text-zinc-300">No track playing</span>
+              <span className="text-[11px] text-zinc-500">Choose a song to start</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Center Section: Playback Controls & Progress Bar */}
@@ -172,7 +192,12 @@ export function BottomPlayerBar() {
           {/* Circular Play / Pause */}
           <button
             onClick={togglePlay}
-            className="w-8 h-8 rounded-full bg-white text-black hover:scale-105 active:scale-95 flex items-center justify-center transition cursor-pointer shadow hover:bg-zinc-200"
+            disabled={!currentTrack}
+            className={`w-8 h-8 rounded-full bg-white text-black flex items-center justify-center transition shadow ${
+              currentTrack
+                ? 'hover:scale-105 active:scale-95 cursor-pointer hover:bg-zinc-200'
+                : 'opacity-50 cursor-not-allowed'
+            }`}
             title={isPlaying ? 'Pause' : 'Play'}
           >
             <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-xs`}></i>

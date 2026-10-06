@@ -47,7 +47,7 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-bold text-white hover:underline cursor-pointer truncate pr-2">
-          {isQueueOpen ? 'Playback Queue' : (currentTrack?.albumName || 'Sky is the limit 📈')}
+          {isQueueOpen ? 'Playback Queue' : (currentTrack ? (currentTrack.albumName || currentTrack.title) : 'Now Playing')}
         </h2>
         <div className="flex items-center gap-3 text-spotify-textSubdued text-sm">
           <button className="hover:text-white cursor-pointer" title="Options">
@@ -208,42 +208,44 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
             </div>
           </div>
         </div>
-      ) : (
-        /* Standard Now Playing & Artist View matching Stitch */
+      ) : currentTrack ? (
+        /* Standard Now Playing & Artist View */
         <>
           {/* Main Song Big Album Artwork */}
-          <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-4 shadow-2xl bg-black">
+          <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-4 shadow-2xl bg-zinc-900 border border-zinc-800">
             <img
-              alt={currentTrack?.title || 'Fearless Funk'}
-              className="w-full h-full object-cover filter contrast-150 brightness-75"
+              alt={currentTrack.title}
+              className="w-full h-full object-cover filter brightness-95"
               src={
-                currentTrack?.artworkUrl ||
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuA5-A5tvDVNA1zUz-P2fNxAW00Db5ym3CfrOJFQk-k2P77vTWqQjvEKAKGvywh3CHuCVi1INiU6cjJSpAx91bBTR7RLLNO6MO9Y5XVDzegiCf3TViS5VLvs5-CQAt1HkSz0btc1w6du8wzdewpqOpnkX8fJxL-ehZh-bIhAt-EVDpBVRKyEt-LFtKPb_W45DfYMBoFgjFDKWIL2DlQ0d8O7mSBiiePUCyRzx6qXsIjVLnk98ger4Rha7A'
+                currentTrack.artworkUrl ||
+                `https://i.ytimg.com/vi/${currentTrack.youtubeId}/hqdefault.jpg`
               }
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (currentTrack.youtubeId && !target.src.includes(currentTrack.youtubeId)) {
+                  target.src = `https://i.ytimg.com/vi/${currentTrack.youtubeId}/hqdefault.jpg`;
+                }
+              }}
             />
-            {/* NCS Style demonic silhouette overlay simulation */}
-            <div className="absolute inset-0 bg-gradient-to-t from-red-950/90 via-red-900/30 to-black/80 flex flex-col justify-between p-3 pointer-events-none">
-              <span className="text-red-500 font-extrabold tracking-widest text-xs">
-                {currentTrack?.genre?.includes('Phonk') || currentTrack?.genre?.includes('Electronic') ? 'NCS' : 'FEATURED'}
-              </span>
-              <div className="self-center mb-6">
-                <i className="fa-solid fa-person-burst text-4xl text-red-500/80"></i>
+            {currentTrack.genre && (
+              <div className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider">
+                {currentTrack.genre}
               </div>
-            </div>
+            )}
           </div>
 
           {/* Track Information & Verified Saved Icon */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex flex-col min-w-0 pr-2">
-              <h1 className="text-xl font-bold text-white truncate hover:underline cursor-pointer">
-                {currentTrack?.title || 'Fearless Funk'}
+              <h1 className="text-xl font-bold text-white truncate hover:underline cursor-pointer" title={currentTrack.title}>
+                {currentTrack.title}
               </h1>
-              <p className="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer font-medium mt-0.5">
-                {currentTrack?.artistName || 'DR MØB, Chris Linton'}
+              <p className="text-xs text-spotify-textSubdued truncate hover:underline cursor-pointer font-medium mt-0.5" title={currentTrack.artistName}>
+                {currentTrack.artistName}
               </p>
             </div>
             <button
-              onClick={() => currentTrack && toggleFavorite(currentTrack)}
+              onClick={() => toggleFavorite(currentTrack)}
               className="text-spotify-green hover:scale-105 transition flex-shrink-0 cursor-pointer"
               title={isCurrentFavorite ? 'Saved to your Liked Songs' : 'Save to Liked Songs'}
             >
@@ -266,7 +268,7 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
                 className="flex items-center gap-2.5 cursor-pointer group"
               >
                 <img
-                  src={upNextTrack.artworkUrl || 'https://via.placeholder.com/40'}
+                  src={upNextTrack.artworkUrl || `https://i.ytimg.com/vi/${upNextTrack.youtubeId}/hqdefault.jpg`}
                   alt={upNextTrack.title}
                   className="w-10 h-10 rounded object-cover flex-shrink-0 group-hover:scale-105 transition"
                 />
@@ -287,24 +289,21 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
 
           {/* About The Artist Card */}
           <div
-            className="bg-spotify-card rounded-lg overflow-hidden relative group cursor-pointer shadow-lg mb-4"
+            className="bg-spotify-card rounded-lg overflow-hidden relative group cursor-pointer shadow-lg mb-4 border border-zinc-850"
             data-purpose="artist-bio-card"
           >
-            <div className="relative h-44 w-full bg-zinc-800 overflow-hidden">
+            <div className="relative h-36 w-full bg-zinc-800 overflow-hidden">
               <img
                 alt={activeArtist.name}
                 className="w-full h-full object-cover filter brightness-75 contrast-125 group-hover:scale-105 transition duration-500"
-                src={
-                  activeArtist.imageUrl ||
-                  'https://lh3.googleusercontent.com/aida-public/AB6AXuDj7E5tMyhe2b5EaYOK4lJh2KRCtgQ_jKH3_O5K2E3CdMFvOlKbz3xMOrYIdBwP8Ark7XnDpT4o0VK-zWhQcFXXRmVLeGKocdo99aPU7xVvXUUSG3s6QxYWtzq3bRt7CPCzXdEid390YrGTZNkkaibp1RU2nCPyomMma8d-CpftdKjCpsRz3maoRMv0fDiYm1YIiihM3f1hkyi_0oOox5nw5wCGsbu2kcevSgV8d_6rrr1vWuo17-u-rQ'
-                }
+                src={activeArtist.imageUrl || currentTrack.artworkUrl || 'https://via.placeholder.com/300'}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-spotify-card via-black/40 to-transparent"></div>
               <div className="absolute top-3 left-3 text-xs font-bold text-white uppercase tracking-wider drop-shadow">
                 About the artist
               </div>
             </div>
-            <div className="p-3 -mt-6 relative">
+            <div className="p-3 -mt-4 relative">
               <div className="flex items-center gap-1.5">
                 <span className="text-white font-bold text-base hover:underline">
                   {activeArtist.name}
@@ -312,15 +311,27 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
                 <i className="fa-solid fa-certificate text-blue-400 text-xs" title="Verified Artist"></i>
               </div>
               <p className="text-xs text-spotify-textSubdued mt-1">
-                {activeArtist.monthlyListeners || '124,592 monthly listeners'}
+                {activeArtist.monthlyListeners || '1,200,000 monthly listeners'}
               </p>
               <p className="text-xs text-spotify-textSubdued mt-2 line-clamp-3 leading-relaxed">
-                {activeArtist.description ||
-                  'Multi-genre producer combining dark cyber-bass textures, Phonk grooves, and high-energy electronic soundscapes.'}
+                {activeArtist.description || 'Verified recording artist with active releases streaming across the platform.'}
               </p>
             </div>
           </div>
         </>
+      ) : (
+        /* Empty State when no track is selected yet */
+        <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3.5 my-auto">
+          <div className="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-600 shadow-inner">
+            <i className="fa-solid fa-headphones-simple text-2xl"></i>
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-sm font-bold text-white">No song playing</h3>
+            <p className="text-xs text-spotify-textSubdued leading-relaxed max-w-[210px]">
+              Select any track from Trending, Bollywood, or your playlists to view track info, artist bio, and suggestions here.
+            </p>
+          </div>
+        </div>
       )}
     </aside>
   );

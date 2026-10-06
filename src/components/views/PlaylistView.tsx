@@ -54,7 +54,16 @@ export function PlaylistView({ playlistId, onBack }: PlaylistViewProps) {
       <div className="p-4 sm:p-6 bg-gradient-to-b from-indigo-900/60 to-spotify-surface flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6 pt-6 sm:pt-12 pb-4 sm:pb-6 text-center sm:text-left">
         <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-lg overflow-hidden shadow-2xl bg-zinc-800 flex-shrink-0">
           {playlist.coverUrl ? (
-            <img src={playlist.coverUrl} alt={playlist.name} className="w-full h-full object-cover" />
+            <img
+              src={playlist.coverUrl}
+              alt={playlist.name}
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/logo.webp';
+              }}
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-zinc-800 text-zinc-500">
               <i className="fa-solid fa-music text-3xl sm:text-5xl"></i>

@@ -248,52 +248,582 @@ export const INITIAL_ARTISTS: Artist[] = [
 
 export const INITIAL_PLAYLISTS: Playlist[] = [
   {
-    id: 'playlist-sky-limit',
-    name: 'Sky is the limit 📈',
-    description: 'High energy beats, motivational anthems, and relentless drive.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOmQRIS8f3CS7eq3-ImvLihnpYXCuK4XFtSQaKbHJqpVuEXbiLOZKmF6CPSG-zLsfTvR6wib5bOzDbvfFyN2FgQxLEL4xQ3p9JgWh3eYkbLEwYy0lcJmS-OtS_b_bICeOBzAckeSTfIN82slGKPJh0JFltPB0MUs5bV78cerqpuKYyRNyULvyruUfqUzDvvZDUbI3KiIfAYZwd-rXwI9LhANOZei1IrGhoUfDDVIc3Dxhoy3RkJtOAVA',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[0], INITIAL_TRACKS[1], INITIAL_TRACKS[8], INITIAL_TRACKS[9]]
+    id: 'playlist-bollywood-chill',
+    name: 'Bollywood Romance & Chill 💖',
+    description: 'Soulful Hindi chartbusters, heartfelt melodies, and late-night Bollywood vibes.',
+    coverUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-k3g_WjLCsXM',
+        youtubeId: 'k3g_WjLCsXM',
+        title: 'O Sajni Re',
+        artistName: 'Arijit Singh, Ram Sampath',
+        albumName: 'Laapataa Ladies',
+        artworkUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
+        duration: 172,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-BddP6PYo2gs',
+        youtubeId: 'BddP6PYo2gs',
+        title: 'Kesariya',
+        artistName: 'Arijit Singh, Pritam',
+        albumName: 'Brahmāstra',
+        artworkUrl: 'https://i.ytimg.com/vi/BddP6PYo2gs/hqdefault.jpg',
+        duration: 268,
+        genre: 'Romance',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-lXqvdKl3S2k',
+        youtubeId: 'lXqvdKl3S2k',
+        title: 'Tum Se',
+        artistName: 'Sachin-Jigar, Raghav Chaitanya',
+        albumName: 'Teri Baaton Mein Aisa Uljha Jiya',
+        artworkUrl: 'https://i.ytimg.com/vi/lXqvdKl3S2k/hqdefault.jpg',
+        duration: 263,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-Pz_FkqA2x6s',
+        youtubeId: 'Pz_FkqA2x6s',
+        title: 'Ve Kamleya',
+        artistName: 'Arijit Singh, Shreya Ghoshal',
+        albumName: 'Rocky Aur Rani Kii Prem Kahaani',
+        artworkUrl: 'https://i.ytimg.com/vi/Pz_FkqA2x6s/hqdefault.jpg',
+        duration: 247,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-u2NAuswnTKs',
+        youtubeId: 'u2NAuswnTKs',
+        title: 'Apna Bana Le',
+        artistName: 'Arijit Singh, Sachin-Jigar',
+        albumName: 'Bhediya',
+        artworkUrl: 'https://i.ytimg.com/vi/u2NAuswnTKs/hqdefault.jpg',
+        duration: 261,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-jHNNMj5bNQw',
+        youtubeId: 'jHNNMj5bNQw',
+        title: 'Kabira',
+        artistName: 'Arijit Singh, Harshdeep Kaur',
+        albumName: 'Yeh Jawaani Hai Deewani',
+        artworkUrl: 'https://i.ytimg.com/vi/jHNNMj5bNQw/hqdefault.jpg',
+        duration: 215,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-bzSTpdcs-EI',
+        youtubeId: 'bzSTpdcs-EI',
+        title: 'Channa Mereya',
+        artistName: 'Arijit Singh, Pritam',
+        albumName: 'Ae Dil Hai Mushkil',
+        artworkUrl: 'https://i.ytimg.com/vi/bzSTpdcs-EI/hqdefault.jpg',
+        duration: 289,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-sK7riqg2mr4',
+        youtubeId: 'sK7riqg2mr4',
+        title: 'Agar Tum Saath Ho',
+        artistName: 'Arijit Singh, Alka Yagnik',
+        albumName: 'Tamasha',
+        artworkUrl: 'https://i.ytimg.com/vi/sK7riqg2mr4/hqdefault.jpg',
+        duration: 341,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      }
+    ]
   },
   {
-    id: 'playlist-diffsong2',
-    name: 'Diffsong2',
-    description: 'Eclectic electronic cuts, indie melodies, and fresh discoveries.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjCrrkIsO7PhuNhCQSglSzTl9Y6b6wyGC7Ru3DbJviiQQyy0fZsAy6_ohyfpXvd9K6NnEvYRvOrg1YGkyVtPwqcZsxNqSPWK0WZuyxg1GE-JcUppejk2hxpZSQG9EhUio0zARB6vVH1AW7PREWersKcNX-oUGQkUpqNk0qkeIntajuO4a7w4vM3psuPumnxQOQilDxyA2a4KA1tSF1YOw60cSlKZu0yO2ET0Rv19R3Q9wWH_ijLrlE0w',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[4], INITIAL_TRACKS[5], INITIAL_TRACKS[6]]
+    id: 'playlist-bengali-hits',
+    name: 'Bangla Top Hits & Classics 🎵',
+    description: 'Timeless melodies, romantic modern hits, and iconic Bengali masterpieces.',
+    coverUrl: 'https://i.ytimg.com/vi/J2JQQm1h6xQ/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-J2JQQm1h6xQ',
+        youtubeId: 'J2JQQm1h6xQ',
+        title: 'Bojhena Shey Bojhena',
+        artistName: 'Arijit Singh',
+        albumName: 'Bojhena Shey Bojhena',
+        artworkUrl: 'https://i.ytimg.com/vi/J2JQQm1h6xQ/hqdefault.jpg',
+        duration: 249,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-eORVpaICbzk',
+        youtubeId: 'eORVpaICbzk',
+        title: 'Mon Majhi Re',
+        artistName: 'Arijit Singh',
+        albumName: 'Boss (Bengali)',
+        artworkUrl: 'https://i.ytimg.com/vi/eORVpaICbzk/hqdefault.jpg',
+        duration: 266,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-LkUqqoKB4rM',
+        youtubeId: 'LkUqqoKB4rM',
+        title: 'Tumi Jaake Bhalobasho',
+        artistName: 'Iman Chakraborty',
+        albumName: 'Praktan',
+        artworkUrl: 'https://i.ytimg.com/vi/LkUqqoKB4rM/hqdefault.jpg',
+        duration: 288,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-YmIhZCNXfJE',
+        youtubeId: 'YmIhZCNXfJE',
+        title: 'Kolkata',
+        artistName: 'Anupam Roy, Shreya Ghoshal',
+        albumName: 'Praktan',
+        artworkUrl: 'https://i.ytimg.com/vi/YmIhZCNXfJE/hqdefault.jpg',
+        duration: 302,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-u5zkgaOuQ8A',
+        youtubeId: 'u5zkgaOuQ8A',
+        title: 'Ami Banglay Gaan Gai',
+        artistName: 'Pratul Mukhopadhyay',
+        albumName: 'Bangla Classics',
+        artworkUrl: 'https://i.ytimg.com/vi/u5zkgaOuQ8A/hqdefault.jpg',
+        duration: 403,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-JZ1CReueASQ',
+        youtubeId: 'JZ1CReueASQ',
+        title: 'Tomake Chai',
+        artistName: 'Kabir Suman',
+        albumName: 'Tomake Chai',
+        artworkUrl: 'https://i.ytimg.com/vi/JZ1CReueASQ/hqdefault.jpg',
+        duration: 384,
+        genre: 'Bengali Songs',
+        source: 'YouTube Music'
+      }
+    ]
   },
   {
-    id: 'playlist-bengali-songs',
-    name: 'Bengali songs 🎵',
-    description: 'Timeless melodies, Rabindra Sangeet, and contemporary Bangla hits.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC0nwddKHCIdgGbgXSUBLSW19mAPIrcuYRnuC-ZSTYso9Lh6a7xe9Glm-PaHVTdSoIBoiVDSjdw0cEnMkFFNmQi9pJ-_t705z9ftMAA1JNHtLyenKove5xPjrmXUr-ek3pO7M1BVjOEAVigoGZ3sLkmVa3nU57nTv3M9hW_7xM8mM9GT2Of7zzFxDjNeiZIpFwJlTQtMYnvkctKQvxfENd_q5DWfXNwY0qtahkccrcSvvL1qYXvfLxoKQ',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[3], INITIAL_TRACKS[7], INITIAL_TRACKS[10]]
+    id: 'playlist-punjabi-chartbusters',
+    name: 'Punjabi Hits & Bhangra 🔥',
+    description: 'High-octane Punjabi bangers, desi hip hop, and chart-topping swagger.',
+    coverUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-BBrQWOuE_pg',
+        youtubeId: 'BBrQWOuE_pg',
+        title: 'Tauba Tauba',
+        artistName: 'Karan Aujla',
+        albumName: 'Bad Newz',
+        artworkUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
+        duration: 204,
+        genre: 'Punjabi Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt--Chif1XK2e8',
+        youtubeId: '-Chif1XK2e8',
+        title: 'Softly',
+        artistName: 'Karan Aujla, Ikky',
+        albumName: 'Making Memories',
+        artworkUrl: 'https://i.ytimg.com/vi/-Chif1XK2e8/hqdefault.jpg',
+        duration: 156,
+        genre: 'Punjabi Hits',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-cl0a3i2wFcc',
+        youtubeId: 'cl0a3i2wFcc',
+        title: 'Born To Shine',
+        artistName: 'Diljit Dosanjh',
+        albumName: 'G.O.A.T.',
+        artworkUrl: 'https://i.ytimg.com/vi/cl0a3i2wFcc/hqdefault.jpg',
+        duration: 214,
+        genre: 'Punjabi Hits',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-fnyd1hGyJIY',
+        youtubeId: 'fnyd1hGyJIY',
+        title: 'Chal Kudiye',
+        artistName: 'Diljit Dosanjh, Alia Bhatt',
+        albumName: 'Jigra Soundtracks',
+        artworkUrl: 'https://i.ytimg.com/vi/fnyd1hGyJIY/hqdefault.jpg',
+        duration: 198,
+        genre: 'Punjabi Hits',
+        source: 'YouTube Music'
+      }
+    ]
   },
   {
-    id: 'playlist-fresh-bengali',
-    name: 'Fresh bengali',
-    description: 'Newest releases and vibrant beats from Kolkata and Dhaka.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB8hXfAzQFPyxyinbqcC8K3pv5SLuK1HNKACKEMZu9AprpYG6-gYIyF0wno1ZewRK0tsW5tyu5Sk44k2BSt2S3RI7LGoXvPVxUWxhQkdInFcXspfU9oAVexI8HdTegXe9kHxL8d9dlaDmt3nGd4I_i3fsXV1hiFq_8DF1mKLHwIhm10y5dDowmO4HTBGHWRGvUEnNAwQRcoZmZrpixRA8zRWRsRJrhNG9TuZQo86mX5UhaDZ-zMHrSsZA',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[1], INITIAL_TRACKS[3]]
+    id: 'playlist-midnight-lofi',
+    name: 'Midnight Lo-Fi & Chill ☕',
+    description: 'Relaxing Indian and global Lo-Fi beats, slow reverb acoustics, and focus rhythms.',
+    coverUrl: 'https://i.ytimg.com/vi/RO04JSM3Mso/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-RO04JSM3Mso',
+        youtubeId: 'RO04JSM3Mso',
+        title: 'Bollywood Chill Lo-Fi Drive',
+        artistName: 'Lo-Fi Records India',
+        albumName: 'Late Night Drives',
+        artworkUrl: 'https://i.ytimg.com/vi/RO04JSM3Mso/hqdefault.jpg',
+        duration: 3600,
+        genre: 'Lo-Fi & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-AX6OrbgS8lI',
+        youtubeId: 'AX6OrbgS8lI',
+        title: 'Baarishein',
+        artistName: 'Anuv Jain',
+        albumName: 'Baarishein (Single)',
+        artworkUrl: 'https://i.ytimg.com/vi/AX6OrbgS8lI/hqdefault.jpg',
+        duration: 207,
+        genre: 'Indian Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-0IIJxkDtkHY',
+        youtubeId: '0IIJxkDtkHY',
+        title: 'Husn',
+        artistName: 'Anuv Jain',
+        albumName: 'Husn (Single)',
+        artworkUrl: 'https://i.ytimg.com/vi/0IIJxkDtkHY/hqdefault.jpg',
+        duration: 219,
+        genre: 'Indian Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-EiiOYwqk3A0',
+        youtubeId: 'EiiOYwqk3A0',
+        title: 'Faasle',
+        artistName: 'Aditya Rikhari',
+        albumName: 'Faasle (Single)',
+        artworkUrl: 'https://i.ytimg.com/vi/EiiOYwqk3A0/hqdefault.jpg',
+        duration: 196,
+        genre: 'Indian Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-8GkPMG8IwBQ',
+        youtubeId: '8GkPMG8IwBQ',
+        title: 'Tu Hai Kahan',
+        artistName: 'AUR',
+        albumName: 'Tu Hai Kahan',
+        artworkUrl: 'https://i.ytimg.com/vi/8GkPMG8IwBQ/hqdefault.jpg',
+        duration: 263,
+        genre: 'Indian Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-jfKfPfyJRdk',
+        youtubeId: 'jfKfPfyJRdk',
+        title: 'Sunny Days in Goa',
+        artistName: 'Acoustic Waves',
+        albumName: 'Happy Vibes Vol. 1',
+        artworkUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
+        duration: 195,
+        genre: 'Indie Acoustic',
+        source: 'YouTube Music'
+      }
+    ]
+  },
+  {
+    id: 'playlist-festival-edm',
+    name: 'Festival EDM & Bass Drops ⚡',
+    description: 'Euphoric electronic dance music, massive synth drops, and festival mainstage anthems.',
+    coverUrl: 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-60ItHLz5WEA',
+        youtubeId: '60ItHLz5WEA',
+        title: 'Faded',
+        artistName: 'Alan Walker',
+        albumName: 'Different World',
+        artworkUrl: 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg',
+        duration: 213,
+        genre: 'Electronic / EDM',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-gCYcHz2k5x0',
+        youtubeId: 'gCYcHz2k5x0',
+        title: 'Animals',
+        artistName: 'Martin Garrix',
+        albumName: 'Gold Skies',
+        artworkUrl: 'https://i.ytimg.com/vi/gCYcHz2k5x0/hqdefault.jpg',
+        duration: 192,
+        genre: 'Electronic / EDM',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-m7Bc3pLyij0',
+        youtubeId: 'm7Bc3pLyij0',
+        title: 'Happier',
+        artistName: 'Marshmello, Bastille',
+        albumName: 'Joytime II',
+        artworkUrl: 'https://i.ytimg.com/vi/m7Bc3pLyij0/hqdefault.jpg',
+        duration: 234,
+        genre: 'Electronic / EDM',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-cMg8KaMdDYo',
+        youtubeId: 'cMg8KaMdDYo',
+        title: 'Fearless Funk',
+        artistName: 'DR MØB, Chris Linton',
+        albumName: 'Fearless Funk (Single)',
+        artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
+        duration: 138,
+        genre: 'Electronic / Phonk',
+        source: 'YouTube Music'
+      }
+    ]
+  },
+  {
+    id: 'playlist-phonk-drift',
+    name: 'Phonk Drift & Gym Beast 🏎️',
+    description: 'Aggressive drift phonk, distorted 808 cowbells, and unstoppable workout energy.',
+    coverUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt--w54aVt1JsY',
+        youtubeId: '-w54aVt1JsY',
+        title: 'Tokyo Midnight Drift (PHONK)',
+        artistName: 'Kordhell & DVRST Echoes',
+        albumName: 'the beat of your drift',
+        artworkUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
+        duration: 152,
+        genre: 'Drift Phonk',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-w-sQRS-Lc9k',
+        youtubeId: 'w-sQRS-Lc9k',
+        title: 'Murder In My Mind',
+        artistName: 'KORDHELL',
+        albumName: 'Murder In My Mind',
+        artworkUrl: 'https://i.ytimg.com/vi/w-sQRS-Lc9k/hqdefault.jpg',
+        duration: 145,
+        genre: 'Drift Phonk',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-1-xGerv5FOk',
+        youtubeId: '1-xGerv5FOk',
+        title: 'Close Eyes',
+        artistName: 'DVRST',
+        albumName: 'Close Eyes',
+        artworkUrl: 'https://i.ytimg.com/vi/1-xGerv5FOk/hqdefault.jpg',
+        duration: 132,
+        genre: 'Drift Phonk',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt--dhx7Hnu-wo',
+        youtubeId: '-dhx7Hnu-wo',
+        title: 'Metamorphosis',
+        artistName: 'INTERWORLD',
+        albumName: 'Metamorphosis',
+        artworkUrl: 'https://i.ytimg.com/vi/-dhx7Hnu-wo/hqdefault.jpg',
+        duration: 142,
+        genre: 'Drift Phonk',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-F5tSoaJ93ac',
+        youtubeId: 'F5tSoaJ93ac',
+        title: 'Override',
+        artistName: 'KSLV Noh',
+        albumName: 'Override',
+        artworkUrl: 'https://i.ytimg.com/vi/F5tSoaJ93ac/hqdefault.jpg',
+        duration: 114,
+        genre: 'Drift Phonk',
+        source: 'YouTube Music'
+      }
+    ]
+  },
+  {
+    id: 'playlist-global-pop',
+    name: 'Global Billboard Hot 100 🌍',
+    description: 'The biggest songs worldwide streaming non-stop right now.',
+    coverUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-kPa7bsKwL-c',
+        youtubeId: 'kPa7bsKwL-c',
+        title: 'Die With A Smile',
+        artistName: 'Lady Gaga, Bruno Mars',
+        albumName: 'Die With A Smile',
+        artworkUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
+        duration: 252,
+        genre: 'Pop / Global',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-eVli-tstM5E',
+        youtubeId: 'eVli-tstM5E',
+        title: 'Espresso',
+        artistName: 'Sabrina Carpenter',
+        albumName: 'Short n Sweet',
+        artworkUrl: 'https://i.ytimg.com/vi/eVli-tstM5E/hqdefault.jpg',
+        duration: 175,
+        genre: 'Pop / Global',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-V9PVRfjEBTI',
+        youtubeId: 'V9PVRfjEBTI',
+        title: 'Birds of a Feather',
+        artistName: 'Billie Eilish',
+        albumName: 'Hit Me Hard and Soft',
+        artworkUrl: 'https://i.ytimg.com/vi/V9PVRfjEBTI/hqdefault.jpg',
+        duration: 198,
+        genre: 'Alternative / Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-ekr2nIex040',
+        youtubeId: 'ekr2nIex040',
+        title: 'APT.',
+        artistName: 'ROSÉ, Bruno Mars',
+        albumName: 'rosie',
+        artworkUrl: 'https://i.ytimg.com/vi/ekr2nIex040/hqdefault.jpg',
+        duration: 170,
+        genre: 'Pop / K-Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-4NRXx6U8ABQ',
+        youtubeId: '4NRXx6U8ABQ',
+        title: 'Blinding Lights',
+        artistName: 'The Weeknd',
+        albumName: 'After Hours',
+        artworkUrl: 'https://i.ytimg.com/vi/4NRXx6U8ABQ/hqdefault.jpg',
+        duration: 200,
+        genre: 'Synthpop / Global',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-JGwWNGJdvx8',
+        youtubeId: 'JGwWNGJdvx8',
+        title: 'Shape of You',
+        artistName: 'Ed Sheeran',
+        albumName: '÷ (Divide)',
+        artworkUrl: 'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg',
+        duration: 233,
+        genre: 'Pop / Global',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-dMMUH_ZpbB0',
+        youtubeId: 'dMMUH_ZpbB0',
+        title: 'Starboy',
+        artistName: 'The Weeknd, Daft Punk',
+        albumName: 'Starboy',
+        artworkUrl: 'https://i.ytimg.com/vi/dMMUH_ZpbB0/hqdefault.jpg',
+        duration: 230,
+        genre: 'R&B / Pop',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-H5v3kku4y6Q',
+        youtubeId: 'H5v3kku4y6Q',
+        title: 'As It Was',
+        artistName: 'Harry Styles',
+        albumName: "Harry's House",
+        artworkUrl: 'https://i.ytimg.com/vi/H5v3kku4y6Q/hqdefault.jpg',
+        duration: 167,
+        genre: 'Indie Pop',
+        source: 'YouTube Music'
+      }
+    ]
   },
   {
     id: 'playlist-peace-of-mind',
-    name: 'Peace of mind',
-    description: 'Calm acoustic instruments, ambient strings, and mindful meditation.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDreGk7wvWOh72L6iEDdeeKBXvjjCSqqCa5v2WHwnT3mFXF98dc1X6U0l_qEeD6USzNrq3OurrnBib5S_p_CRAg0A96R9GDTQdxYgJIrw_P4zt8_Z0GhRt2wSVz00fQQwe5vHjUZrLfhvCygkAsCUD3gtaqygG5KCvrQ9FJUcsIR52inFaHPWBYbMKC9riYc-NT0HgKOQdT0j8RaYv6KLd0vF6Gz4AqqIumlXH2OCyEB85BVxPSBtmTVA',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[4], INITIAL_TRACKS[10]]
-  },
-  {
-    id: 'playlist-edm',
-    name: 'EDM',
-    description: 'Festival bass drops, house anthems, and euphoric dance beats.',
-    coverUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBpywiZIg-rc2TPlZxWCiCydIPpj_66RHQEzSfY0Dz3LQhAPN5dnYvTh-6QDLbgHdIIIXzWp62q5pMGngPN-QsBnJKWFkBYrn9BuMl_gGrHn9EA5o-xtD06JWE-dWeHY8piv6adGk4NSvpwJd4aocWY3EcDYk540Zl4VVO2r0i9aXoYNYae6XUhdqvXdZ-imK4WVyxvYRKQfsmUCcLXGuSMdjmGkSEQJ8yRNltpVi_P2JlRmNX2uMGTDA',
-    author: 'Suvradip Maity',
-    tracks: [INITIAL_TRACKS[0], INITIAL_TRACKS[8], INITIAL_TRACKS[9]]
+    name: 'Peace of Mind & Soulful 🌿',
+    description: 'Calming acoustic strings, meditative vocals, and serene healing sounds.',
+    coverUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
+    author: 'YouTube Music',
+    tracks: [
+      {
+        id: 'yt-T94PHkuydcw',
+        youtubeId: 'T94PHkuydcw',
+        title: 'Kun Faya Kun',
+        artistName: 'A.R. Rahman, Mohit Chauhan, Javed Ali',
+        albumName: 'Rockstar',
+        artworkUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
+        duration: 470,
+        genre: 'Bollywood & Chill',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-GxldQ9eX2wo',
+        youtubeId: 'GxldQ9eX2wo',
+        title: 'Until I Found You',
+        artistName: 'Stephen Sanchez',
+        albumName: 'Easy On My Eyes',
+        artworkUrl: 'https://i.ytimg.com/vi/GxldQ9eX2wo/hqdefault.jpg',
+        duration: 177,
+        genre: 'Romance',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-2Vv-BfVoq4g',
+        youtubeId: '2Vv-BfVoq4g',
+        title: 'Perfect',
+        artistName: 'Ed Sheeran',
+        albumName: '÷ (Divide)',
+        artworkUrl: 'https://i.ytimg.com/vi/2Vv-BfVoq4g/hqdefault.jpg',
+        duration: 263,
+        genre: 'Romance',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-450p7goxZqg',
+        youtubeId: '450p7goxZqg',
+        title: 'All of Me',
+        artistName: 'John Legend',
+        albumName: 'Love in the Future',
+        artworkUrl: 'https://i.ytimg.com/vi/450p7goxZqg/hqdefault.jpg',
+        duration: 269,
+        genre: 'Romance',
+        source: 'YouTube Music'
+      },
+      {
+        id: 'yt-0yW7w8F2TVA',
+        youtubeId: '0yW7w8F2TVA',
+        title: "Say You Won't Let Go",
+        artistName: 'James Arthur',
+        albumName: 'Back from the Edge',
+        artworkUrl: 'https://i.ytimg.com/vi/0yW7w8F2TVA/hqdefault.jpg',
+        duration: 211,
+        genre: 'Romance',
+        source: 'YouTube Music'
+      }
+    ]
   }
 ];
 

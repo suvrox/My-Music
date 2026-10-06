@@ -1,35 +1,30 @@
 import { Playlist, Track } from '@/types/music';
 import { INITIAL_PLAYLISTS, INITIAL_TRACKS } from '../music/providers/catalog';
 
-const PLAYLISTS_KEY = 'music:playlists';
+const PLAYLISTS_KEY = 'music:playlists:v4';
 
 export function getStoredPlaylists(): Playlist[] {
   if (typeof window === 'undefined') return INITIAL_PLAYLISTS;
   try {
     const raw = localStorage.getItem(PLAYLISTS_KEY);
     if (!raw) {
-      localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(INITIAL_PLAYLISTS));
-      return INITIAL_PLAYLISTS;
+      // Check legacy keys for user-created custom playlists
+      let customUserPlaylists: Playlist[] = [];
+      const legacyRaw = localStorage.getItem('music:playlists') || localStorage.getItem('music:playlists:v2');
+      if (legacyRaw) {
+        try {
+          const oldList: Playlist[] = JSON.parse(legacyRaw);
+          customUserPlaylists = oldList.filter(p => p.author === 'You' || (!p.id.startsWith('playlist-bollywood') && !p.id.startsWith('playlist-bengali') && !p.id.startsWith('playlist-punjabi') && !p.id.startsWith('playlist-midnight') && !p.id.startsWith('playlist-festival') && !p.id.startsWith('playlist-phonk') && !p.id.startsWith('playlist-global') && !p.id.startsWith('playlist-peace') && !p.id.startsWith('playlist-sky') && !p.id.startsWith('playlist-diffsong') && !p.id.startsWith('playlist-fresh') && !p.id.startsWith('playlist-edm')));
+        } catch {}
+      }
+      const combined = [...INITIAL_PLAYLISTS, ...customUserPlaylists];
+      localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(combined));
+      return combined;
     }
     const parsed: Playlist[] = JSON.parse(raw);
-    const upgraded = parsed.map(p => ({
-      ...p,
-      tracks: p.tracks.map(t => {
-        if (!t.youtubeId) {
-          const match = INITIAL_TRACKS.find(it => it.title === t.title || it.id === t.id);
-          if (match) {
-            return {
-              ...t,
-              youtubeId: match.youtubeId,
-              artworkUrl: match.artworkUrl,
-              id: match.id
-            };
-          }
-        }
-        return t;
-      })
-    }));
-    return upgraded;
+    // Ensure official curated playlists always have up-to-date tracks & metadata
+    const userCreated = parsed.filter(p => !INITIAL_PLAYLISTS.some(ip => ip.id === p.id));
+    return [...INITIAL_PLAYLISTS, ...userCreated];
   } catch {
     return INITIAL_PLAYLISTS;
   }

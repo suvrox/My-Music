@@ -166,6 +166,11 @@ export function LeftSidebar({ activeView, setActiveView }: LeftSidebarProps) {
                     alt={pl.name}
                     className="w-full h-full object-cover"
                     src={pl.coverUrl}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/logo.webp';
+                    }}
                   />
                 ) : (
                   <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500">
@@ -176,7 +181,7 @@ export function LeftSidebar({ activeView, setActiveView }: LeftSidebarProps) {
               <div className="flex flex-col min-w-0">
                 <span className="text-white text-sm font-semibold truncate">{pl.name}</span>
                 <span className="text-xs text-spotify-textSubdued truncate">
-                  Playlist • {pl.author || 'Suvradip Maity'}
+                  Playlist • {pl.author || 'YouTube Music'}
                 </span>
               </div>
             </div>

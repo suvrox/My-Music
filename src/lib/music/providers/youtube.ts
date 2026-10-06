@@ -1,6 +1,6 @@
 import { Track, Artist, Album, Playlist } from '@/types/music';
 import { MusicProvider } from '../types';
-import { INITIAL_ARTISTS } from './catalog';
+import { INITIAL_ARTISTS, INITIAL_PLAYLISTS } from './catalog';
 
 function parseDuration(isoDuration?: string): number {
   if (!isoDuration) return 180;
@@ -1192,17 +1192,7 @@ export class YouTubeMusicProvider implements MusicProvider {
   }
 
   async getFeaturedPlaylists(): Promise<Playlist[]> {
-    const tracks = await this.getTrendingTracks();
-    return [
-      {
-        id: 'playlist-yt-top',
-        name: 'YouTube Top Music 2026',
-        description: 'Global chartbusters and viral hits direct from YouTube.',
-        coverUrl: tracks[0]?.artworkUrl,
-        author: 'YouTube Music',
-        tracks
-      }
-    ];
+    return INITIAL_PLAYLISTS;
   }
 
   private getFallbackTracks(query?: string): Track[] {

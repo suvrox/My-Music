@@ -1,7 +1,7 @@
 import { Playlist, Track } from '@/types/music';
 import { INITIAL_PLAYLISTS, INITIAL_TRACKS } from '../music/providers/catalog';
 
-const PLAYLISTS_KEY = 'music:playlists:v4';
+const PLAYLISTS_KEY = 'music:playlists:v5';
 
 export function getStoredPlaylists(): Playlist[] {
   if (typeof window === 'undefined') return INITIAL_PLAYLISTS;

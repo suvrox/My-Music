@@ -150,7 +150,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
     duration: 252,
     genre: 'Pop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-eVli-tstM5E',
@@ -161,7 +161,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/eVli-tstM5E/hqdefault.jpg',
     duration: 175,
     genre: 'Pop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-V9PVRfjEBTI',
@@ -172,7 +172,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/V9PVRfjEBTI/hqdefault.jpg',
     duration: 198,
     genre: 'Alternative / Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-ekr2nIex040',
@@ -183,7 +183,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/ekr2nIex040/hqdefault.jpg',
     duration: 170,
     genre: 'Pop / K-Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-JGwWNGJdvx8',
@@ -194,7 +194,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg',
     duration: 233,
     genre: 'Pop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-7wtfhZwyrcc',
@@ -205,7 +205,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/7wtfhZwyrcc/hqdefault.jpg',
     duration: 204,
     genre: 'Alternative / Rock',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-4NRXx6U8ABQ',
@@ -216,7 +216,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/4NRXx6U8ABQ/hqdefault.jpg',
     duration: 200,
     genre: 'Synthpop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-dMMUH_ZpbB0',
@@ -227,7 +227,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/dMMUH_ZpbB0/hqdefault.jpg',
     duration: 230,
     genre: 'R&B / Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-kTJczUoc26U',
@@ -238,7 +238,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/kTJczUoc26U/hqdefault.jpg',
     duration: 141,
     genre: 'Pop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-H5v3kku4y6Q',
@@ -249,7 +249,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/H5v3kku4y6Q/hqdefault.jpg',
     duration: 167,
     genre: 'Indie Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-XoiOOiuH8iI',
@@ -260,7 +260,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/XoiOOiuH8iI/hqdefault.jpg',
     duration: 200,
     genre: 'Afrobeats / Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Trending India & Bollywood Chill
@@ -273,7 +273,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
     duration: 204,
     genre: 'Punjabi Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-9jY8PItvMxo',
@@ -284,7 +284,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/9jY8PItvMxo/hqdefault.jpg',
     duration: 220,
     genre: 'Tamil Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-k3g_WjLCsXM',
@@ -295,7 +295,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
     duration: 172,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-lXqvdKl3S2k',
@@ -306,7 +306,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/lXqvdKl3S2k/hqdefault.jpg',
     duration: 263,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-Pz_FkqA2x6s',
@@ -317,7 +317,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/Pz_FkqA2x6s/hqdefault.jpg',
     duration: 247,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-u2NAuswnTKs',
@@ -328,7 +328,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/u2NAuswnTKs/hqdefault.jpg',
     duration: 261,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-jHNNMj5bNQw',
@@ -339,7 +339,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/jHNNMj5bNQw/hqdefault.jpg',
     duration: 215,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-bzSTpdcs-EI',
@@ -350,7 +350,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/bzSTpdcs-EI/hqdefault.jpg',
     duration: 289,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-sK7riqg2mr4',
@@ -361,7 +361,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/sK7riqg2mr4/hqdefault.jpg',
     duration: 341,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-T94PHkuydcw',
@@ -372,7 +372,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
     duration: 470,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Romance & Love (pov: you're in love)
@@ -385,7 +385,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/BddP6PYo2gs/hqdefault.jpg',
     duration: 268,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-RLzC55ai0eo',
@@ -396,7 +396,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/RLzC55ai0eo/hqdefault.jpg',
     duration: 194,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-gvyUuxdRdR4',
@@ -407,7 +407,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/gvyUuxdRdR4/hqdefault.jpg',
     duration: 230,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-GxldQ9eX2wo',
@@ -418,7 +418,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/GxldQ9eX2wo/hqdefault.jpg',
     duration: 177,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-2Vv-BfVoq4g',
@@ -429,7 +429,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/2Vv-BfVoq4g/hqdefault.jpg',
     duration: 263,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-450p7goxZqg',
@@ -440,7 +440,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/450p7goxZqg/hqdefault.jpg',
     duration: 269,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-0yW7w8F2TVA',
@@ -451,7 +451,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/0yW7w8F2TVA/hqdefault.jpg',
     duration: 211,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Happy Vibes & Upbeat
@@ -464,7 +464,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
     duration: 195,
     genre: 'Indie Acoustic',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-TUVcZfQe-Kw',
@@ -475,7 +475,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/TUVcZfQe-Kw/hqdefault.jpg',
     duration: 203,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-ApXoWvfEYVU',
@@ -486,7 +486,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/ApXoWvfEYVU/hqdefault.jpg',
     duration: 158,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-fdubeMFwuGs',
@@ -497,7 +497,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/fdubeMFwuGs/hqdefault.jpg',
     duration: 229,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-qFkNATtc3mc',
@@ -508,7 +508,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/qFkNATtc3mc/hqdefault.jpg',
     duration: 302,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-ZbZSe6N_BXs',
@@ -519,7 +519,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/ZbZSe6N_BXs/hqdefault.jpg',
     duration: 233,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-hT_nvWreIhg',
@@ -530,7 +530,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/hT_nvWreIhg/hqdefault.jpg',
     duration: 257,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-OPf0YbXqDm0',
@@ -541,7 +541,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/OPf0YbXqDm0/hqdefault.jpg',
     duration: 270,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-qrO4YZeyl0I',
@@ -552,7 +552,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/qrO4YZeyl0I/hqdefault.jpg',
     duration: 308,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-H7HmzwI67ec',
@@ -563,7 +563,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/H7HmzwI67ec/hqdefault.jpg',
     duration: 206,
     genre: 'Happy Vibes',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // I-Pop Superhits & Indie Pop
@@ -576,7 +576,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/73vZDNKa_Wg/hqdefault.jpg',
     duration: 194,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-AX6OrbgS8lI',
@@ -587,7 +587,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/AX6OrbgS8lI/hqdefault.jpg',
     duration: 207,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-0IIJxkDtkHY',
@@ -598,7 +598,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/0IIJxkDtkHY/hqdefault.jpg',
     duration: 219,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-EiiOYwqk3A0',
@@ -609,7 +609,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/EiiOYwqk3A0/hqdefault.jpg',
     duration: 196,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-8GkPMG8IwBQ',
@@ -620,7 +620,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/8GkPMG8IwBQ/hqdefault.jpg',
     duration: 263,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Hot Hits Hindi & Punjabi
@@ -633,7 +633,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/fnyd1hGyJIY/hqdefault.jpg',
     duration: 198,
     genre: 'Hot Hits Hindi',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt--Chif1XK2e8',
@@ -644,7 +644,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/-Chif1XK2e8/hqdefault.jpg',
     duration: 156,
     genre: 'Punjabi Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-cl0a3i2wFcc',
@@ -655,7 +655,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/cl0a3i2wFcc/hqdefault.jpg',
     duration: 214,
     genre: 'Punjabi Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Drift Phonk & Workout
@@ -668,7 +668,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
     duration: 152,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-w-sQRS-Lc9k',
@@ -679,7 +679,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/w-sQRS-Lc9k/hqdefault.jpg',
     duration: 145,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-1-xGerv5FOk',
@@ -690,7 +690,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/1-xGerv5FOk/hqdefault.jpg',
     duration: 132,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt--dhx7Hnu-wo',
@@ -701,7 +701,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/-dhx7Hnu-wo/hqdefault.jpg',
     duration: 142,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-F5tSoaJ93ac',
@@ -712,7 +712,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/F5tSoaJ93ac/hqdefault.jpg',
     duration: 114,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-cMg8KaMdDYo',
@@ -723,7 +723,7 @@ const COMPREHENSIVE_YOUTUBE_CATALOG: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
     duration: 138,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
 
   // Podcasts & Storytelling Episodes
@@ -811,7 +811,7 @@ export class YouTubeMusicProvider implements MusicProvider {
         seenIds.add(vr.videoId);
 
         const rawTitle = vr.title?.runs?.[0]?.text || '';
-        const channelTitle = vr.ownerText?.runs?.[0]?.text || 'YouTube Music';
+        const channelTitle = vr.ownerText?.runs?.[0]?.text || 'Suvradip Maity';
         const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
         const durationStr = vr.lengthText?.simpleText || '';
         const duration = parseTimeString(durationStr);
@@ -828,8 +828,8 @@ export class YouTubeMusicProvider implements MusicProvider {
           albumName: album,
           artworkUrl: thumb,
           duration,
-          genre: 'YouTube Music',
-          source: 'YouTube Music'
+          genre: 'Suvradip Maity',
+          source: 'Suvradip Maity'
         });
       }
 
@@ -895,7 +895,7 @@ export class YouTubeMusicProvider implements MusicProvider {
                   albumName: album,
                   artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
                   duration,
-                  genre: 'YouTube Music',
+                  genre: 'Suvradip Maity',
                   source: 'YouTube API'
                 });
               }
@@ -967,7 +967,7 @@ export class YouTubeMusicProvider implements MusicProvider {
         .filter((item: any) => item.status?.embeddable !== false)
         .map((item: any) => {
           const rawTitle = item.snippet?.title || '';
-          const channelTitle = item.snippet?.channelTitle || 'YouTube Music';
+          const channelTitle = item.snippet?.channelTitle || 'Suvradip Maity';
           const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
           const duration = parseDuration(item.contentDetails?.duration);
           const thumbnails = item.snippet?.thumbnails;
@@ -1140,7 +1140,7 @@ export class YouTubeMusicProvider implements MusicProvider {
         albumName: album,
         artworkUrl: artworkUrl || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
         duration,
-        genre: 'YouTube Music',
+        genre: 'Suvradip Maity',
         source: 'YouTube API'
       };
     } catch {

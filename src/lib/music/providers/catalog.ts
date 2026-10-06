@@ -13,7 +13,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
     duration: 252,
     genre: 'Pop / Global',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-BBrQWOuE_pg',
@@ -26,7 +26,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
     duration: 204,
     genre: 'Punjabi Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-9jY8PItvMxo',
@@ -39,7 +39,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/9jY8PItvMxo/hqdefault.jpg',
     duration: 220,
     genre: 'Tamil Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-k3g_WjLCsXM',
@@ -52,7 +52,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
     duration: 172,
     genre: 'Bollywood & Chill',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-jfKfPfyJRdk',
@@ -65,7 +65,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
     duration: 195,
     genre: 'Indie Acoustic',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-GxldQ9eX2wo',
@@ -78,7 +78,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/GxldQ9eX2wo/hqdefault.jpg',
     duration: 177,
     genre: 'Romance',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-73vZDNKa_Wg',
@@ -91,7 +91,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/73vZDNKa_Wg/hqdefault.jpg',
     duration: 194,
     genre: 'Indian Pop',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-fnyd1hGyJIY',
@@ -104,7 +104,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/fnyd1hGyJIY/hqdefault.jpg',
     duration: 198,
     genre: 'Hindi Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-cl0a3i2wFcc',
@@ -117,7 +117,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/cl0a3i2wFcc/hqdefault.jpg',
     duration: 214,
     genre: 'Punjabi Hits',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt--w54aVt1JsY',
@@ -130,7 +130,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
     duration: 152,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   },
   {
     id: 'yt-1-xGerv5FOk',
@@ -143,7 +143,7 @@ export const INITIAL_TRACKS: Track[] = [
     artworkUrl: 'https://i.ytimg.com/vi/1-xGerv5FOk/hqdefault.jpg',
     duration: 132,
     genre: 'Drift Phonk',
-    source: 'YouTube Music'
+    source: 'Suvradip Maity'
   }
 ];
 
@@ -252,7 +252,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Bollywood Romance & Chill 💖',
     description: 'Soulful Hindi chartbusters, heartfelt melodies, and late-night Bollywood vibes.',
     coverUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-k3g_WjLCsXM',
@@ -263,7 +263,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/k3g_WjLCsXM/hqdefault.jpg',
         duration: 172,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-BddP6PYo2gs',
@@ -274,7 +274,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/BddP6PYo2gs/hqdefault.jpg',
         duration: 268,
         genre: 'Romance',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-lXqvdKl3S2k',
@@ -285,7 +285,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/lXqvdKl3S2k/hqdefault.jpg',
         duration: 263,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-Pz_FkqA2x6s',
@@ -296,7 +296,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/Pz_FkqA2x6s/hqdefault.jpg',
         duration: 247,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-u2NAuswnTKs',
@@ -307,7 +307,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/u2NAuswnTKs/hqdefault.jpg',
         duration: 261,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-jHNNMj5bNQw',
@@ -318,7 +318,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/jHNNMj5bNQw/hqdefault.jpg',
         duration: 215,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-bzSTpdcs-EI',
@@ -329,7 +329,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/bzSTpdcs-EI/hqdefault.jpg',
         duration: 289,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-sK7riqg2mr4',
@@ -340,7 +340,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/sK7riqg2mr4/hqdefault.jpg',
         duration: 341,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -349,7 +349,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Bangla Top Hits & Classics 🎵',
     description: 'Timeless melodies, romantic modern hits, and iconic Bengali masterpieces.',
     coverUrl: 'https://i.ytimg.com/vi/J2JQQm1h6xQ/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-J2JQQm1h6xQ',
@@ -360,7 +360,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/J2JQQm1h6xQ/hqdefault.jpg',
         duration: 249,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-eORVpaICbzk',
@@ -371,7 +371,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/eORVpaICbzk/hqdefault.jpg',
         duration: 266,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-LkUqqoKB4rM',
@@ -382,7 +382,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/LkUqqoKB4rM/hqdefault.jpg',
         duration: 288,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-YmIhZCNXfJE',
@@ -393,7 +393,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/YmIhZCNXfJE/hqdefault.jpg',
         duration: 302,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-u5zkgaOuQ8A',
@@ -404,7 +404,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/u5zkgaOuQ8A/hqdefault.jpg',
         duration: 403,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-JZ1CReueASQ',
@@ -415,7 +415,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/JZ1CReueASQ/hqdefault.jpg',
         duration: 384,
         genre: 'Bengali Songs',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -424,7 +424,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Punjabi Hits & Bhangra 🔥',
     description: 'High-octane Punjabi bangers, desi hip hop, and chart-topping swagger.',
     coverUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-BBrQWOuE_pg',
@@ -435,7 +435,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/BBrQWOuE_pg/hqdefault.jpg',
         duration: 204,
         genre: 'Punjabi Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt--Chif1XK2e8',
@@ -446,7 +446,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/-Chif1XK2e8/hqdefault.jpg',
         duration: 156,
         genre: 'Punjabi Hits',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-cl0a3i2wFcc',
@@ -457,7 +457,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/cl0a3i2wFcc/hqdefault.jpg',
         duration: 214,
         genre: 'Punjabi Hits',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-fnyd1hGyJIY',
@@ -468,7 +468,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/fnyd1hGyJIY/hqdefault.jpg',
         duration: 198,
         genre: 'Punjabi Hits',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -477,7 +477,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Midnight Lo-Fi & Chill ☕',
     description: 'Relaxing Indian and global Lo-Fi beats, slow reverb acoustics, and focus rhythms.',
     coverUrl: 'https://i.ytimg.com/vi/RO04JSM3Mso/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-RO04JSM3Mso',
@@ -488,7 +488,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/RO04JSM3Mso/hqdefault.jpg',
         duration: 3600,
         genre: 'Lo-Fi & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-AX6OrbgS8lI',
@@ -499,7 +499,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/AX6OrbgS8lI/hqdefault.jpg',
         duration: 207,
         genre: 'Indian Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-0IIJxkDtkHY',
@@ -510,7 +510,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/0IIJxkDtkHY/hqdefault.jpg',
         duration: 219,
         genre: 'Indian Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-EiiOYwqk3A0',
@@ -521,7 +521,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/EiiOYwqk3A0/hqdefault.jpg',
         duration: 196,
         genre: 'Indian Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-8GkPMG8IwBQ',
@@ -532,7 +532,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/8GkPMG8IwBQ/hqdefault.jpg',
         duration: 263,
         genre: 'Indian Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-jfKfPfyJRdk',
@@ -543,7 +543,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
         duration: 195,
         genre: 'Indie Acoustic',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -552,7 +552,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Festival EDM & Bass Drops ⚡',
     description: 'Euphoric electronic dance music, massive synth drops, and festival mainstage anthems.',
     coverUrl: 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-60ItHLz5WEA',
@@ -563,7 +563,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg',
         duration: 213,
         genre: 'Electronic / EDM',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-gCYcHz2k5x0',
@@ -574,7 +574,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/gCYcHz2k5x0/hqdefault.jpg',
         duration: 192,
         genre: 'Electronic / EDM',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-m7Bc3pLyij0',
@@ -585,7 +585,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/m7Bc3pLyij0/hqdefault.jpg',
         duration: 234,
         genre: 'Electronic / EDM',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-cMg8KaMdDYo',
@@ -596,7 +596,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
         duration: 138,
         genre: 'Electronic / Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -605,7 +605,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Phonk Drift & Gym Beast 🏎️',
     description: 'Aggressive drift phonk, distorted 808 cowbells, and unstoppable workout energy.',
     coverUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt--w54aVt1JsY',
@@ -616,7 +616,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/-w54aVt1JsY/hqdefault.jpg',
         duration: 152,
         genre: 'Drift Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-w-sQRS-Lc9k',
@@ -627,7 +627,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/w-sQRS-Lc9k/hqdefault.jpg',
         duration: 145,
         genre: 'Drift Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-1-xGerv5FOk',
@@ -638,7 +638,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/1-xGerv5FOk/hqdefault.jpg',
         duration: 132,
         genre: 'Drift Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt--dhx7Hnu-wo',
@@ -649,7 +649,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/-dhx7Hnu-wo/hqdefault.jpg',
         duration: 142,
         genre: 'Drift Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-F5tSoaJ93ac',
@@ -660,7 +660,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/F5tSoaJ93ac/hqdefault.jpg',
         duration: 114,
         genre: 'Drift Phonk',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -669,7 +669,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Global Billboard Hot 100 🌍',
     description: 'The biggest songs worldwide streaming non-stop right now.',
     coverUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-kPa7bsKwL-c',
@@ -680,7 +680,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/kPa7bsKwL-c/hqdefault.jpg',
         duration: 252,
         genre: 'Pop / Global',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-eVli-tstM5E',
@@ -691,7 +691,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/eVli-tstM5E/hqdefault.jpg',
         duration: 175,
         genre: 'Pop / Global',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-V9PVRfjEBTI',
@@ -702,7 +702,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/V9PVRfjEBTI/hqdefault.jpg',
         duration: 198,
         genre: 'Alternative / Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-ekr2nIex040',
@@ -713,7 +713,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/ekr2nIex040/hqdefault.jpg',
         duration: 170,
         genre: 'Pop / K-Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-4NRXx6U8ABQ',
@@ -724,7 +724,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/4NRXx6U8ABQ/hqdefault.jpg',
         duration: 200,
         genre: 'Synthpop / Global',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-JGwWNGJdvx8',
@@ -735,7 +735,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg',
         duration: 233,
         genre: 'Pop / Global',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-dMMUH_ZpbB0',
@@ -746,7 +746,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/dMMUH_ZpbB0/hqdefault.jpg',
         duration: 230,
         genre: 'R&B / Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-H5v3kku4y6Q',
@@ -757,7 +757,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/H5v3kku4y6Q/hqdefault.jpg',
         duration: 167,
         genre: 'Indie Pop',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   },
@@ -766,7 +766,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
     name: 'Peace of Mind & Soulful 🌿',
     description: 'Calming acoustic strings, meditative vocals, and serene healing sounds.',
     coverUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
-    author: 'YouTube Music',
+    author: 'Suvradip Maity',
     tracks: [
       {
         id: 'yt-T94PHkuydcw',
@@ -777,7 +777,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/T94PHkuydcw/hqdefault.jpg',
         duration: 470,
         genre: 'Bollywood & Chill',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-GxldQ9eX2wo',
@@ -788,7 +788,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/GxldQ9eX2wo/hqdefault.jpg',
         duration: 177,
         genre: 'Romance',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-2Vv-BfVoq4g',
@@ -799,7 +799,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/2Vv-BfVoq4g/hqdefault.jpg',
         duration: 263,
         genre: 'Romance',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-450p7goxZqg',
@@ -810,7 +810,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/450p7goxZqg/hqdefault.jpg',
         duration: 269,
         genre: 'Romance',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       },
       {
         id: 'yt-0yW7w8F2TVA',
@@ -821,7 +821,7 @@ export const INITIAL_PLAYLISTS: Playlist[] = [
         artworkUrl: 'https://i.ytimg.com/vi/0yW7w8F2TVA/hqdefault.jpg',
         duration: 211,
         genre: 'Romance',
-        source: 'YouTube Music'
+        source: 'Suvradip Maity'
       }
     ]
   }

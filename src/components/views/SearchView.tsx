@@ -91,28 +91,41 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
   // Derive unique artists matching this search query
   const matchingArtists = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
-    const map = new Map<string, { id: string; name: string; imageUrl?: string }>();
+    const seenIds = new Set<string>();
+    const seenNames = new Set<string>();
+    const list: { id: string; name: string; imageUrl?: string }[] = [];
 
     // 1. Check INITIAL_ARTISTS
     INITIAL_ARTISTS.forEach(a => {
-      if (a.name.toLowerCase().includes(q) || q.includes(a.name.toLowerCase())) {
-        map.set(a.name.toLowerCase(), { id: a.id, name: a.name, imageUrl: a.imageUrl });
+      const lowerName = a.name.toLowerCase();
+      if ((lowerName.includes(q) || q.includes(lowerName)) && !seenNames.has(lowerName) && !seenIds.has(a.id)) {
+        seenNames.add(lowerName);
+        seenIds.add(a.id);
+        list.push({ id: a.id, name: a.name, imageUrl: a.imageUrl });
       }
     });
 
     // 2. Check artists in search results
-    results.forEach(r => {
+    results.forEach((r, idx) => {
       const artName = r.artistName?.trim();
-      if (artName && !map.has(artName.toLowerCase()) && artName.length < 35) {
-        map.set(artName.toLowerCase(), {
-          id: r.artistId || `artist-${artName.toLowerCase().replace(/\s+/g, '-')}`,
-          name: artName,
-          imageUrl: r.artworkUrl
-        });
-      }
+      if (!artName || artName.length > 35) return;
+      const lowerName = artName.toLowerCase();
+      if (seenNames.has(lowerName)) return;
+
+      const slug = lowerName.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      const uniqueId = `art-slug-${slug || `idx-${idx}`}`;
+      if (seenIds.has(uniqueId)) return;
+
+      seenNames.add(lowerName);
+      seenIds.add(uniqueId);
+      list.push({
+        id: uniqueId,
+        name: artName,
+        imageUrl: r.artworkUrl
+      });
     });
 
-    return Array.from(map.values()).slice(0, 8);
+    return list.slice(0, 8);
   }, [results, searchQuery]);
 
   const topResult = results[0];
@@ -242,12 +255,12 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                     <div className={`${topResult ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-3`}>
                       <h3 className="text-xl font-bold text-white tracking-tight">Songs</h3>
                       <div className="space-y-1">
-                        {topSongs.map((track) => {
+                        {topSongs.map((track, idx) => {
                           const isCurrent = currentTrack?.id === track.id;
                           const isFav = isFavorite(track.id);
                           return (
                             <div
-                              key={track.id}
+                              key={`top-song-${track.id}-${idx}`}
                               onClick={() => handlePlay(track)}
                               className="flex items-center justify-between p-2 rounded-md hover:bg-spotify-elevated transition cursor-pointer group"
                             >
@@ -321,7 +334,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
 
                           return (
                             <div
-                              key={track.id}
+                              key={`all-row-${track.id}-${idx}`}
                               onClick={() => handlePlay(track)}
                               className={`grid grid-cols-12 items-center px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                                 isCurrent ? 'bg-spotify-elevated/70' : ''
@@ -399,9 +412,9 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                     <div className="space-y-4 pt-4 border-t border-zinc-800/80">
                       <h3 className="text-xl font-bold text-white tracking-tight">Artists</h3>
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        {matchingArtists.map((artist) => (
+                        {matchingArtists.map((artist, idx) => (
                           <div
-                            key={artist.id}
+                            key={`grid-artist-${artist.id}-${idx}`}
                             onClick={() => {
                               if (setActiveView) {
                                 setActiveView({ type: 'artist', id: artist.id });
@@ -451,7 +464,7 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
 
                         return (
                           <div
-                            key={track.id}
+                            key={`songs-tab-${track.id}-${idx}`}
                             onClick={() => handlePlay(track)}
                             className={`grid grid-cols-12 items-center px-4 py-2.5 rounded-md hover:bg-spotify-elevated transition cursor-pointer group text-xs ${
                               isCurrent ? 'bg-spotify-elevated/70' : ''
@@ -528,9 +541,9 @@ export function SearchView({ searchQuery, setSearchQuery, setActiveView }: Searc
                     Artists ({matchingArtists.length})
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-                    {matchingArtists.map((artist) => (
+                    {matchingArtists.map((artist, idx) => (
                       <div
-                        key={artist.id}
+                        key={`artists-tab-${artist.id}-${idx}`}
                         onClick={() => {
                           if (setActiveView) {
                             setActiveView({ type: 'artist', id: artist.id });

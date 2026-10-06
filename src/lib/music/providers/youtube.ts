@@ -144,10 +144,10 @@ export class YouTubeMusicProvider implements MusicProvider {
       }
 
       const searchData = await searchRes.json();
-      const videoIds = (searchData.items || [])
+      const rawVideoIds = (searchData.items || [])
         .map((item: any) => item.id?.videoId)
-        .filter(Boolean)
-        .join(',');
+        .filter(Boolean);
+      const videoIds = Array.from(new Set(rawVideoIds)).join(',');
 
       if (!videoIds) return this.getFallbackTracks(q);
 
@@ -159,19 +159,26 @@ export class YouTubeMusicProvider implements MusicProvider {
       }
 
       const detailsData = await detailsRes.json();
-      const tracks: Track[] = (detailsData.items || []).map((item: any) => {
+      const seenTrackIds = new Set<string>();
+      const tracks: Track[] = [];
+
+      for (const item of (detailsData.items || [])) {
+        if (!item?.id || seenTrackIds.has(item.id)) continue;
+        seenTrackIds.add(item.id);
+
         const rawTitle = item.snippet?.title || '';
         const channelTitle = item.snippet?.channelTitle || 'YouTube Artist';
         const { songTitle, artist, album } = parseMusicTrackDetails(rawTitle, channelTitle);
         const duration = parseDuration(item.contentDetails?.duration);
         const thumbnails = item.snippet?.thumbnails;
         const artworkUrl = thumbnails?.high?.url || thumbnails?.medium?.url || thumbnails?.maxres?.url || thumbnails?.default?.url;
+        const artistSlug = (artist || channelTitle).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-        return {
+        tracks.push({
           id: `yt-${item.id}`,
           youtubeId: item.id,
           title: songTitle,
-          artistId: `artist-${item.snippet?.channelId}`,
+          artistId: `artist-${artistSlug || item.snippet?.channelId || 'yt'}`,
           artistName: artist,
           albumId: `album-${item.id}`,
           albumName: album,
@@ -179,8 +186,8 @@ export class YouTubeMusicProvider implements MusicProvider {
           duration,
           genre: 'YouTube Music',
           source: 'YouTube API'
-        };
-      });
+        });
+      }
 
       // Prioritize playable songs (1 to 10 minutes) before multi-hour mix compilations
       return tracks.sort((a, b) => {

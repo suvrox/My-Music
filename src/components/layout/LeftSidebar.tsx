@@ -29,9 +29,13 @@ export function LeftSidebar({ activeView, setActiveView }: LeftSidebarProps) {
       <div className="px-4 py-3 flex items-center justify-between text-spotify-textSubdued">
         <button
           onClick={() => setActiveView({ type: 'home' })}
-          className="flex items-center gap-3 hover:text-white transition font-bold text-sm cursor-pointer"
+          className="flex items-center gap-2.5 hover:text-white transition font-bold text-sm cursor-pointer group"
         >
-          <i className="fa-solid fa-bookmark text-base"></i>
+          <img
+            src="/My%20Music%20logo.webp"
+            alt="My Music"
+            className="w-5 h-5 rounded-full object-cover group-hover:scale-105 transition"
+          />
           <span className="text-white text-base">Your Library</span>
         </button>
         <div className="flex items-center gap-2">

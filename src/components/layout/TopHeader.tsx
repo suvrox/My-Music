@@ -41,17 +41,31 @@ export function TopHeader({
 
   return (
     <header className="h-[52px] bg-black flex items-center justify-between px-3 gap-2 flex-shrink-0 z-50">
-      {/* Left: Window Controls & History Navigation */}
-      <div className="flex items-center gap-3 w-[280px]" data-purpose="left-controls">
-        {/* Windows Window Dots / Options */}
+      {/* Left: App Logo, Options & History Navigation */}
+      <div className="flex items-center gap-2.5 w-[280px]" data-purpose="left-controls">
+        {/* My Music App Logo */}
         <button
-          className="text-spotify-textSubdued hover:text-white px-1.5 py-1 text-xs transition cursor-pointer"
+          onClick={() => setActiveView({ type: 'home' })}
+          className="flex items-center gap-2 hover:opacity-90 transition cursor-pointer group flex-shrink-0"
+          title="My Music"
+        >
+          <img
+            src="/My%20Music%20logo.webp"
+            alt="My Music"
+            className="w-7 h-7 rounded-full object-cover group-hover:scale-105 transition shadow-sm"
+          />
+          <span className="font-bold text-sm tracking-tight text-white hidden sm:inline">My Music</span>
+        </button>
+
+        {/* Options Dots */}
+        <button
+          className="text-spotify-textSubdued hover:text-white px-1 py-1 text-xs transition cursor-pointer"
           title="More options"
         >
           <i className="fa-solid fa-ellipsis text-sm"></i>
         </button>
         {/* Back / Forward Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={onGoBack}
             disabled={!canGoBack}

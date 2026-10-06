@@ -207,8 +207,8 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA"
                   />
-                  <div className="absolute top-2 left-2 text-[#1ed760] text-sm drop-shadow">
-                    <i className="fa-brands fa-spotify text-lg"></i>
+                  <div className="absolute top-2 left-2 drop-shadow">
+                    <img src="/My%20Music%20logo.webp" alt="My Music" className="w-5 h-5 rounded-full object-cover" />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
                     <span className="text-emerald-400 font-extrabold text-base italic leading-tight drop-shadow-md">
@@ -239,8 +239,8 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw"
                   />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
+                  <div className="absolute top-2 left-2 drop-shadow">
+                    <img src="/My%20Music%20logo.webp" alt="My Music" className="w-5 h-5 rounded-full object-cover" />
                   </div>
                   <div className="absolute bottom-2 left-2 text-yellow-300 font-bold text-sm drop-shadow">
                     Bollywood &amp; Chill

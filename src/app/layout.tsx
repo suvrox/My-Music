@@ -9,15 +9,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Spotify - Web Player',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  title: 'My Music - Web Player',
   description: 'Music for everyone. Discover, stream and organize your favorite songs with no login required.',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/My%20Music%20logo.webp', type: 'image/webp' },
+      { url: '/logo.webp', type: 'image/webp' },
+      { url: '/favicon.ico' },
+    ],
+    shortcut: '/My%20Music%20logo.webp',
+    apple: '/My%20Music%20logo.webp',
   },
   openGraph: {
-    title: 'Spotify - Web Player',
+    title: 'My Music - Web Player',
     description: 'Music for everyone. Free, responsive legal music streaming web app.',
-    siteName: 'Spotify Web Player',
+    siteName: 'My Music Web Player',
+    images: [{ url: '/My%20Music%20logo.webp' }],
     type: 'website',
   },
 };
@@ -30,6 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <head>
+        <link rel="icon" type="image/webp" href="/My%20Music%20logo.webp" />
+        <link rel="shortcut icon" href="/My%20Music%20logo.webp" />
+        <link rel="apple-touch-icon" href="/My%20Music%20logo.webp" />
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           rel="stylesheet"

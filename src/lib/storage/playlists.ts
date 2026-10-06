@@ -1,5 +1,5 @@
 import { Playlist, Track } from '@/types/music';
-import { INITIAL_PLAYLISTS } from '../music/providers/catalog';
+import { INITIAL_PLAYLISTS, INITIAL_TRACKS } from '../music/providers/catalog';
 
 const PLAYLISTS_KEY = 'music:playlists';
 
@@ -11,7 +11,25 @@ export function getStoredPlaylists(): Playlist[] {
       localStorage.setItem(PLAYLISTS_KEY, JSON.stringify(INITIAL_PLAYLISTS));
       return INITIAL_PLAYLISTS;
     }
-    return JSON.parse(raw);
+    const parsed: Playlist[] = JSON.parse(raw);
+    const upgraded = parsed.map(p => ({
+      ...p,
+      tracks: p.tracks.map(t => {
+        if (!t.youtubeId) {
+          const match = INITIAL_TRACKS.find(it => it.title === t.title || it.id === t.id);
+          if (match) {
+            return {
+              ...t,
+              youtubeId: match.youtubeId,
+              artworkUrl: match.artworkUrl,
+              id: match.id
+            };
+          }
+        }
+        return t;
+      })
+    }));
+    return upgraded;
   } catch {
     return INITIAL_PLAYLISTS;
   }

@@ -15,9 +15,26 @@ interface ArtistViewProps {
 export function ArtistView({ artistId, onBack }: ArtistViewProps) {
   const { playTrack, currentTrack, isPlaying, togglePlay } = useAudioPlayer();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const [dynamicTracks, setDynamicTracks] = React.useState<Track[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const artist = INITIAL_ARTISTS.find(a => a.id === artistId) || INITIAL_ARTISTS[0];
-  const artistTracks = INITIAL_TRACKS.filter(t => t.artistId === artist.id || t.artistName.includes(artist.name));
+  const fallbackTracks = INITIAL_TRACKS.filter(t => t.artistId === artist.id || t.artistName.includes(artist.name));
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    fetch(`/api/music/search?q=${encodeURIComponent(artist.name + ' top songs')}`)
+      .then(r => r.json())
+      .then(d => {
+        if (Array.isArray(d.tracks) && d.tracks.length > 0) {
+          setDynamicTracks(d.tracks);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+  }, [artist.name]);
+
+  const artistTracks = dynamicTracks.length > 0 ? dynamicTracks : fallbackTracks;
 
   const handlePlayAll = () => {
     if (artistTracks.length > 0) {

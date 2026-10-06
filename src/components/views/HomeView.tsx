@@ -5,44 +5,217 @@ import { useAudioPlayer } from '@/context/AudioPlayerContext';
 import { INITIAL_TRACKS, INITIAL_ARTISTS } from '@/lib/music/providers/catalog';
 import { Track, FilterTab, ActiveView } from '@/types/music';
 import { getStoredHistory } from '@/lib/storage/history';
+import { formatTime } from '@/lib/utils';
 
 interface HomeViewProps {
   setActiveView: (view: ActiveView) => void;
 }
 
+interface CategoryRow {
+  id: string;
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  query: string;
+  tracks: Track[];
+  fallbackTracks: Track[];
+}
+
 export function HomeView({ setActiveView }: HomeViewProps) {
   const { playTrack, currentTrack, isPlaying, togglePlay } = useAudioPlayer();
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
-  const [youtubeTrending, setYoutubeTrending] = useState<Track[]>([]);
   const [recentHistory, setRecentHistory] = useState<Track[]>([]);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  // Dynamic Category Rows loaded from YouTube API
+  const [trendingTracks, setTrendingTracks] = useState<Track[]>(INITIAL_TRACKS.slice(0, 5));
+  const [indiaTrendingTracks, setIndiaTrendingTracks] = useState<Track[]>(INITIAL_TRACKS.slice(1, 6));
+  const [bollywoodTracks, setBollywoodTracks] = useState<Track[]>(INITIAL_TRACKS.slice(2, 7));
+  const [loveTracks, setLoveTracks] = useState<Track[]>(INITIAL_TRACKS.slice(3, 8));
+  const [happyTracks, setHappyTracks] = useState<Track[]>(INITIAL_TRACKS.slice(4, 9));
+  const [ipopTracks, setIpopTracks] = useState<Track[]>(INITIAL_TRACKS.slice(5, 10));
+  const [hotHitsTracks, setHotHitsTracks] = useState<Track[]>(INITIAL_TRACKS.slice(6, 11));
+  const [phonkTracks, setPhonkTracks] = useState<Track[]>(INITIAL_TRACKS.slice(0, 5));
+  const [podcastTracks, setPodcastTracks] = useState<Track[]>([]);
+  const [isLoadingFeed, setIsLoadingFeed] = useState<boolean>(true);
 
   useEffect(() => {
     setRecentHistory(getStoredHistory());
   }, [currentTrack]);
 
+  // Load live YouTube API data across all sections
   useEffect(() => {
-    fetch('/api/music/trending')
-      .then(res => res.json())
-      .then(data => {
-        if (data.tracks && Array.isArray(data.tracks)) {
-          setYoutubeTrending(data.tracks);
-        }
-      })
-      .catch(() => {});
+    let isMounted = true;
+    setIsLoadingFeed(true);
+
+    const loadCategory = async (url: string): Promise<Track[]> => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data.tracks) ? data.tracks : [];
+      } catch {
+        return [];
+      }
+    };
+
+    // Parallel fetch for snappy responsiveness
+    Promise.all([
+      loadCategory('/api/music/trending'),
+      loadCategory('/api/music/category?category=Trending Now India Hindi Top Songs'),
+      loadCategory('/api/music/category?category=Bollywood Chill Acoustic Songs'),
+      loadCategory('/api/music/category?category=pov you are in love songs hindi english'),
+      loadCategory('/api/music/category?category=Happy Vibes upbeat feel good songs'),
+      loadCategory('/api/music/category?category=Indian Pop hits indipop latest'),
+      loadCategory('/api/music/category?category=Hot Hits Hindi Punjabi Billboard'),
+      loadCategory('/api/music/category?category=drift phonk gym workout phonk'),
+      loadCategory('/api/music/category?category=podcast storytelling english hindi full episode')
+    ]).then(([trending, india, bollywood, love, happy, ipop, hothits, phonk, podcasts]) => {
+      if (!isMounted) return;
+      if (trending.length > 0) setTrendingTracks(trending);
+      if (india.length > 0) setIndiaTrendingTracks(india);
+      if (bollywood.length > 0) setBollywoodTracks(bollywood);
+      if (love.length > 0) setLoveTracks(love);
+      if (happy.length > 0) setHappyTracks(happy);
+      if (ipop.length > 0) setIpopTracks(ipop);
+      if (hothits.length > 0) setHotHitsTracks(hothits);
+      if (phonk.length > 0) setPhonkTracks(phonk);
+      if (podcasts.length > 0) setPodcastTracks(podcasts);
+      setIsLoadingFeed(false);
+    }).catch(() => {
+      if (isMounted) setIsLoadingFeed(false);
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const handlePlayOrPauseTrack = (track: Track, e?: React.MouseEvent) => {
+  const handlePlayOrPauseTrack = (track: Track, contextTracks: Track[], e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (currentTrack?.id === track.id) {
+    if (currentTrack?.id === track.id || (currentTrack?.youtubeId && currentTrack?.youtubeId === track.youtubeId)) {
       togglePlay();
     } else {
-      playTrack(track, INITIAL_TRACKS);
+      playTrack(track, contextTracks);
     }
+  };
+
+  const toggleExpand = (sectionId: string) => {
+    setExpandedSection(prev => prev === sectionId ? null : sectionId);
+  };
+
+  // Render a uniform, responsive music row
+  const renderTrackSection = (
+    sectionId: string,
+    title: string,
+    subtitle: string,
+    badgeText: string,
+    tracks: Track[],
+    accentColor: string = 'text-spotify-green'
+  ) => {
+    if (!tracks || tracks.length === 0) return null;
+    const isExpanded = expandedSection === sectionId;
+    const displayedTracks = isExpanded ? tracks : tracks.slice(0, 5);
+
+    return (
+      <section key={sectionId} data-purpose={`section-${sectionId}`} className="space-y-3">
+        <div className="flex items-end justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <i className="fa-brands fa-youtube text-red-500 text-base"></i>
+              <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
+                {title}
+              </h2>
+              {badgeText && (
+                <span className={`text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-zinc-800 ${accentColor}`}>
+                  {badgeText}
+                </span>
+              )}
+            </div>
+            {subtitle && (
+              <p className="text-xs text-spotify-textSubdued mt-0.5 font-normal">
+                {subtitle}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={() => toggleExpand(sectionId)}
+            className="text-xs font-bold text-spotify-textSubdued hover:text-white transition cursor-pointer"
+          >
+            {isExpanded ? 'Show less' : `Show all (${tracks.length})`}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {displayedTracks.map((track) => {
+            const isTrackActive =
+              currentTrack?.id === track.id ||
+              (currentTrack?.youtubeId && currentTrack?.youtubeId === track.youtubeId);
+
+            return (
+              <div
+                key={track.id}
+                onClick={() => handlePlayOrPauseTrack(track, tracks)}
+                className="bg-spotify-card hover:bg-spotify-cardHover p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border border-transparent hover:border-zinc-800/80 shadow-md"
+              >
+                {/* Artwork with YouTube Badge and Play Overlay */}
+                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+                  <img
+                    alt={track.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                    src={track.artworkUrl || `https://i.ytimg.com/vi/${track.youtubeId}/hqdefault.jpg`}
+                    loading="lazy"
+                  />
+                  {/* YouTube Tag */}
+                  <div className="absolute top-2 left-2 text-red-500 text-xs drop-shadow bg-black/70 px-1.5 py-0.5 rounded flex items-center gap-1 backdrop-blur-sm">
+                    <i className="fa-brands fa-youtube"></i>
+                    <span className="text-[10px] text-white font-semibold">YT</span>
+                  </div>
+
+                  {/* Duration Badge */}
+                  {Boolean(track.duration && track.duration > 0) && (
+                    <div className="absolute bottom-2 left-2 text-[10px] text-white/90 font-medium bg-black/70 px-1.5 py-0.5 rounded backdrop-blur-sm">
+                      {formatTime(track.duration || 0)}
+                    </div>
+                  )}
+
+                  {/* Play Button Overlay */}
+                  <div className={`absolute right-2 bottom-2 transition-all duration-300 drop-shadow-xl ${
+                    isTrackActive && isPlaying
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'
+                  }`}>
+                    <div className="w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95 transition">
+                      <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Track Title */}
+                <h3 className={`font-bold text-sm truncate mb-0.5 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`} title={track.title}>
+                  {track.title}
+                </h3>
+
+                {/* Artist Name */}
+                <p className="text-xs text-spotify-textSubdued truncate leading-snug" title={track.artistName}>
+                  {track.artistName}
+                </p>
+
+                {/* Album / Channel source */}
+                <span className="text-[11px] text-zinc-500 truncate mt-1">
+                  {track.albumName || 'YouTube Music'}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
   };
 
   return (
     <div className="flex-1 overflow-y-auto relative flex flex-col" data-purpose="center-main-feed">
-      {/* Top Violet Ambient Glow Background Banner matching Stitch */}
+      {/* Top Violet Ambient Glow Background Banner */}
       <div className="custom-gradient-header pt-4 px-6 pb-6 sticky top-0 z-20">
         {/* Filter Tabs: All, Music, Podcasts */}
         <div className="flex items-center gap-2">
@@ -76,15 +249,22 @@ export function HomeView({ setActiveView }: HomeViewProps) {
           >
             Podcasts
           </button>
+
+          {isLoadingFeed && (
+            <div className="ml-auto flex items-center gap-2 text-xs text-spotify-textSubdued">
+              <i className="fa-solid fa-circle-notch fa-spin text-spotify-green"></i>
+              <span>Loading YouTube tracks...</span>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Feed Grid Sections Container */}
-      <div className="px-6 space-y-8 pb-12 -mt-2">
-        {/* Recently Played Section (if user has listening history) */}
+      {/* Feed Content Sections */}
+      <div className="px-6 space-y-9 pb-16 -mt-2">
+        {/* SECTION: Recently Played (from local listening history) */}
         {recentHistory.length > 0 && filterTab !== 'podcasts' && (
-          <section data-purpose="recently-played-row">
-            <div className="flex items-center justify-between mb-4">
+          <section data-purpose="recently-played-row" className="space-y-3">
+            <div className="flex items-center justify-between">
               <h2
                 onClick={() => setActiveView({ type: 'history' })}
                 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer"
@@ -98,14 +278,16 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                 Show all
               </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {recentHistory.slice(0, 5).map((track) => {
-                const isTrackActive = currentTrack?.id === track.id;
+                const isTrackActive =
+                  currentTrack?.id === track.id ||
+                  (currentTrack?.youtubeId && currentTrack?.youtubeId === track.youtubeId);
                 return (
                   <div
-                    key={track.id}
-                    onClick={() => handlePlayOrPauseTrack(track)}
-                    className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
+                    key={`hist-${track.id}`}
+                    onClick={() => handlePlayOrPauseTrack(track, recentHistory)}
+                    className="bg-spotify-card hover:bg-spotify-cardHover p-3 rounded-lg transition duration-200 cursor-pointer group flex flex-col relative border border-transparent hover:border-zinc-800"
                   >
                     <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
                       <img
@@ -113,14 +295,13 @@ export function HomeView({ setActiveView }: HomeViewProps) {
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                         src={track.artworkUrl || 'https://via.placeholder.com/200'}
                       />
-                      {/* Play Button Overlay on Hover */}
                       <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                        <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
+                        <div className="w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
                           <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
                         </div>
                       </div>
                     </div>
-                    <h3 className={`font-bold text-sm truncate mb-1 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`}>
+                    <h3 className={`font-bold text-sm truncate mb-0.5 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`}>
                       {track.title}
                     </h3>
                     <p className="text-xs text-spotify-textSubdued truncate leading-snug">
@@ -133,432 +314,158 @@ export function HomeView({ setActiveView }: HomeViewProps) {
           </section>
         )}
 
-        {/* Dynamic YouTube Trending Row */}
-        {youtubeTrending.length > 0 && filterTab !== 'podcasts' && (
-          <section data-purpose="youtube-trending-row">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <i className="fa-brands fa-youtube text-red-500 text-xl"></i>
-                <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
-                  Trending on YouTube
-                </h2>
-              </div>
-              <span className="text-xs font-semibold text-spotify-textSubdued">
-                Live from YouTube API
-              </span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {youtubeTrending.slice(0, 5).map((track) => {
-                const isTrackActive = currentTrack?.id === track.id || currentTrack?.youtubeId === track.youtubeId;
-                return (
-                  <div
-                    key={track.id}
-                    onClick={() => handlePlayOrPauseTrack(track)}
-                    className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-                  >
-                    <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                      <img
-                        alt={track.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        src={track.artworkUrl || `https://i.ytimg.com/vi/${track.youtubeId}/hqdefault.jpg`}
-                      />
-                      <div className="absolute top-2 left-2 text-red-500 text-sm drop-shadow bg-black/60 px-1.5 py-0.5 rounded flex items-center gap-1">
-                        <i className="fa-brands fa-youtube"></i>
-                      </div>
-                      <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                        <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                          <i className={`fa-solid ${isTrackActive && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                        </div>
-                      </div>
-                    </div>
-                    <h3 className={`font-bold text-sm truncate mb-1 ${isTrackActive ? 'text-spotify-green' : 'text-white'}`}>
-                      {track.title}
-                    </h3>
-                    <p className="text-xs text-spotify-textSubdued truncate leading-snug">
-                      {track.artistName}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
-        {/* SECTION 1: Trending Now matching Stitch */}
+        {/* MUSIC / ALL TABS SECTIONS (All powered by live YouTube API) */}
         {filterTab !== 'podcasts' && (
-          <section data-purpose="trending-row">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
-                Trending Now
-              </h2>
-              <a className="text-xs font-bold text-spotify-textSubdued hover:underline" href="#">
-                Show all
-              </a>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {/* Card 1: Trending Now India */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[1])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="Trending India"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA"
-                  />
-                  <div className="absolute top-2 left-2 drop-shadow">
-                    <img src="/My%20Music%20logo.webp" alt="My Music" className="w-5 h-5 rounded-full object-cover" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
-                    <span className="text-emerald-400 font-extrabold text-base italic leading-tight drop-shadow-md">
-                      Trending<br /><span className="text-yellow-300">Now India</span>
-                    </span>
-                  </div>
-                  {/* Hover play */}
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[1].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Trending Now India</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Every track you&apos;re listening/should be...
-                </p>
-              </div>
+          <>
+            {/* 1. Trending on YouTube */}
+            {renderTrackSection(
+              'trending-global',
+              'Trending on YouTube',
+              'Chart-topping viral songs streaming right now across YouTube',
+              'Top Charts',
+              trendingTracks,
+              'text-red-400'
+            )}
 
-              {/* Card 2: Bollywood & Chill */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[3])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="Bollywood & Chill"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw"
-                  />
-                  <div className="absolute top-2 left-2 drop-shadow">
-                    <img src="/My%20Music%20logo.webp" alt="My Music" className="w-5 h-5 rounded-full object-cover" />
-                  </div>
-                  <div className="absolute bottom-2 left-2 text-yellow-300 font-bold text-sm drop-shadow">
-                    Bollywood &amp; Chill
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[3].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Bollywood &amp; Chill</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Sit back, and chill with Bollywood&apos;s...
-                </p>
-              </div>
+            {/* 2. Trending Now India */}
+            {renderTrackSection(
+              'trending-india',
+              'Trending Now India',
+              'Every track India is streaming on repeat today',
+              'Trending India',
+              indiaTrendingTracks,
+              'text-emerald-400'
+            )}
 
-              {/* Card 3: Happy Vibes */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[4])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="Happy Vibes"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm0Wvim7hrP_Ix-Thx7IGW3U-rJxlanKQrxUX6OjQJk0qPzKbCS4DYYEgiG5vVgAbhWL6hw5MC7UnxJnlIvcayJj7Xl9JgsLOYwDrSQwkB5m7J1Hm43pnbNrQPLrmc2xcLDP2bgdV5oQtfKg8n-zyqmPDNNZlutq4auv8Tm3qkuziIgprzK7I9jsi2P-O9LDL1u5uqwc_FLn0ZGMmOxFYBzVjohOFbcYd0Luk6ppN2u_ieXKuLCz8Npw"
-                  />
-                  <div className="absolute top-2 left-2 text-white/90">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute bottom-2 left-2 right-2 text-white font-extrabold text-base drop-shadow-md">
-                    Happy Vibes
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[4].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Happy Vibes</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Bright, sunny, catchy tunes put a smile on...
-                </p>
-              </div>
+            {/* 3. Bollywood & Chill */}
+            {renderTrackSection(
+              'bollywood-chill',
+              'Bollywood & Chill',
+              'Sit back and unwind with soothing melodies and acoustic Bollywood hits',
+              'Bollywood',
+              bollywoodTracks,
+              'text-yellow-300'
+            )}
 
-              {/* Card 4: pov: you're in love */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[5])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="In Love"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuArPqqhxGNQuAkPXNQ7Qo1IyjZGCe-6UY5BkAdZB840epb7OZ-A-1-PDInctHf_T7lMfoqdhuRB1oUop-bONhFIca7coVES6ug_4vzCnbBCqyJQIo-Wl29YnFx0jy5hg-JEmsqdKqrzT48krptPwCB-AxuaGnaabPDpKcMKXGdKibuwto-_YW8627ehGWTCEkkKqnrlpkFECUxblfTCJAUaCZKZih8iO4l3BfgsT6CTzIrEmIZEfqaiTg"
-                  />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute top-2 right-2 text-yellow-300 text-xs font-semibold drop-shadow">
-                    pov: you&apos;re in love
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[5].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">pov: you&apos;re in love</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Uff, you&apos;ve fallen! 💜
-                </p>
-              </div>
+            {/* 4. pov: you\'re in love */}
+            {renderTrackSection(
+              'pov-in-love',
+              "pov: you're in love",
+              "Uff, you've fallen! Romantic anthems, soulful confessions, and heartbeat rhythms",
+              'Romance',
+              loveTracks,
+              'text-pink-400'
+            )}
 
-              {/* Card 5: I-Pop */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[6])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="I-Pop Superhits"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAopyW1fXaxyQ6fqqM6Mu--hATPxza6P9F25-XDm248qRcaYaO_Rk5h-jBQuwDdn4Sjvup5V-uxp69JVf4H-r2_0cw4iE1bc5tsvlDBLWrUQLV0CGvREMXRJyMt9MMr-13SEceLMsdvHb-0OkB5qkRyQ_VhbHiA7RxeBjH2TdVEa68FCX6nZX-cXVQVPDx-DIGbb9YzeFQC97W84sZXg80lxhaUyqrDzvO8bdvNV11puqLD-5-y2tCUVg"
-                  />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute bottom-2 left-2 text-cyan-400 font-extrabold text-sm drop-shadow">
-                    I-Pop
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[6].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">I-Pop Superhits</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Your ultimate daily pop workout boost...
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
+            {/* 5. Happy Vibes */}
+            {renderTrackSection(
+              'happy-vibes',
+              'Happy Vibes',
+              'Bright, sunny, catchy tunes guaranteed to elevate your mood and energy',
+              'Good Vibes',
+              happyTracks,
+              'text-amber-300'
+            )}
 
-        {/* SECTION 2: More of what you like matching Stitch */}
-        {filterTab !== 'podcasts' && (
-          <section data-purpose="more-of-what-you-like">
-            <div className="flex items-end justify-between mb-3">
-              <div>
-                <p className="text-xs text-spotify-textSubdued font-medium tracking-wide">
-                  Hear a little bit of everything you love.
-                </p>
-                <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
-                  More of what you like
-                </h2>
-              </div>
-              <a className="text-xs font-bold text-spotify-textSubdued hover:underline" href="#">
-                Show all
-              </a>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {/* Card 1: Trending Now Tamil */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[2])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="Trending Tamil"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzoXdIy5kfJYX_DilbwKkzBdT5QMCYwB3-RBVcNsTFcB7t9mpgW0iXB9sqq-EvBpNy4ZRqqf0rTcd39GIsLdYZOmVLOgAmVCyhL67c_8Z-Sys1iqHypd4BVH_UJxidnDfLuOgi18aSZvTwcdA4s99deQda3QjY3nRDGXF2c9bIxRAiadSdQZUh5PV-Dg7WS_SxYTNKx75eUYUxNmFecFf2AYjd_RB7Dwbo4-Q_Rv04XjHp60mNzzlH0A"
-                  />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
-                    <span className="text-emerald-400 font-extrabold text-base italic leading-tight drop-shadow-md">
-                      Trending<br /><span className="text-pink-500">Now Tamil</span>
-                    </span>
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[2].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Trending Now Tamil</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Top Trending Tamil Songs on Social...
-                </p>
-              </div>
+            {/* 6. I-Pop Superhits */}
+            {renderTrackSection(
+              'ipop-superhits',
+              'I-Pop Superhits',
+              'Your ultimate daily indie-pop boost with fresh vocals and catchy hooks',
+              'Indie Pop',
+              ipopTracks,
+              'text-cyan-400'
+            )}
 
-              {/* Card 2: HOT HITS HINDI */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[7])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-red-950 shadow-lg">
-                  <img
-                    alt="Hot Hits Hindi"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300 filter contrast-125"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXp2Y5r7pWKez5A7kdM13GjwX74bbXtPJbLKDFI7pLaLo7UNF6F1h0L2LW3FsINJQ66qE1Vf8ahdCGcTN6PZsjNR8XvcHJD96VMe0tbqvL1zlUOF56rit2OiEqd2FBtnbwtCJFJNvIc_6VFlNYZGDxuGoeo5h9PD3uRerWz7H5_5KvPdG3uFjue5Foyoj6m2n8baxuPPz_vx79Eynajy90ECk5SsK0e4rXUlVkk0wnBjWrl0ZQE_j8Lg"
-                  />
-                  <div className="absolute top-2 left-2 text-white">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute top-1 right-2 text-red-500 font-black tracking-widest text-xs">
-                    HOT HITS
-                  </div>
-                  <div className="absolute bottom-2 left-2 text-white font-extrabold text-xs tracking-wider bg-black/60 px-1 py-0.5 rounded">
-                    HINDI
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[7].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Hot Hits Hindi</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Hottest Hindi music that India is listening...
-                </p>
-              </div>
+            {/* 7. Hot Hits Hindi & Global */}
+            {renderTrackSection(
+              'hot-hits',
+              'More of what you like (Hot Hits)',
+              'Hear a little bit of everything you love with heavy rotation chartbusters',
+              'Hot Hits',
+              hotHitsTracks,
+              'text-red-500'
+            )}
 
-              {/* Card 3: Grand Theft Auto Official Playlist */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[8])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="GTA Playlist"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnaAPj5qow9H9cawa408P83Lle6lbSm0Pm0Po1JEaS61p1dLP9WIVDmczbO9ueJffwozyUbsHi6qyHu62GlZgQgZ44FiK9xjTUhrAdUm9YEP3Sr0Z71lyIfx_8HeVXGFrODbdNgHhh4PytdqiASU3e0WG2-SRO1FmOWA6vXv1jl4SE-BES1tyzEnujvCV84vNF3tHpzZvBRgRHXzuO6WPlV4Tvut01hSA_qn7-5f9YKBVPD_q5gjZNlg"
-                  />
-                  <div className="absolute top-2 left-2 text-white">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute bottom-2 left-2 right-2 text-[10px] leading-tight font-bold text-white drop-shadow bg-black/50 p-1 rounded">
-                    Grand Theft Auto Official Playlist
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[8].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Grand Theft Auto Official...</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Listen to all the music from Grand Theft Au...
-                </p>
-              </div>
+            {/* 8. the beat of your drift (PHONK) */}
+            {renderTrackSection(
+              'phonk-drift',
+              'the beat of your drift (PHONK)',
+              'High-octane drift phonk, dark cyberbass, and aggressive gym workout beats',
+              'Phonk',
+              phonkTracks,
+              'text-purple-400'
+            )}
 
-              {/* Card 4: the beat of your drift (PHONK) */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[9])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-purple-950 shadow-lg">
-                  <img
-                    alt="PHONK"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300 filter hue-rotate-60"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0q7PqQYMt1bwVjLAxGuytTU42EM3iczCuwNsjzeTuVl84Nib7YyGP3ZTuT4FgNXyNS6bdk3_9AWtGkHrbPiGpQQZ2NjhNtHM34tZymmXUa13ZFENmmejd-VCLIF6tkRGWY57D97Un5pdLb1_-aVWaA4NKXUCarsnJczIoDZf3Uax8YUBhMiNa1TMErMUX8zbfu2ms0aeFJkFdaxiDhVnVt_wxKoTnqLCtnECB5Xc_LbWvaJrMQKHpEQ"
-                  />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute right-2 bottom-2 text-white font-black tracking-widest text-lg rotate-90 origin-bottom-right drop-shadow">
-                    PHONK
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[9].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">the beat of your drift</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  the beat of your drift
-                </p>
-              </div>
-
-              {/* Card 5: Dreamy Chill */}
-              <div
-                onClick={() => handlePlayOrPauseTrack(INITIAL_TRACKS[10])}
-                className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col relative"
-              >
-                <div className="relative w-full aspect-square rounded-md overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                  <img
-                    alt="Dream Chill"
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhutN_e5d-q8qaz5HJax0urT6lq-Soxx1coRaITVv7_o0uyDlDSCW2cfSMIdVgGNp20tR2igJEoY22Ue6v4WKmRVvPQ5jiythYoy7v6TuqGPNLJjXjB6YatWQNHbsQNQMGPkuiBvutks7p1JMpGjNNdQMB_z9Z5BkMJuAhKq8YeAayWKSVQk6PPbOJMOYS-KZObQJ9-lZO-BJzQBmqFnUKFpUJem5upVdN5f3gSo6LHqy_2Cp3M6UU4g"
-                  />
-                  <div className="absolute top-2 left-2 text-[#1ed760]">
-                    <i className="fa-brands fa-spotify text-lg drop-shadow"></i>
-                  </div>
-                  <div className="absolute right-2 bottom-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 drop-shadow-xl">
-                    <div className="w-11 h-11 rounded-full bg-spotify-green flex items-center justify-center text-black shadow-lg hover:scale-105 active:scale-95">
-                      <i className={`fa-solid ${currentTrack?.id === INITIAL_TRACKS[10].id && isPlaying ? 'fa-pause' : 'fa-play ml-0.5'} text-sm`}></i>
-                    </div>
-                  </div>
-                </div>
-                <h3 className="font-bold text-sm text-white truncate mb-1">Dreamy Chill</h3>
-                <p className="text-xs text-spotify-textSubdued truncate-2-lines leading-snug">
-                  Relax with ambient chill beats...
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* SECTION 3: Popular Artists matching PRD Section 9 */}
-        {filterTab !== 'podcasts' && (
-          <section data-purpose="popular-artists-row">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
-                Popular Artists
-              </h2>
-              <a className="text-xs font-bold text-spotify-textSubdued hover:underline" href="#">
-                Show all
-              </a>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {INITIAL_ARTISTS.map((artist) => (
-                <div
-                  key={artist.id}
-                  onClick={() => setActiveView({ type: 'artist', id: artist.id })}
-                  className="bg-spotify-card hover:bg-spotify-cardHover p-3.5 rounded-md transition duration-200 cursor-pointer group flex flex-col items-center text-center relative"
-                >
-                  <div className="relative w-36 h-36 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg">
-                    <img
-                      alt={artist.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      src={artist.imageUrl || 'https://via.placeholder.com/150'}
-                    />
-                  </div>
-                  <h3 className="font-bold text-sm text-white truncate mb-0.5 w-full">
-                    {artist.name}
-                  </h3>
-                  <p className="text-xs text-spotify-textSubdued truncate w-full">
-                    Artist • {artist.monthlyListeners}
+            {/* 9. Popular Artists */}
+            <section data-purpose="popular-artists-row" className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-bold tracking-tight text-white hover:underline cursor-pointer">
+                    Popular Artists
+                  </h2>
+                  <p className="text-xs text-spotify-textSubdued mt-0.5">
+                    Explore top verified artists streaming on the platform
                   </p>
                 </div>
-              ))}
-            </div>
-          </section>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {INITIAL_ARTISTS.map((artist) => (
+                  <div
+                    key={artist.id}
+                    onClick={() => setActiveView({ type: 'artist', id: artist.id })}
+                    className="bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg transition duration-200 cursor-pointer group flex flex-col items-center text-center relative border border-transparent hover:border-zinc-800"
+                  >
+                    <div className="relative w-32 h-32 rounded-full overflow-hidden mb-3 bg-zinc-800 shadow-lg">
+                      <img
+                        alt={artist.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                        src={artist.imageUrl || 'https://via.placeholder.com/150'}
+                      />
+                    </div>
+                    <h3 className="font-bold text-sm text-white truncate mb-0.5 w-full">
+                      {artist.name}
+                    </h3>
+                    <p className="text-xs text-spotify-textSubdued truncate w-full">
+                      Artist • {artist.monthlyListeners}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
         )}
 
-        {/* Podcasts empty/preview view if Podcasts tab selected */}
+        {/* PODCASTS TAB VIEW (Powered by YouTube Podcasts) */}
         {filterTab === 'podcasts' && (
-          <div className="py-16 text-center text-spotify-textSubdued space-y-3">
-            <i className="fa-solid fa-podcast text-4xl text-zinc-600"></i>
-            <h3 className="text-lg font-bold text-white">Podcasts on Web Player</h3>
-            <p className="text-xs max-w-sm mx-auto">
-              Follow and listen to talk shows, storytelling, and tech podcasts. New episodes release daily.
-            </p>
+          <div className="space-y-8">
+            {renderTrackSection(
+              'podcasts-youtube',
+              'Popular Podcasts on YouTube',
+              'Top talk shows, technology discussions, and captivating audio stories',
+              'Podcast',
+              podcastTracks.length > 0 ? podcastTracks : INITIAL_TRACKS.slice(0, 5),
+              'text-indigo-400'
+            )}
+
+            <div className="bg-spotify-card/60 p-6 rounded-xl border border-zinc-800 flex items-center justify-between">
+              <div className="space-y-1 max-w-xl">
+                <div className="flex items-center gap-2 text-indigo-400">
+                  <i className="fa-solid fa-podcast text-lg"></i>
+                  <span className="text-xs font-bold uppercase tracking-wider">Audio Stories &amp; Shows</span>
+                </div>
+                <h3 className="text-lg font-bold text-white">Continuous Podcast Streaming via YouTube</h3>
+                <p className="text-xs text-spotify-textSubdued">
+                  Enjoy non-stop episodes, full interview recordings, and storytelling curated directly from official YouTube creators.
+                </p>
+              </div>
+              <button
+                onClick={() => setFilterTab('all')}
+                className="px-4 py-2 bg-white text-black font-bold text-xs rounded-full hover:scale-105 transition"
+              >
+                Explore Music
+              </button>
+            </div>
           </div>
         )}
       </div>

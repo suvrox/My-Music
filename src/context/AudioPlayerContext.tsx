@@ -22,7 +22,7 @@ const INITIAL_YOUTUBE_TRACKS: Track[] = [
     artistName: 'DR MØB, Chris Linton',
     albumId: 'album-ncs-release',
     albumName: 'Fearless Funk (Single)',
-    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/maxresdefault.jpg',
+    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
     duration: 138,
     genre: 'Electronic / Phonk',
     source: 'YouTube Music'
@@ -84,6 +84,8 @@ interface AudioPlayerContextType {
   repeat: RepeatMode;
   queue: Track[];
   currentIndex: number;
+  recommendations: Track[];
+  isRecommendationsLoading: boolean;
   playTrack: (track: Track, newQueue?: Track[]) => void;
   togglePlay: () => void;
   playNext: () => void;
@@ -113,6 +115,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const [repeat, setRepeat] = useState<RepeatMode>('off');
   const [queue, setQueue] = useState<Track[]>(INITIAL_YOUTUBE_TRACKS);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [recommendations, setRecommendations] = useState<Track[]>([]);
+  const [isRecommendationsLoading, setIsRecommendationsLoading] = useState<boolean>(false);
   const [isQueueOpen, setIsQueueOpen] = useState<boolean>(false);
 
   // Synchronization refs to prevent stale closure bugs in callbacks
@@ -137,6 +141,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const currentIndexRef = useRef<number>(currentIndex);
   currentIndexRef.current = currentIndex;
 
+  const recommendationsRef = useRef<Track[]>(recommendations);
+  recommendationsRef.current = recommendations;
+
   const originalQueueRef = useRef<Track[]>(INITIAL_YOUTUBE_TRACKS);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ytPlayerRef = useRef<any>(null);
@@ -144,6 +151,50 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const pendingTrackRef = useRef<Track | null>(null);
   const pendingPlayRef = useRef<boolean>(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Direct playback execution
+  const playTrackDirect = useCallback((track: Track) => {
+    currentTrackRef.current = track;
+    setCurrentTrack(track);
+
+    if (track.youtubeId) {
+      if (audioRef.current) audioRef.current.pause();
+
+      if (ytPlayerRef.current && isYtReadyRef.current) {
+        try {
+          ytPlayerRef.current.loadVideoById(track.youtubeId);
+          ytPlayerRef.current.playVideo();
+
+          const volVal = isMutedRef.current ? 0 : volumeRef.current * 100;
+          ytPlayerRef.current.setVolume(volVal);
+          if (isMutedRef.current) ytPlayerRef.current.mute();
+          else ytPlayerRef.current.unMute();
+
+          setIsPlaying(true);
+        } catch (err) {
+          console.warn('YouTube loadVideoById error:', err);
+        }
+      } else {
+        pendingTrackRef.current = track;
+        pendingPlayRef.current = true;
+        setIsPlaying(true);
+      }
+    } else if (track.audioUrl) {
+      if (ytPlayerRef.current && isYtReadyRef.current) {
+        try { ytPlayerRef.current.pauseVideo(); } catch {}
+      }
+      if (audioRef.current) {
+        audioRef.current.src = track.audioUrl;
+        audioRef.current.currentTime = 0;
+        audioRef.current.volume = isMutedRef.current ? 0 : volumeRef.current;
+        audioRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+    }
+
+    addTrackToHistory(track);
+  }, []);
 
   // Auto-advance track when current song finishes
   const handleNextTrackAuto = useCallback(() => {
@@ -182,61 +233,50 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       setCurrentTrack(firstTrack);
       playTrackDirect(firstTrack);
     } else {
-      // End of playlist
-      setIsPlaying(false);
-      if (curTrack?.youtubeId && ytPlayerRef.current && isYtReadyRef.current) {
-        try { ytPlayerRef.current.pauseVideo(); } catch {}
-      } else if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    }
-  }, []);
+      // Queue finished: automatically play from YouTube recommendations for continuous stream!
+      const unplayedRec = recommendationsRef.current.find(
+        r => !curQueue.some(q => q.id === r.id || (q.youtubeId && q.youtubeId === r.youtubeId))
+      );
 
-  // Direct playback execution
-  const playTrackDirect = useCallback((track: Track) => {
-    currentTrackRef.current = track;
-    setCurrentTrack(track);
-
-    if (track.youtubeId) {
-      if (audioRef.current) audioRef.current.pause();
-
-      if (ytPlayerRef.current && isYtReadyRef.current) {
-        try {
-          ytPlayerRef.current.loadVideoById(track.youtubeId);
-          ytPlayerRef.current.playVideo();
-
-          // Sync volume immediately
-          const volVal = isMutedRef.current ? 0 : volumeRef.current * 100;
-          ytPlayerRef.current.setVolume(volVal);
-          if (isMutedRef.current) ytPlayerRef.current.mute();
-          else ytPlayerRef.current.unMute();
-
-          setIsPlaying(true);
-        } catch (err) {
-          console.warn('YouTube loadVideoById error:', err);
-        }
+      if (unplayedRec) {
+        const updated = [...curQueue, unplayedRec];
+        queueRef.current = updated;
+        setQueue(updated);
+        const nextIdx = updated.length - 1;
+        currentIndexRef.current = nextIdx;
+        setCurrentIndex(nextIdx);
+        setCurrentTrack(unplayedRec);
+        playTrackDirect(unplayedRec);
       } else {
-        // Player not ready yet; schedule for onReady
-        pendingTrackRef.current = track;
-        pendingPlayRef.current = true;
-        setIsPlaying(true);
-      }
-    } else if (track.audioUrl) {
-      if (ytPlayerRef.current && isYtReadyRef.current) {
-        try { ytPlayerRef.current.pauseVideo(); } catch {}
-      }
-      if (audioRef.current) {
-        audioRef.current.src = track.audioUrl;
-        audioRef.current.currentTime = 0;
-        audioRef.current.volume = isMutedRef.current ? 0 : volumeRef.current;
-        audioRef.current.play()
-          .then(() => setIsPlaying(true))
-          .catch(() => setIsPlaying(false));
+        setIsPlaying(false);
       }
     }
+  }, [playTrackDirect]);
 
-    addTrackToHistory(track);
-  }, []);
+  // Fetch real-time YouTube recommendations whenever the current track changes
+  useEffect(() => {
+    if (!currentTrack) return;
+    setIsRecommendationsLoading(true);
+
+    const params = new URLSearchParams({
+      trackId: currentTrack.id,
+      youtubeId: currentTrack.youtubeId || '',
+      title: currentTrack.title,
+      artistName: currentTrack.artistName,
+      genre: currentTrack.genre || ''
+    });
+
+    fetch(`/api/music/recommendations?${params.toString()}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.tracks && Array.isArray(data.tracks)) {
+          setRecommendations(data.tracks);
+          recommendationsRef.current = data.tracks;
+        }
+      })
+      .catch(() => {})
+      .finally(() => setIsRecommendationsLoading(false));
+  }, [currentTrack?.id]);
 
   // Initialize Audio & YouTube API on Mount
   useEffect(() => {
@@ -272,7 +312,28 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     audio.addEventListener('loadedmetadata', handleAudioLoadedMetadata);
     audio.addEventListener('ended', handleAudioEnded);
 
-    // Initialize YouTube Player
+    // Mount YouTube player host element strictly on document.body outside of React's Virtual DOM
+    let host = document.getElementById('yt-player-host');
+    if (!host && typeof document !== 'undefined') {
+      host = document.createElement('div');
+      host.id = 'yt-player-host';
+      host.style.position = 'fixed';
+      host.style.bottom = '0';
+      host.style.right = '0';
+      host.style.width = '200px';
+      host.style.height = '200px';
+      host.style.pointerEvents = 'none';
+      host.style.opacity = '0.001';
+      host.style.zIndex = '-999';
+      host.style.overflow = 'hidden';
+
+      const inner = document.createElement('div');
+      inner.id = 'yt-player-container';
+      host.appendChild(inner);
+      document.body.appendChild(host);
+    }
+
+    // Initialize YouTube Player instance
     const initYT = () => {
       if (typeof window === 'undefined' || !window.YT || !window.YT.Player) return false;
       if (ytPlayerRef.current) return true;
@@ -301,7 +362,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
               event.target.setVolume(curMuted ? 0 : curVol * 100);
               if (curMuted) event.target.mute();
 
-              // Handle queued pending track if clicked during handshake
               if (pendingTrackRef.current?.youtubeId) {
                 event.target.loadVideoById(pendingTrackRef.current.youtubeId);
                 if (pendingPlayRef.current) {
@@ -334,7 +394,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       }
     };
 
-    // Load YouTube API script with reliable poller fallback
     if (typeof window !== 'undefined') {
       const isAlreadyReady = initYT();
       if (!isAlreadyReady) {
@@ -365,7 +424,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       if (ytPlayerRef.current && isYtReadyRef.current && typeof ytPlayerRef.current.getCurrentTime === 'function') {
         try {
           const state = ytPlayerRef.current.getPlayerState();
-          if (state === 1 || state === 3) { // Playing or buffering
+          if (state === 1 || state === 3) {
             const curr = ytPlayerRef.current.getCurrentTime() || 0;
             const dur = ytPlayerRef.current.getDuration() || 0;
             setCurrentTime(curr);
@@ -418,7 +477,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
             setIsPlaying(false);
           } else {
             ytPlayerRef.current.playVideo();
-            // Ensure volume is synchronized
             const curVol = isMutedRef.current ? 0 : volumeRef.current * 100;
             ytPlayerRef.current.setVolume(curVol);
             if (isMutedRef.current) ytPlayerRef.current.mute();
@@ -459,19 +517,44 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     const q = queueRef.current;
     if (q.length === 0) return;
     const curIdx = currentIndexRef.current;
-    const nextIdx = (curIdx + 1) % q.length;
-    const nextTrack = q[nextIdx];
-    currentIndexRef.current = nextIdx;
-    setCurrentIndex(nextIdx);
-    setCurrentTrack(nextTrack);
-    playTrackDirect(nextTrack);
+
+    if (curIdx < q.length - 1) {
+      const nextIdx = curIdx + 1;
+      const nextTrack = q[nextIdx];
+      currentIndexRef.current = nextIdx;
+      setCurrentIndex(nextIdx);
+      setCurrentTrack(nextTrack);
+      playTrackDirect(nextTrack);
+    } else {
+      // If at end of queue, try playing next recommendation
+      const unplayedRec = recommendationsRef.current.find(
+        r => !q.some(item => item.id === r.id || (item.youtubeId && item.youtubeId === r.youtubeId))
+      );
+      if (unplayedRec) {
+        const updated = [...q, unplayedRec];
+        queueRef.current = updated;
+        setQueue(updated);
+        const nextIdx = updated.length - 1;
+        currentIndexRef.current = nextIdx;
+        setCurrentIndex(nextIdx);
+        setCurrentTrack(unplayedRec);
+        playTrackDirect(unplayedRec);
+      } else {
+        // Loop back if repeat all
+        if (repeatRef.current === 'all' && q.length > 0) {
+          currentIndexRef.current = 0;
+          setCurrentIndex(0);
+          setCurrentTrack(q[0]);
+          playTrackDirect(q[0]);
+        }
+      }
+    }
   }, [playTrackDirect]);
 
   const playPrev = useCallback(() => {
     const q = queueRef.current;
     if (q.length === 0) return;
 
-    // If played more than 3 seconds, restart current track
     if (currentTime > 3) {
       seek(0);
       return;
@@ -505,7 +588,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     setVolumeState(val);
     volumeRef.current = val;
 
-    // Adjusting volume automatically unmutes
     if (val > 0 && isMutedRef.current) {
       setIsMuted(false);
       isMutedRef.current = false;
@@ -639,6 +721,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         repeat,
         queue,
         currentIndex,
+        recommendations,
+        isRecommendationsLoading,
         playTrack,
         togglePlay,
         playNext,
@@ -655,21 +739,6 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         toggleQueue
       }}
     >
-      {/* Hidden YouTube Player IFrame container: kept in viewport to bypass browser background media throttling */}
-      <div
-        id="yt-player-container"
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          right: 0,
-          width: 200,
-          height: 200,
-          pointerEvents: 'none',
-          opacity: 0.001,
-          zIndex: -50,
-          overflow: 'hidden'
-        }}
-      />
       {children}
     </AudioPlayerContext.Provider>
   );

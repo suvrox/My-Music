@@ -245,6 +245,40 @@ export class YouTubeMusicProvider implements MusicProvider {
     }
   }
 
+  async getRecommendations(track: Track): Promise<Track[]> {
+    if (!track) return this.getTrendingTracks();
+
+    try {
+      const artistClean = track.artistName?.replace(/^(YouTube|Various).*$/i, '').trim() || '';
+      const query = artistClean
+        ? `${artistClean} top songs`
+        : `${track.title} music`;
+
+      const tracks = await this.searchTracks(query);
+      const filtered = tracks.filter(t => t.id !== track.id && t.youtubeId !== track.youtubeId);
+      if (filtered.length >= 6) {
+        return filtered.slice(0, 15);
+      }
+
+      const trending = await this.getTrendingTracks();
+      const combined = [...filtered, ...trending.filter(t => t.id !== track.id)];
+      const unique = Array.from(new Map(combined.map(t => [t.youtubeId || t.id, t])).values());
+      return unique.slice(0, 15);
+    } catch {
+      return this.getTrendingTracks();
+    }
+  }
+
+  async getCategoryTracks(category: string): Promise<Track[]> {
+    const q = category.trim();
+    if (!q) return this.getTrendingTracks();
+    try {
+      return await this.searchTracks(`${q} songs`);
+    } catch {
+      return this.getTrendingTracks();
+    }
+  }
+
   async getTrack(id: string): Promise<Track | null> {
     const videoId = id.replace('yt-', '');
     if (!this.apiKey) {

@@ -3,147 +3,147 @@ import { MusicProvider } from '../types';
 
 export const INITIAL_TRACKS: Track[] = [
   {
-    id: 'track-fearless-funk',
+    id: 'yt-cMg8KaMdDYo',
+    youtubeId: 'cMg8KaMdDYo',
     title: 'Fearless Funk',
     artistId: 'artist-dr-mob',
     artistName: 'DR MØB, Chris Linton',
     albumId: 'album-ncs-release',
     albumName: 'Fearless Funk (Single)',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5-A5tvDVNA1zUz-P2fNxAW00Db5ym3CfrOJFQk-k2P77vTWqQjvEKAKGvywh3CHuCVi1INiU6cjJSpAx91bBTR7RLLNO6MO9Y5XVDzegiCf3TViS5VLvs5-CQAt1HkSz0btc1w6du8wzdewpqOpnkX8fJxL-ehZh-bIhAt-EVDpBVRKyEt-LFtKPb_W45DfYMBoFgjFDKWIL2DlQ0d8O7mSBiiePUCyRzx6qXsIjVLnk98ger4Rha7A',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    duration: 138, // 2:18 matching Stitch
+    artworkUrl: 'https://i.ytimg.com/vi/cMg8KaMdDYo/hqdefault.jpg',
+    duration: 138,
     genre: 'Electronic / Phonk',
-    source: 'NCS Royalty-Free Catalog'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-tauba-tauba',
+    id: 'yt-L76eT_L76E',
+    youtubeId: 'L76eT_L76E',
     title: 'Tauba Tauba',
     artistId: 'artist-karan-aujla',
     artistName: 'Karan Aujla',
     albumId: 'album-bad-newz',
     albumName: 'Bad Newz',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCL8ITEgoYGl_SE8l9wuE-_CnGrrPSWoiZl0T-HX5KpmYdBCuuqwX7-Yk_h3iGIr0zqhBcWE-UbBgZp0LnkgCJV8Is137HhD5bi7Vndfgmuee9HoFTANyGQ_T-lV3DuciOu6g58BwVKCqOgEZhhcSO61NQwWSQmpFpnVc3kR9Q_cBpPlBE6_FVYjCQU3OuXH3o3EG2gSUYDYxpDS0NBKgQRUSp6Qh5LpRUVD7rrdu0JzCjtBFCJr55yRA',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/L76eT_L76E/hqdefault.jpg',
     duration: 204,
     genre: 'Punjabi Pop',
-    source: 'Trending India'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-chuttamalle',
+    id: 'yt-b0_i0b5t8jY',
+    youtubeId: 'b0_i0b5t8jY',
     title: 'Chuttamalle',
     artistId: 'artist-anirudh',
     artistName: 'Anirudh Ravichander, Shilpa Rao',
     albumId: 'album-devara',
     albumName: 'Devara Part 1',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCzoXdIy5kfJYX_DilbwKkzBdT5QMCYwB3-RBVcNsTFcB7t9mpgW0iXB9sqq-EvBpNy4ZRqqf0rTcd39GIsLdYZOmVLOgAmVCyhL67c_8Z-Sys1iqHypd4BVH_UJxidnDfLuOgi18aSZvTwcdA4s99deQda3QjY3nRDGXF2c9bIxRAiadSdQZUh5PV-Dg7WS_SxYTNKx75eUYUxNmFecFf2AYjd_RB7Dwbo4-Q_Rv04XjHp60mNzzlH0A',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/b0_i0b5t8jY/hqdefault.jpg',
     duration: 220,
     genre: 'Tamil Hits',
-    source: 'Trending Tamil'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-o-sajni-re',
+    id: 'yt-AKHg502z1LM',
+    youtubeId: 'AKHg502z1LM',
     title: 'O Sajni Re',
     artistId: 'artist-arijit-singh',
     artistName: 'Arijit Singh, Ram Sampath',
     albumId: 'album-laapataa-ladies',
     albumName: 'Laapataa Ladies',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3s5P-n1HV1lUeyy5iu8h2YK3GH-QQ5P6tA_WA2dnJvjnpQ2YZzMY7iVkRl_f4y7u4TGuYSOrMloPr9qammRZgLlZarXkLOOSgARa_hHaP-d2KXY-pqd-DgUGfFdcJd_8-8x-GYodSgZNTqFVjZNuxJkT_nZyUfK8xusdYJ3YMXUwIqLTb-kx_5rxhe6uV_eyVdRC0xvaIntkEcuHxNKNPc1B93aASa2BPHDDV50TA4-Q8mNd-BqwHWw',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/AKHg502z1LM/hqdefault.jpg',
     duration: 172,
     genre: 'Bollywood & Chill',
-    source: 'Bollywood & Chill'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-happy-vibes',
+    id: 'yt-jfKfPfyJRdk',
+    youtubeId: 'jfKfPfyJRdk',
     title: 'Sunny Days in Goa',
     artistId: 'artist-chill-groove',
     artistName: 'Acoustic Waves',
     albumId: 'album-happy-vibes',
     albumName: 'Happy Vibes Vol. 1',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCm0Wvim7hrP_Ix-Thx7IGW3U-rJxlanKQrxUX6OjQJk0qPzKbCS4DYYEgiG5vVgAbhWL6hw5MC7UnxJnlIvcayJj7Xl9JgsLOYwDrSQwkB5m7J1Hm43pnbNrQPLrmc2xcLDP2bgdV5oQtfKg8n-zyqmPDNNZlutq4auv8Tm3qkuziIgprzK7I9jsi2P-O9LDL1u5uqwc_FLn0ZGMmOxFYBzVjohOFbcYd0Luk6ppN2u_ieXKuLCz8Npw',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
     duration: 195,
     genre: 'Indie Acoustic',
-    source: 'Happy Vibes'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-pov-in-love',
+    id: 'yt-21qNxnCS8WU',
+    youtubeId: '21qNxnCS8WU',
     title: 'Midnight Euphoria',
     artistId: 'artist-luna-rose',
     artistName: 'Luna Rose',
     albumId: 'album-pov-in-love',
     albumName: "pov: you're in love",
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuArPqqhxGNQuAkPXNQ7Qo1IyjZGCe-6UY5BkAdZB840epb7OZ-A-1-PDInctHf_T7lMfoqdhuRB1oUop-bONhFIca7coVES6ug_4vzCnbBCqyJQIo-Wl29YnFx0jy5hg-JEmsqdKqrzT48krptPwCB-AxuaGnaabPDpKcMKXGdKibuwto-_YW8627ehGWTCEkkKqnrlpkFECUxblfTCJAUaCZKZih8iO4l3BfgsT6CTzIrEmIZEfqaiTg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/21qNxnCS8WU/hqdefault.jpg',
     duration: 184,
     genre: 'Dream Pop / Romance',
-    source: "pov: you're in love"
+    source: 'YouTube Music'
   },
   {
-    id: 'track-ipop-hits',
-    title: 'Neon Skyline',
+    id: 'yt-fHi8s4Qr3nU',
+    youtubeId: 'fHi8s4Qr3nU',
+    title: 'Neon Skyline (I-Pop)',
     artistId: 'artist-kabir-sen',
     artistName: 'Kabir Sen, Priya Nair',
     albumId: 'album-ipop-hits',
     albumName: 'I-Pop Superhits 2026',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAopyW1fXaxyQ6fqqM6Mu--hATPxza6P9F25-XDm248qRcaYaO_Rk5h-jBQuwDdn4Sjvup5V-uxp69JVf4H-r2_0cw4iE1bc5tsvlDBLWrUQLV0CGvREMXRJyMt9MMr-13SEceLMsdvHb-0OkB5qkRyQ_VhbHiA7RxeBjH2TdVEa68FCX6nZX-cXVQVPDx-DIGbb9YzeFQC97W84sZXg80lxhaUyqrDzvO8bdvNV11puqLD-5-y2tCUVg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/fHi8s4Qr3nU/hqdefault.jpg',
     duration: 210,
     genre: 'Indian Pop',
-    source: 'I-Pop'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-hot-hits-hindi',
+    id: 'yt-G4s-43g_6bQ',
+    youtubeId: 'G4s-43g_6bQ',
     title: 'Chal Kudiye',
     artistId: 'artist-diljit-dosanjh',
     artistName: 'Diljit Dosanjh, Alia Bhatt',
     albumId: 'album-jigra',
     albumName: 'Jigra Soundtracks',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXp2Y5r7pWKez5A7kdM13GjwX74bbXtPJbLKDFI7pLaLo7UNF6F1h0L2LW3FsINJQ66qE1Vf8ahdCGcTN6PZsjNR8XvcHJD96VMe0tbqvL1zlUOF56rit2OiEqd2FBtnbwtCJFJNvIc_6VFlNYZGDxuGoeo5h9PD3uRerWz7H5_5KvPdG3uFjue5Foyoj6m2n8baxuPPz_vx79Eynajy90ECk5SsK0e4rXUlVkk0wnBjWrl0ZQE_j8Lg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/G4s-43g_6bQ/hqdefault.jpg',
     duration: 198,
     genre: 'Hindi Hits',
-    source: 'Hot Hits Hindi'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-gta-beat',
+    id: 'yt-kXYiU_JCYtU',
+    youtubeId: 'kXYiU_JCYtU',
     title: 'Midnight City Boulevard',
     artistId: 'artist-vice-fm',
     artistName: 'Vice City FM Synthesizers',
     albumId: 'album-gta-soundtrack',
     albumName: 'Grand Theft Auto Official Playlist',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCnaAPj5qow9H9cawa408P83Lle6lbSm0Pm0Po1JEaS61p1dLP9WIVDmczbO9ueJffwozyUbsHi6qyHu62GlZgQgZ44FiK9xjTUhrAdUm9YEP3Sr0Z71lyIfx_8HeVXGFrODbdNgHhh4PytdqiASU3e0WG2-SRO1FmOWA6vXv1jl4SE-BES1tyzEnujvCV84vNF3tHpzZvBRgRHXzuO6WPlV4Tvut01hSA_qn7-5f9YKBVPD_q5gjZNlg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/kXYiU_JCYtU/hqdefault.jpg',
     duration: 245,
     genre: 'Synthwave / Retro',
-    source: 'Rockstar Games'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-phonk-drift',
+    id: 'yt-1laX4XUfgkM',
+    youtubeId: '1laX4XUfgkM',
     title: 'Tokyo Midnight Drift',
     artistId: 'artist-phonk-master',
     artistName: 'Kordhell & DVRST Echoes',
     albumId: 'album-phonk-drift',
     albumName: 'the beat of your drift (PHONK)',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA0q7PqQYMt1bwVjLAxGuytTU42EM3iczCuwNsjzeTuVl84Nib7YyGP3ZTuT4FgNXyNS6bdk3_9AWtGkHrbPiGpQQZ2NjhNtHM34tZymmXUa13ZFENmmejd-VCLIF6tkRGWY57D97Un5pdLb1_-aVWaA4NKXUCarsnJczIoDZf3Uax8YUBhMiNa1TMErMUX8zbfu2ms0aeFJkFdaxiDhVnVt_wxKoTnqLCtnECB5Xc_LbWvaJrMQKHpEQ',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/1laX4XUfgkM/hqdefault.jpg',
     duration: 152,
     genre: 'Drift Phonk',
-    source: 'PHONK Records'
+    source: 'YouTube Music'
   },
   {
-    id: 'track-dreamy-chill',
+    id: 'yt-5qap5aO4i9A',
+    youtubeId: '5qap5aO4i9A',
     title: 'Raindrops in Kyoto',
     artistId: 'artist-lofi-beats',
     artistName: 'Lofi Garden & Chillhop',
     albumId: 'album-dreamy-chill',
     albumName: 'Dreamy Chill Lounge',
-    artworkUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAhutN_e5d-q8qaz5HJax0urT6lq-Soxx1coRaITVv7_o0uyDlDSCW2cfSMIdVgGNp20tR2igJEoY22Ue6v4WKmRVvPQ5jiythYoy7v6TuqGPNLJjXjB6YatWQNHbsQNQMGPkuiBvutks7p1JMpGjNNdQMB_z9Z5BkMJuAhKq8YeAayWKSVQk6PPbOJMOYS-KZObQJ9-lZO-BJzQBmqFnUKFpUJem5upVdN5f3gSo6LHqy_2Cp3M6UU4g',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    artworkUrl: 'https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg',
     duration: 178,
     genre: 'Ambient Chill',
-    source: 'Dreamy Chill'
+    source: 'YouTube Music'
   }
 ];
 
@@ -359,6 +359,16 @@ export class CatalogMusicProvider implements MusicProvider {
         tracks: [INITIAL_TRACKS[1]]
       }
     ];
+  }
+
+  async getRecommendations(track: Track): Promise<Track[]> {
+    return INITIAL_TRACKS.filter(t => t.id !== track.id).slice(0, 10);
+  }
+
+  async getCategoryTracks(category: string): Promise<Track[]> {
+    const q = category.toLowerCase();
+    const matches = INITIAL_TRACKS.filter(t => (t.genre && t.genre.toLowerCase().includes(q)) || t.title.toLowerCase().includes(q));
+    return matches.length > 0 ? matches : INITIAL_TRACKS;
   }
 
   async getFeaturedPlaylists(): Promise<Playlist[]> {

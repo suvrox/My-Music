@@ -17,7 +17,10 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
     currentIndex,
     playTrack,
     removeFromQueue,
-    clearQueue
+    clearQueue,
+    recommendations,
+    isRecommendationsLoading,
+    addToQueue
   } = useAudioPlayer();
   const { isFavorite, toggleFavorite } = useFavorites();
 
@@ -33,6 +36,8 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
     : INITIAL_ARTISTS[0];
 
   const isCurrentFavorite = currentTrack ? isFavorite(currentTrack.id) : false;
+
+  const upNextTrack = queue[currentIndex + 1] || recommendations[0];
 
   return (
     <aside
@@ -95,9 +100,9 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
 
           <div className="pt-2">
             <span className="text-xs font-semibold text-spotify-textSubdued uppercase mb-2 block">
-              Next Up ({queue.length - currentIndex - 1})
+              Next Up in Queue ({queue.length - currentIndex - 1})
             </span>
-            <div className="space-y-1 overflow-y-auto max-h-[calc(100vh-320px)]">
+            <div className="space-y-1 overflow-y-auto max-h-[220px]">
               {queue.slice(currentIndex + 1).map((track, i) => {
                 const actualIndex = currentIndex + 1 + i;
                 return (
@@ -134,8 +139,70 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
                 );
               })}
               {queue.length - currentIndex - 1 === 0 && (
+                <p className="text-xs text-spotify-textSubdued italic p-2 bg-spotify-elevated/50 rounded">
+                  No upcoming tracks in queue. The YouTube recommendations below will automatically stream next!
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* YouTube Recommendations Section (Auto-plays Next) */}
+          <div className="pt-3 border-t border-zinc-800/80">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <i className="fa-brands fa-youtube text-red-500 text-sm"></i>
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
+                  Recommended Next (YouTube API)
+                </span>
+              </div>
+              {isRecommendationsLoading && (
+                <i className="fa-solid fa-circle-notch fa-spin text-xs text-spotify-textSubdued"></i>
+              )}
+            </div>
+            <p className="text-[11px] text-spotify-textSubdued mb-2">
+              Similar songs curated from YouTube suggestions. Plays automatically when your queue ends.
+            </p>
+            <div className="space-y-1.5 overflow-y-auto max-h-[320px]">
+              {recommendations.slice(0, 10).map((recTrack) => (
+                <div
+                  key={recTrack.id}
+                  className="flex items-center justify-between p-2 rounded hover:bg-spotify-card transition group bg-spotify-card/40"
+                >
+                  <div
+                    onClick={() => playTrack(recTrack)}
+                    className="flex items-center gap-2.5 min-w-0 flex-1 cursor-pointer"
+                  >
+                    <div className="relative w-9 h-9 flex-shrink-0 rounded overflow-hidden">
+                      <img
+                        src={recTrack.artworkUrl || 'https://via.placeholder.com/40'}
+                        alt={recTrack.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                        <i className="fa-solid fa-play text-white text-[10px]"></i>
+                      </div>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-white truncate group-hover:text-spotify-green">
+                        {recTrack.title}
+                      </p>
+                      <p className="text-[11px] text-spotify-textSubdued truncate">
+                        {recTrack.artistName}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => addToQueue(recTrack)}
+                    className="text-spotify-textSubdued hover:text-white p-1 text-xs opacity-0 group-hover:opacity-100 transition cursor-pointer ml-1"
+                    title="Add to queue"
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                  </button>
+                </div>
+              ))}
+              {recommendations.length === 0 && !isRecommendationsLoading && (
                 <p className="text-xs text-spotify-textSubdued italic p-2">
-                  No upcoming tracks in queue. Add more songs to continue listening!
+                  No suggestions available right now.
                 </p>
               )}
             </div>
@@ -183,6 +250,40 @@ export function RightSidebar({ onClose }: RightSidebarProps) {
               <i className={`text-lg ${isCurrentFavorite ? 'fa-solid fa-circle-check' : 'fa-regular fa-heart text-spotify-textSubdued hover:text-white'}`}></i>
             </button>
           </div>
+
+          {/* Up Next Card Preview */}
+          {upNextTrack && (
+            <div className="bg-spotify-card/80 p-3 rounded-lg mb-4 border border-zinc-800">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-spotify-textSubdued flex items-center gap-1.5">
+                  <i className="fa-brands fa-youtube text-red-500"></i>
+                  Next in Queue
+                </span>
+                <span className="text-[10px] text-spotify-green font-semibold">Autoplay</span>
+              </div>
+              <div
+                onClick={() => playTrack(upNextTrack)}
+                className="flex items-center gap-2.5 cursor-pointer group"
+              >
+                <img
+                  src={upNextTrack.artworkUrl || 'https://via.placeholder.com/40'}
+                  alt={upNextTrack.title}
+                  className="w-10 h-10 rounded object-cover flex-shrink-0 group-hover:scale-105 transition"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold text-white truncate group-hover:text-spotify-green">
+                    {upNextTrack.title}
+                  </p>
+                  <p className="text-[11px] text-spotify-textSubdued truncate">
+                    {upNextTrack.artistName}
+                  </p>
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white/10 group-hover:bg-spotify-green group-hover:text-black flex items-center justify-center text-white transition flex-shrink-0">
+                  <i className="fa-solid fa-play text-[10px] ml-0.5"></i>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* About The Artist Card */}
           <div
